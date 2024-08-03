@@ -1,0 +1,16 @@
+{
+    "users":[
+    {
+      "id":1,
+      "name":"Aizaz Ul Haq",
+      "email":"aizaz@gmail.com",
+      "password":"superSecret"
+    },
+    {
+      "id":2,
+      "name":"Asfand",
+      "email":"admin@gmail.com",
+      "password":"easySecret"
+    }
+    ]
+}
