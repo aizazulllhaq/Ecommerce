@@ -10,7 +10,11 @@ export async function getAllProducts() {
 }
 
 export async function getProductsByFilter(filter, sort) {
-  // filter => {"category":"smartphone"} , {"brand":"al halal"}
+   // NOTE : ["a","b","c"] => length = 3 & indexes = 2 
+  // filter object : {"category":["laptops","smartphones"]}
+  // sort = { _sort : "price" , _order : "desc" }
+  // pagination = { _page : page , limit = 10 }
+
   let queryString = "";
   for (let key in filter) {
     queryString += `${key}=${filter[key]}&`;
@@ -19,12 +23,12 @@ export async function getProductsByFilter(filter, sort) {
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
-
+  console.log("sort : ", sort);
   try {
     const response = await axios.get(
       `http://localhost:8000/products?${queryString}`
     );
-    console.log(response);
+    return response.data;
   } catch (error) {
     console.log(error);
     console.log("Error Occurred : ", error.message);

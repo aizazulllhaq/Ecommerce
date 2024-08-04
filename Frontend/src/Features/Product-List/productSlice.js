@@ -12,7 +12,7 @@ export const getAllProductsAsync = createAsyncThunk(
 export const getProductsByFilterAsync = createAsyncThunk(
   "product/getProductsByFilter",
   async ({ filter, sort }) => {
-    const response = await getProductsByFilter(filter);
+    const response = await getProductsByFilter(filter,sort);
     return response;
   }
 );
