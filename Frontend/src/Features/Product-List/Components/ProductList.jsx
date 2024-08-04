@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useState } from "react";
 import {
   Dialog,
   DialogBackdrop,
@@ -10,216 +10,181 @@ import {
   MenuButton,
   MenuItem,
   MenuItems,
-} from '@headlessui/react'
-import { XMarkIcon } from '@heroicons/react/24/outline'
-import { ChevronDownIcon, FunnelIcon, MinusIcon, PlusIcon, Squares2X2Icon } from '@heroicons/react/20/solid'
-import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/20/solid'
-
-const items = [
-  { id: 1, title: 'Back End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
-  { id: 2, title: 'Front End Developer', department: 'Engineering', type: 'Full-time', location: 'Remote' },
-  { id: 3, title: 'User Interface Designer', department: 'Design', type: 'Full-time', location: 'Remote' },
-]
+} from "@headlessui/react";
+import { StarIcon, XMarkIcon } from "@heroicons/react/24/outline";
+import {
+  ChevronDownIcon,
+  FunnelIcon,
+  MinusIcon,
+  PlusIcon,
+  Squares2X2Icon,
+} from "@heroicons/react/20/solid";
+import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
+import { useDispatch, useSelector } from "react-redux";
+import { getProductsByFilterAsync } from "../productSlice";
 
 const sortOptions = [
-  { name: 'Most Popular', href: '#', current: true },
-  { name: 'Best Rating', href: '#', current: false },
-  { name: 'Newest', href: '#', current: false },
-  { name: 'Price: Low to High', href: '#', current: false },
-  { name: 'Price: High to Low', href: '#', current: false },
-]
-const subCategories = [
-  { name: 'Totes', href: '#' },
-  { name: 'Backpacks', href: '#' },
-  { name: 'Travel Bags', href: '#' },
-  { name: 'Hip Bags', href: '#' },
-  { name: 'Laptop Sleeves', href: '#' },
-]
-const filters = [
-  {
-    id: 'color',
-    name: 'Color',
-    options: [
-      { value: 'white', label: 'White', checked: false },
-      { value: 'beige', label: 'Beige', checked: false },
-      { value: 'blue', label: 'Blue', checked: true },
-      { value: 'brown', label: 'Brown', checked: false },
-      { value: 'green', label: 'Green', checked: false },
-      { value: 'purple', label: 'Purple', checked: false },
-    ],
-  },
-  {
-    id: 'category',
-    name: 'Category',
-    options: [
-      { value: 'new-arrivals', label: 'New Arrivals', checked: false },
-      { value: 'sale', label: 'Sale', checked: false },
-      { value: 'travel', label: 'Travel', checked: true },
-      { value: 'organization', label: 'Organization', checked: false },
-      { value: 'accessories', label: 'Accessories', checked: false },
-    ],
-  },
-  {
-    id: 'size',
-    name: 'Size',
-    options: [
-      { value: '2l', label: '2L', checked: false },
-      { value: '6l', label: '6L', checked: false },
-      { value: '12l', label: '12L', checked: false },
-      { value: '18l', label: '18L', checked: false },
-      { value: '20l', label: '20L', checked: false },
-      { value: '40l', label: '40L', checked: true },
-    ],
-  },
-]
-
-function classNames(...classes) {
-  return classes.filter(Boolean).join(' ')
-}
-
-const products = [
-  {
-    id: 1,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 2,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 3,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  {
-    id: 4,
-    name: "Basic Tee",
-    href: "#",
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
-    imageAlt: "Front of men's Basic Tee in black.",
-    price: "$35",
-    color: "Black",
-  },
-  // More products...
+  { name: "Best rating", sort: "rating", order: "desc", current: false },
+  { name: "Price: low to high", sort: "price", order: "asc", current: false },
+  { name: "Price: hight to low", sort: "price", order: "desc", current: false },
 ];
 
-export default function ProductList() {
-  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false)
+const filters = [
+  {
+    id: "category",
+    name: "Category",
+    options: [
+      { value: "beauty", label: "beauty", checked: false },
+      { value: "fragrances", label: "fragrances", checked: false },
+      { value: "furniture", label: "furniture", checked: false },
+      { value: "groceries", label: "groceries", checked: false },
+      {
+        value: "home-decoration",
+        label: "home decoration",
+        checked: false,
+      },
+      {
+        value: "kitchen-accessories",
+        label: "kitchen accessories",
+        checked: false,
+      },
+      { value: "laptops", label: "laptops", checked: false },
+      { value: "mens-shirts", label: "mens shirts", checked: false },
+      { value: "mens-shoes", label: "mens shoes", checked: false },
+      { value: "mens-watches", label: "mens watches", checked: false },
+      {
+        value: "mobile-accessories",
+        label: "mobile accessories",
+        checked: false,
+      },
+    ],
+  },
+  {
+    id: "brand",
+    name: "Brand",
+    options: [
+      { value: "Essence", label: "Essence", checked: false },
+      {
+        value: "Glamour Beauty",
+        label: "Glamour Beauty",
+        checked: false,
+      },
+      { value: "Velvet Touch", label: "Velvet Touch", checked: false },
+      {
+        value: "Chic Cosmetics",
+        label: "Chic Cosmetics",
+        checked: false,
+      },
+      { value: "Nail Couture", label: "Nail Couture", checked: false },
+      { value: "Calvin Klein", label: "Calvin Klein", checked: false },
+      { value: "Chanel", label: "Chanel", checked: false },
+      { value: "Dior", label: "Dior", checked: false },
+      {
+        value: "Dolce & Gabbana",
+        label: "Dolce & Gabbana",
+        checked: false,
+      },
+      { value: "Gucci", label: "Gucci", checked: false },
+      {
+        value: "Annibale Colombo",
+        label: "Annibale Colombo",
+        checked: false,
+      },
+      { value: "Furniture Co.", label: "Furniture Co.", checked: false },
+      { value: "Knoll", label: "Knoll", checked: false },
+      { value: "Bath Trends", label: "Bath Trends", checked: false },
+      { value: "ACA", label: "ACA", checked: false },
+      { value: "sdACA", label: "sdACA", checked: false },
+      { value: "Apple", label: "Apple", checked: false },
+      { value: "Asus", label: "Asus", checked: false },
+      { value: "Huawei", label: "Huawei", checked: false },
+      { value: "Lenovo", label: "Lenovo", checked: false },
+      { value: "Dell", label: "Dell", checked: false },
+      {
+        value: "Fashion Trends",
+        label: "Fashion Trends",
+        checked: false,
+      },
+      { value: "Gigabyte", label: "Gigabyte", checked: false },
+      { value: "Classic Wear", label: "Classic Wear", checked: false },
+      {
+        value: "Casual Comfort",
+        label: "Casual Comfort",
+        checked: false,
+      },
+      { value: "Urban Chic", label: "Urban Chic", checked: false },
+      { value: "Nike", label: "Nike", checked: false },
+      { value: "Puma", label: "Puma", checked: false },
+      { value: "Off White", label: "Off White", checked: false },
+      {
+        value: "Fashion Timepieces",
+        label: "Fashion Timepieces",
+        checked: false,
+      },
+      { value: "Longines", label: "Longines", checked: false },
+      { value: "Rolex", label: "Rolex", checked: false },
+      { value: "Amazon", label: "Amazon", checked: false },
+    ],
+  },
+];
 
+function classNames(...classes) {
+  return classes.filter(Boolean).join(" ");
+}
+
+// const products = [
+//   {
+//     id: 1,
+//     name: "Basic Tee",
+//     href: "#",
+//     thumbnail:
+//       "https://tailwindui.com/img/ecommerce-images/product-page-01-related-product-01.jpg",
+//     imageAlt: "Front of men's Basic Tee in black.",
+//     price: "$35",
+//     color: "Black",
+//   },
+// ];
+
+export default function ProductList() {
+  const dispatch = useDispatch();
+  const products = useSelector((state) => state.product.products);
+  const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
+  const [filter, setFilter] = useState({});
+  const [sort, setSort] = useState({});
+
+  const handleFilter = (e, section, option) => {
+    const newFilter = { ...filter };
+    if (e.target.checked) {
+      if (newFilter[section.id]) {
+        newFilter[section.id].push(option.value);
+      } else {
+        newFilter[section.id] = [option.value];
+      }
+    } else {
+      const index = newFilter[section.id].findIndex(
+        (el) => el === option.value
+      );
+      newFilter[section.id].splice(index, 1);
+    }
+    setFilter(newFilter);
+  };
+
+  const handleSort = (e, option) => {
+    const sort = { _sort: option.sort, order: option.order };
+    setSort(sort);
+  };
+
+  useEffect(() => {
+    dispatch(getProductsByFilterAsync({ filter, sort }));
+  }, [dispatch, filter, sort]);
   return (
     <div className="bg-white">
       <div>
-        {/* Mobile filter dialog */}
-        <Dialog
-          open={mobileFiltersOpen}
-          onClose={setMobileFiltersOpen}
-          className="relative z-40 lg:hidden"
-        >
-          <DialogBackdrop
-            transition
-            className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
-          />
-
-          <div className="fixed inset-0 z-40 flex">
-            <DialogPanel
-              transition
-              className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
-            >
-              <div className="flex items-center justify-between px-4">
-                <h2 className="text-lg font-medium text-gray-900">Filters</h2>
-                <button
-                  type="button"
-                  onClick={() => setMobileFiltersOpen(false)}
-                  className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
-                >
-                  <span className="sr-only">Close menu</span>
-                  <XMarkIcon aria-hidden="true" className="h-6 w-6" />
-                </button>
-              </div>
-
-              {/* Filters */}
-              <form className="mt-4 border-t border-gray-200">
-                <h3 className="sr-only">Categories</h3>
-                <ul role="list" className="px-2 py-3 font-medium text-gray-900">
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href} className="block px-2 py-3">
-                        {category.name}
-                      </a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
-                  <Disclosure
-                    key={section.id}
-                    as="div"
-                    className="border-t border-gray-200 px-4 py-6"
-                  >
-                    <h3 className="-mx-2 -my-3 flow-root">
-                      <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">
-                          {section.name}
-                        </span>
-                        <span className="ml-6 flex items-center">
-                          <PlusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 group-data-[open]:hidden"
-                          />
-                          <MinusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                          />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel className="pt-6">
-                      <div className="space-y-6">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
-                            <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
-                              id={`filter-mobile-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                              className="ml-3 min-w-0 flex-1 text-gray-500"
-                            >
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                ))}
-              </form>
-            </DialogPanel>
-          </div>
-        </Dialog>
-
+        <MobileFilter
+          mobileFiltersOpen={mobileFiltersOpen}
+          setMobileFiltersOpen={setMobileFiltersOpen}
+          handleFilter={handleFilter}
+        />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
@@ -245,8 +210,8 @@ export default function ProductList() {
                   <div className="py-1">
                     {sortOptions.map((option) => (
                       <MenuItem key={option.name}>
-                        <a
-                          href={option.href}
+                        <div
+                          onClick={(e) => handleSort(e, option)}
                           className={classNames(
                             option.current
                               ? "font-medium text-gray-900"
@@ -255,7 +220,7 @@ export default function ProductList() {
                           )}
                         >
                           {option.name}
-                        </a>
+                        </div>
                       </MenuItem>
                     ))}
                   </div>
@@ -287,112 +252,175 @@ export default function ProductList() {
 
             <div className="grid grid-cols-1 gap-x-8 gap-y-10 lg:grid-cols-4">
               {/* Filters */}
-              <form className="hidden lg:block">
-                <h3 className="sr-only">Categories</h3>
-                <ul
-                  role="list"
-                  className="space-y-4 border-b border-gray-200 pb-6 text-sm font-medium text-gray-900"
-                >
-                  {subCategories.map((category) => (
-                    <li key={category.name}>
-                      <a href={category.href}>{category.name}</a>
-                    </li>
-                  ))}
-                </ul>
-
-                {filters.map((section) => (
-                  <Disclosure
-                    key={section.id}
-                    as="div"
-                    className="border-b border-gray-200 py-6"
-                  >
-                    <h3 className="-my-3 flow-root">
-                      <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                        <span className="font-medium text-gray-900">
-                          {section.name}
-                        </span>
-                        <span className="ml-6 flex items-center">
-                          <PlusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 group-data-[open]:hidden"
-                          />
-                          <MinusIcon
-                            aria-hidden="true"
-                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                          />
-                        </span>
-                      </DisclosureButton>
-                    </h3>
-                    <DisclosurePanel className="pt-6">
-                      <div className="space-y-4">
-                        {section.options.map((option, optionIdx) => (
-                          <div key={option.value} className="flex items-center">
-                            <input
-                              defaultValue={option.value}
-                              defaultChecked={option.checked}
-                              id={`filter-${section.id}-${optionIdx}`}
-                              name={`${section.id}[]`}
-                              type="checkbox"
-                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
-                            />
-                            <label
-                              htmlFor={`filter-${section.id}-${optionIdx}`}
-                              className="ml-3 text-sm text-gray-600"
-                            >
-                              {option.label}
-                            </label>
-                          </div>
-                        ))}
-                      </div>
-                    </DisclosurePanel>
-                  </Disclosure>
-                ))}
-              </form>
+              <DesktopFilter
+                mobileFiltersOpen={mobileFiltersOpen}
+                setMobileFiltersOpen={setMobileFiltersOpen}
+                handleFilter={handleFilter}
+              />
 
               {/* Product grid */}
               <div className="lg:col-span-3">
-                {/* Product List Section  */}
+                {/* <ProductGrid products={products} /> */}
                 <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
-
-                  <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-4 xl:gap-x-8">
-                    {products.map((product) => (
-                      <div key={product.id} className="group relative">
-                        <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                          <img
-                            alt={product.imageAlt}
-                            src={product.imageSrc}
-                            className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                          />
-                        </div>
-                        <div className="mt-4 flex justify-between">
-                          <div>
-                            <h3 className="text-sm text-gray-700">
-                              <a href={product.href}>
-                                <span
-                                  aria-hidden="true"
-                                  className="absolute inset-0"
-                                />
-                                {product.name}
-                              </a>
-                            </h3>
-                            <p className="mt-1 text-sm text-gray-500">
-                              {product.color}
+                  <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+                    {products &&
+                      products.map((product) => (
+                        <div key={product.id} className="group relative">
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <img
+                              alt={product.title}
+                              src={product.thumbnail}
+                              className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            />
+                          </div>
+                          <div className="mt-4 flex justify-between">
+                            <div>
+                              <h3 className="text-sm text-gray-700">
+                                <a href={product.href}>
+                                  <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0"
+                                  />
+                                  {product.title}
+                                </a>
+                              </h3>
+                              <p className="mt-1 text-sm text-gray-500">
+                                {product.color}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium text-gray-900 line-through">
+                              {product.price}
                             </p>
                           </div>
-                          <p className="text-sm font-medium text-gray-900">
-                            {product.price}
-                          </p>
+                          <div className="flex justify-between">
+                            <div className="text-sm font-medium text-gray-900">
+                              <p>
+                                <StarIcon />
+                                {product.rating}
+                              </p>
+                            </div>
+                            <p className="text-sm font-medium text-gray-900">
+                              {Math.floor(
+                                product.price *
+                                  (1 - product.discountPercentage / 100)
+                              )}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))}
                   </div>
                 </div>
               </div>
             </div>
           </section>
 
-           {/* Pagination  */}
-           <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
+          {/* Pagination  */}
+          <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6"></div>
+          <Pagination />
+        </main>
+      </div>
+    </div>
+  );
+}
+
+function MobileFilter({
+  mobileFiltersOpen,
+  setMobileFiltersOpen,
+  handleFilter,
+}) {
+  return (
+    <>
+      {/* Mobile filter dialog */}
+      <Dialog
+        open={mobileFiltersOpen}
+        onClose={setMobileFiltersOpen}
+        className="relative z-40 lg:hidden"
+      >
+        <DialogBackdrop
+          transition
+          className="fixed inset-0 bg-black bg-opacity-25 transition-opacity duration-300 ease-linear data-[closed]:opacity-0"
+        />
+
+        <div className="fixed inset-0 z-40 flex">
+          <DialogPanel
+            transition
+            className="relative ml-auto flex h-full w-full max-w-xs transform flex-col overflow-y-auto bg-white py-4 pb-12 shadow-xl transition duration-300 ease-in-out data-[closed]:translate-x-full"
+          >
+            <div className="flex items-center justify-between px-4">
+              <h2 className="text-lg font-medium text-gray-900">Filters</h2>
+              <button
+                type="button"
+                onClick={() => setMobileFiltersOpen(false)}
+                className="-mr-2 flex h-10 w-10 items-center justify-center rounded-md bg-white p-2 text-gray-400"
+              >
+                <span className="sr-only">Close menu</span>
+                <XMarkIcon aria-hidden="true" className="h-6 w-6" />
+              </button>
+            </div>
+
+            {/* Filters */}
+            <form className="mt-4 border-t border-gray-200">
+              <h3 className="sr-only">Categories</h3>
+
+              {filters.map((section) => (
+                <Disclosure
+                  key={section.id}
+                  as="div"
+                  className="border-t border-gray-200 px-4 py-6"
+                >
+                  <h3 className="-mx-2 -my-3 flow-root">
+                    <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                      <span className="font-medium text-gray-900">
+                        {section.name}
+                      </span>
+                      <span className="ml-6 flex items-center">
+                        <PlusIcon
+                          aria-hidden="true"
+                          className="h-5 w-5 group-data-[open]:hidden"
+                        />
+                        <MinusIcon
+                          aria-hidden="true"
+                          className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                        />
+                      </span>
+                    </DisclosureButton>
+                  </h3>
+                  <DisclosurePanel className="pt-6">
+                    <div className="space-y-6">
+                      {section.options.map((option, optionIdx) => (
+                        <div key={option.value} className="flex items-center">
+                          <input
+                            defaultValue={option.value}
+                            defaultChecked={option.checked}
+                            id={`filter-mobile-${section.id}-${optionIdx}`}
+                            name={`${section.id}[]`}
+                            type="checkbox"
+                            onChange={(e) => handleFilter(e, section, option)}
+                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                          />
+                          <label
+                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                            className="ml-3 min-w-0 flex-1 text-gray-500"
+                          >
+                            {option.label}
+                          </label>
+                        </div>
+                      ))}
+                    </div>
+                  </DisclosurePanel>
+                </Disclosure>
+              ))}
+            </form>
+          </DialogPanel>
+        </div>
+      </Dialog>
+    </>
+  );
+}
+
+function Pagination() {
+  return (
+    <>
       <div className="flex flex-1 justify-between sm:hidden">
         <a
           href="#"
@@ -410,12 +438,16 @@ export default function ProductList() {
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing <span className="font-medium">1</span> to <span className="font-medium">10</span> of{' '}
+            Showing <span className="font-medium">1</span> to{" "}
+            <span className="font-medium">10</span> of{" "}
             <span className="font-medium">97</span> results
           </p>
         </div>
         <div>
-          <nav aria-label="Pagination" className="isolate inline-flex -space-x-px rounded-md shadow-sm">
+          <nav
+            aria-label="Pagination"
+            className="isolate inline-flex -space-x-px rounded-md shadow-sm"
+          >
             <a
               href="#"
               className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
@@ -474,9 +506,117 @@ export default function ProductList() {
           </nav>
         </div>
       </div>
-    </div>
-        </main>
+    </>
+  );
+}
+
+function ProductGrid({ products }) {
+  return (
+    <>
+      {/* Product List Section  */}
+      <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
+        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+          {products &&
+            products.map((product) => (
+              <div key={product.id} className="group relative">
+                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                  <img
+                    alt={product.title}
+                    src={product.thumbnail}
+                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                  />
+                </div>
+                <div className="mt-4 flex justify-between">
+                  <div>
+                    <h3 className="text-sm text-gray-700">
+                      <a href={product.href}>
+                        <span aria-hidden="true" className="absolute inset-0" />
+                        {product.title}
+                      </a>
+                    </h3>
+                    <p className="mt-1 text-sm text-gray-500">
+                      {product.color}
+                    </p>
+                  </div>
+                  <p className="text-sm font-medium text-gray-900 line-through">
+                    {product.price}
+                  </p>
+                </div>
+                <div className="flex justify-between">
+                  <div className="text-sm font-medium text-gray-900">
+                    <p>
+                      <StarIcon />
+                      {product.rating}
+                    </p>
+                  </div>
+                  <p className="text-sm font-medium text-gray-900">
+                    {Math.floor(
+                      product.price * (1 - product.discountPercentage / 100)
+                    )}
+                  </p>
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
+    </>
+  );
+}
+
+function DesktopFilter({ handleFilter }) {
+  return (
+    <>
+      <form className="hidden lg:block">
+        <h3 className="sr-only">Categories</h3>
+        {filters.map((section) => (
+          <Disclosure
+            key={section.id}
+            as="div"
+            className="border-b border-gray-200 py-6"
+          >
+            <h3 className="-my-3 flow-root">
+              <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                <span className="font-medium text-gray-900">
+                  {section.name}
+                </span>
+                <span className="ml-6 flex items-center">
+                  <PlusIcon
+                    aria-hidden="true"
+                    className="h-5 w-5 group-data-[open]:hidden"
+                  />
+                  <MinusIcon
+                    aria-hidden="true"
+                    className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                  />
+                </span>
+              </DisclosureButton>
+            </h3>
+            <DisclosurePanel className="pt-6">
+              <div className="space-y-4">
+                {section.options.map((option, optionIdx) => (
+                  <div key={option.value} className="flex items-center">
+                    <input
+                      defaultValue={option.value}
+                      defaultChecked={option.checked}
+                      id={`filter-${section.id}-${optionIdx}`}
+                      name={`${section.id}[]`}
+                      type="checkbox"
+                      onChange={(e) => handleFilter(e, section, option)}
+                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                    />
+                    <label
+                      htmlFor={`filter-${section.id}-${optionIdx}`}
+                      className="ml-3 text-sm text-gray-600"
+                    >
+                      {option.label}
+                    </label>
+                  </div>
+                ))}
+              </div>
+            </DisclosurePanel>
+          </Disclosure>
+        ))}
+      </form>
+    </>
   );
 }

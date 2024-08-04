@@ -1,37 +1,49 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUsers } from "./productApi";
+import { getAllProducts, getProductsByFilter } from "./productApi";
 
-export const getUsersAsync = createAsyncThunk("auth/getUsers", async () => {
-  const response = await getUsers();
-  return response;
-});
+export const getAllProductsAsync = createAsyncThunk(
+  "product/getAllProducts",
+  async () => {
+    const response = await getAllProducts();
+    return response;
+  }
+);
+
+export const getProductsByFilterAsync = createAsyncThunk(
+  "product/getProductsByFilter",
+  async ({ filter, sort }) => {
+    const response = await getProductsByFilter(filter);
+    return response;
+  }
+);
 
 const initialState = {
   status: "idle",
-  users: null,
-  user: null,
-  isLoggedIn: false,
-  error: null,
+  products: [],
+  product: null,
 };
 
-export const authSlice = createSlice({
-  name: "auth",
+export const productSlice = createSlice({
+  name: "product",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUsersAsync.pending, (state) => {
+      .addCase(getAllProductsAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getUsersAsync.fulfilled, (state, action) => {
+      .addCase(getAllProductsAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.users = action.payload;
+        state.products = action.payload;
       })
-      .addCase(getUsersAsync.rejected, (state, action) => {
+      .addCase(getProductsByFilterAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getProductsByFilterAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.error = action.error;
+        state.products = action.payload;
       });
   },
 });
 
-export default authSlice.reducer;
+export default productSlice.reducer;
