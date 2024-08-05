@@ -9,8 +9,8 @@ export async function getAllProducts() {
   }
 }
 
-export async function getProductsByFilter(filter, sort) {
-   // NOTE : ["a","b","c"] => length = 3 & indexes = 2 
+export async function getProductsByFilter(filter, sort, pagination) {
+  // NOTE : ["a","b","c"] => length = 3 & indexes = 2
   // filter object : {"category":["laptops","smartphones"]}
   // sort = { _sort : "price" , _order : "desc" }
   // pagination = { _page : page , limit = 10 }
@@ -23,14 +23,41 @@ export async function getProductsByFilter(filter, sort) {
   for (let key in sort) {
     queryString += `${key}=${sort[key]}&`;
   }
-  console.log("sort : ", sort);
+
+  for (let key in pagination) {
+    queryString += `${key}=${pagination[key]}&`;
+  }
+
   try {
     const response = await axios.get(
       `http://localhost:8000/products?${queryString}`
     );
-    return response.data;
+    const totalItems = response.headers["x-total-count"];
+    return { data: response.data, totalItems: totalItems };
   } catch (error) {
     console.log(error);
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function getAllCategries() {
+  try {
+    const response = await axios.get("http://localhost:8000/categories");
+    return {
+      data: response.data,
+    };
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function getAllBrands() {
+  try {
+    const response = await axios.get("http://localhost:8000/brands");
+    return {
+      data: response.data,
+    };
+  } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
 }

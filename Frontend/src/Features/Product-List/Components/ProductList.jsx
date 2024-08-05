@@ -21,7 +21,11 @@ import {
 } from "@heroicons/react/20/solid";
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";
-import { getProductsByFilterAsync } from "../productSlice";
+import {
+  getAllBrandsAsync,
+  getAllCategoriesAsync,
+  getProductsByFilterAsync,
+} from "../productSlice";
 import { Link } from "react-router-dom";
 import { ITEM_PER_PAGE } from "../../../App/constant";
 
@@ -29,105 +33,6 @@ const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
   { name: "Price: low to high", sort: "price", order: "asc", current: false },
   { name: "Price: hight to low", sort: "price", order: "desc", current: false },
-];
-
-const filters = [
-  {
-    id: "category",
-    name: "Category",
-    options: [
-      { value: "beauty", label: "beauty", checked: false },
-      { value: "fragrances", label: "fragrances", checked: false },
-      { value: "furniture", label: "furniture", checked: false },
-      { value: "groceries", label: "groceries", checked: false },
-      {
-        value: "home-decoration",
-        label: "home decoration",
-        checked: false,
-      },
-      {
-        value: "kitchen-accessories",
-        label: "kitchen accessories",
-        checked: false,
-      },
-      { value: "laptops", label: "laptops", checked: false },
-      { value: "mens-shirts", label: "mens shirts", checked: false },
-      { value: "mens-shoes", label: "mens shoes", checked: false },
-      { value: "mens-watches", label: "mens watches", checked: false },
-      {
-        value: "mobile-accessories",
-        label: "mobile accessories",
-        checked: false,
-      },
-    ],
-  },
-  {
-    id: "brand",
-    name: "Brand",
-    options: [
-      { value: "Essence", label: "Essence", checked: false },
-      {
-        value: "Glamour Beauty",
-        label: "Glamour Beauty",
-        checked: false,
-      },
-      { value: "Velvet Touch", label: "Velvet Touch", checked: false },
-      {
-        value: "Chic Cosmetics",
-        label: "Chic Cosmetics",
-        checked: false,
-      },
-      { value: "Nail Couture", label: "Nail Couture", checked: false },
-      { value: "Calvin Klein", label: "Calvin Klein", checked: false },
-      { value: "Chanel", label: "Chanel", checked: false },
-      { value: "Dior", label: "Dior", checked: false },
-      {
-        value: "Dolce & Gabbana",
-        label: "Dolce & Gabbana",
-        checked: false,
-      },
-      { value: "Gucci", label: "Gucci", checked: false },
-      {
-        value: "Annibale Colombo",
-        label: "Annibale Colombo",
-        checked: false,
-      },
-      { value: "Furniture Co.", label: "Furniture Co.", checked: false },
-      { value: "Knoll", label: "Knoll", checked: false },
-      { value: "Bath Trends", label: "Bath Trends", checked: false },
-      { value: "ACA", label: "ACA", checked: false },
-      { value: "sdACA", label: "sdACA", checked: false },
-      { value: "Apple", label: "Apple", checked: false },
-      { value: "Asus", label: "Asus", checked: false },
-      { value: "Huawei", label: "Huawei", checked: false },
-      { value: "Lenovo", label: "Lenovo", checked: false },
-      { value: "Dell", label: "Dell", checked: false },
-      {
-        value: "Fashion Trends",
-        label: "Fashion Trends",
-        checked: false,
-      },
-      { value: "Gigabyte", label: "Gigabyte", checked: false },
-      { value: "Classic Wear", label: "Classic Wear", checked: false },
-      {
-        value: "Casual Comfort",
-        label: "Casual Comfort",
-        checked: false,
-      },
-      { value: "Urban Chic", label: "Urban Chic", checked: false },
-      { value: "Nike", label: "Nike", checked: false },
-      { value: "Puma", label: "Puma", checked: false },
-      { value: "Off White", label: "Off White", checked: false },
-      {
-        value: "Fashion Timepieces",
-        label: "Fashion Timepieces",
-        checked: false,
-      },
-      { value: "Longines", label: "Longines", checked: false },
-      { value: "Rolex", label: "Rolex", checked: false },
-      { value: "Amazon", label: "Amazon", checked: false },
-    ],
-  },
 ];
 
 function classNames(...classes) {
@@ -149,11 +54,26 @@ function classNames(...classes) {
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const products = useSelector((state) => state.product.products);
+  const { products, totalItems, categories, brands } = useSelector(
+    (state) => state.product
+  );
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
-  const [page, setPage] = useState(ITEM_PER_PAGE);
+  const [page, setPage] = useState(1);
+
+  const filters = [
+    {
+      id: "category",
+      name: "Category",
+      options: categories,
+    },
+    {
+      id: "brand",
+      name: "Brand",
+      options: brands,
+    },
+  ];
 
   const handleFilter = (e, section, option) => {
     const newFilter = { ...filter };
@@ -182,9 +102,19 @@ export default function ProductList() {
   };
 
   useEffect(() => {
+    setPage(1);
+  }, [totalItems, sort]);
+
+  useEffect(() => {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
     dispatch(getProductsByFilterAsync({ filter, sort, pagination }));
   }, [filter, sort, page]);
+
+  useEffect(() => {
+    dispatch(getAllCategoriesAsync());
+    dispatch(getAllBrandsAsync());
+  }, []);
+
   return (
     <div className="bg-white">
       <div>
@@ -192,6 +122,7 @@ export default function ProductList() {
           mobileFiltersOpen={mobileFiltersOpen}
           setMobileFiltersOpen={setMobileFiltersOpen}
           handleFilter={handleFilter}
+          filters={filters}
         />
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
@@ -264,6 +195,7 @@ export default function ProductList() {
                 mobileFiltersOpen={mobileFiltersOpen}
                 setMobileFiltersOpen={setMobileFiltersOpen}
                 handleFilter={handleFilter}
+                filters={filters}
               />
 
               {/* Product grid */}
@@ -323,7 +255,11 @@ export default function ProductList() {
           </section>
 
           {/* Pagination  */}
-          <Pagination page={page} handlePage={handlePage} />
+          <Pagination
+            page={page}
+            handlePage={handlePage}
+            totalItems={totalItems}
+          />
         </main>
       </div>
     </div>
@@ -334,6 +270,7 @@ function MobileFilter({
   mobileFiltersOpen,
   setMobileFiltersOpen,
   handleFilter,
+  filters,
 }) {
   return (
     <>
@@ -425,30 +362,35 @@ function MobileFilter({
   );
 }
 
-function Pagination({ page, totalItem = 100, handlePage }) {
+function Pagination({ page, totalItems, handlePage }) {
+  const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
-        <a
-          href="#"
+        <div
+          onClick={(e) => handlePage(page > 1 ? page - 1 : page)}
           className="relative inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Previous
-        </a>
-        <a
-          href="#"
+        </div>
+        <div
+          onClick={(e) => handlePage(page < totalPages ? page + 1 : page)}
           className="relative ml-3 inline-flex items-center rounded-md border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-700 hover:bg-gray-50"
         >
           Next
-        </a>
+        </div>
       </div>
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
             Showing{" "}
             <span className="font-medium">{(page - 1) * ITEM_PER_PAGE}</span> to{" "}
-            <span className="font-medium">{page * ITEM_PER_PAGE}</span> of{" "}
-            <span className="font-medium">{totalItem}</span> results
+            <span className="font-medium">
+              {page * ITEM_PER_PAGE > totalItems
+                ? totalItems
+                : page * ITEM_PER_PAGE}
+            </span>{" "}
+            of <span className="font-medium">{totalItems}</span> results
           </p>
         </div>
         <div>
@@ -456,36 +398,34 @@ function Pagination({ page, totalItem = 100, handlePage }) {
             aria-label="Pagination"
             className="isolate inline-flex -space-x-px rounded-md shadow-sm"
           >
-            <a
-              href="#"
+            <Link
+              onClick={() => handlePage(page > 1 ? page - 1 : page)}
               className="relative inline-flex items-center rounded-l-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Previous</span>
               <ChevronLeftIcon aria-hidden="true" className="h-5 w-5" />
-            </a>
+            </Link>
             {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
-            {Array.from({ length: Math.ceil(totalItem / ITEM_PER_PAGE) }).map(
-              (el, index) => (
-                <div
-                  onClick={(e) => handlePage(index + 1)}
-                  aria-current="page"
-                  className={`relative z-10 inline-flex items-center ${
-                    index + 1 === page
-                      ? "bg-indigo-500 text-white"
-                      : "text-gray-400"
-                  } px-4 py-2 text-sm font-semibold focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer`}
-                >
-                  {index + 1}
-                </div>
-              )
-            )}
-            <a
-              href="#"
+            {Array.from({ length: totalPages }).map((el, index) => (
+              <div
+                onClick={(e) => handlePage(index + 1)}
+                aria-current="page"
+                className={`relative z-10 inline-flex items-center ${
+                  index + 1 === page
+                    ? "bg-indigo-500 text-white"
+                    : "text-gray-400"
+                } px-4 py-2 text-sm font-semibold focus:z-20 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 cursor-pointer`}
+              >
+                {index + 1}
+              </div>
+            ))}
+            <Link
+              onClick={() => handlePage(page < totalPages ? page + 1 : page)}
               className="relative inline-flex items-center rounded-r-md px-2 py-2 text-gray-400 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:z-20 focus:outline-offset-0"
             >
               <span className="sr-only">Next</span>
               <ChevronRightIcon aria-hidden="true" className="h-5 w-5" />
-            </a>
+            </Link>
           </nav>
         </div>
       </div>
@@ -546,59 +486,60 @@ function ProductGrid({ products }) {
   );
 }
 
-function DesktopFilter({ handleFilter }) {
+function DesktopFilter({ handleFilter, filters }) {
   return (
     <>
       <form className="hidden lg:block">
         <h3 className="sr-only">Categories</h3>
-        {filters.map((section) => (
-          <Disclosure
-            key={section.id}
-            as="div"
-            className="border-b border-gray-200 py-6"
-          >
-            <h3 className="-my-3 flow-root">
-              <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
-                <span className="font-medium text-gray-900">
-                  {section.name}
-                </span>
-                <span className="ml-6 flex items-center">
-                  <PlusIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 group-data-[open]:hidden"
-                  />
-                  <MinusIcon
-                    aria-hidden="true"
-                    className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                  />
-                </span>
-              </DisclosureButton>
-            </h3>
-            <DisclosurePanel className="pt-6">
-              <div className="space-y-4">
-                {section.options.map((option, optionIdx) => (
-                  <div key={option.value} className="flex items-center">
-                    <input
-                      defaultValue={option.value}
-                      defaultChecked={option.checked}
-                      id={`filter-${section.id}-${optionIdx}`}
-                      name={`${section.id}[]`}
-                      type="checkbox"
-                      onChange={(e) => handleFilter(e, section, option)}
-                      className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+        {filters &&
+          filters.map((section) => (
+            <Disclosure
+              key={section.id}
+              as="div"
+              className="border-b border-gray-200 py-6"
+            >
+              <h3 className="-my-3 flow-root">
+                <DisclosureButton className="group flex w-full items-center justify-between bg-white py-3 text-sm text-gray-400 hover:text-gray-500">
+                  <span className="font-medium text-gray-900">
+                    {section.name}
+                  </span>
+                  <span className="ml-6 flex items-center">
+                    <PlusIcon
+                      aria-hidden="true"
+                      className="h-5 w-5 group-data-[open]:hidden"
                     />
-                    <label
-                      htmlFor={`filter-${section.id}-${optionIdx}`}
-                      className="ml-3 text-sm text-gray-600"
-                    >
-                      {option.label}
-                    </label>
-                  </div>
-                ))}
-              </div>
-            </DisclosurePanel>
-          </Disclosure>
-        ))}
+                    <MinusIcon
+                      aria-hidden="true"
+                      className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                    />
+                  </span>
+                </DisclosureButton>
+              </h3>
+              <DisclosurePanel className="pt-6">
+                <div className="space-y-4">
+                  {section.options.map((option, optionIdx) => (
+                    <div key={option.value} className="flex items-center">
+                      <input
+                        defaultValue={option.value}
+                        defaultChecked={option.checked}
+                        id={`filter-${section.id}-${optionIdx}`}
+                        name={`${section.id}[]`}
+                        type="checkbox"
+                        onChange={(e) => handleFilter(e, section, option)}
+                        className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                      />
+                      <label
+                        htmlFor={`filter-${section.id}-${optionIdx}`}
+                        className="ml-3 text-sm text-gray-600"
+                      >
+                        {option.label}
+                      </label>
+                    </div>
+                  ))}
+                </div>
+              </DisclosurePanel>
+            </Disclosure>
+          ))}
       </form>
     </>
   );
