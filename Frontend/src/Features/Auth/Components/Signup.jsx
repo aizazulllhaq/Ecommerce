@@ -2,20 +2,22 @@ import React from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
-import { signUpUserAsync } from "../authSlice";
+import { signUpUserAsync } from "../authenticationSlice";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const { loggedInUser } = useSelector((state) => state.auth);
+  const loggedInUser = useSelector((state)=>state.auth.loggedInUser);
 
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors },
   } = useForm();
 
   const onSubmit = (data) => {
     dispatch(signUpUserAsync(data));
+    reset();
   };
   return (
     <>
