@@ -31,7 +31,7 @@ const App = () => {
       element: <CheckoutPage />,
     },
     {
-      path: "/product-detail",
+      path: "/product-detail/:id",
       element: <ProductDetail />,
     },
   ]);

@@ -61,3 +61,12 @@ export async function getAllBrands() {
     console.log("Error Occurred : ", error.message);
   }
 }
+
+export async function getProductById(id) {
+  try {
+    const response = await axios.get(`http://localhost:8000/products/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}

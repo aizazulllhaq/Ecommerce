@@ -3,6 +3,7 @@ import {
   getAllBrands,
   getAllCategries,
   getAllProducts,
+  getProductById,
   getProductsByFilter,
 } from "./productApi";
 
@@ -34,6 +35,14 @@ export const getAllBrandsAsync = createAsyncThunk(
   "product/getAllBrands",
   async () => {
     const response = await getAllBrands();
+    return response;
+  }
+);
+
+export const getProductByIdAsync = createAsyncThunk(
+  "product/getProductById",
+  async (id) => {
+    const response = await getProductById(id);
     return response;
   }
 );
@@ -81,8 +90,17 @@ export const productSlice = createSlice({
       .addCase(getAllBrandsAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.brands = action.payload.data;
+      })
+      .addCase(getProductByIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getProductByIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.product = action.payload;
       });
   },
 });
+
+export const selectProduct = (state) => state.product.product;
 
 export default productSlice.reducer;
