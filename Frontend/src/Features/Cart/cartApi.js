@@ -49,3 +49,15 @@ export async function deleteCartItem(id) {
     console.log("Error Occurred : ", error.message);
   }
 }
+
+export async function resetCart(userID) {
+  try {
+    const response = await getCartItemByUserId(userID);
+    const items = response.data;
+    for (let item of items) {
+      await deleteCartItem(item.id);
+    }
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}

@@ -10,6 +10,8 @@ import ProductDetail from "./Features/Product-List/Components/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
 import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
+import PageNotFound from "./Pages/PageNotFound";
+import OrderSuccess from "./Features/Order/OrderSuccess";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -32,15 +34,11 @@ const App = () => {
     },
     {
       path: "/login",
-      element: (
-          <LoginPage />
-      ),
+      element: <LoginPage />,
     },
     {
       path: "/signup",
-      element: (
-          <SignupPage />
-      ),
+      element: <SignupPage />,
     },
     {
       path: "/cart",
@@ -65,6 +63,18 @@ const App = () => {
           <ProductDetail />
         </Protected>
       ),
+    },
+    {
+      path: "/order-success/:id",
+      element: (
+        <Protected>
+          <OrderSuccess />
+        </Protected>
+      ),
+    },
+    {
+      path: "*",
+      element: <PageNotFound />,
     },
   ]);
   return <RouterProvider router={router} />;

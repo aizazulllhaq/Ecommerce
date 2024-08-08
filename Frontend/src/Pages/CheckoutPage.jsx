@@ -1,79 +1,43 @@
 import React from "react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../Features/Navbar/Navbar";
 import {
   deleteCartItemAsync,
+  selectItems,
   updateCartAsync,
 } from "../Features/Cart/cartSlice";
 import { useForm } from "react-hook-form";
-import { PhotoIcon, UserCircleIcon } from "@heroicons/react/24/solid";
-
-const products = [
-  {
-    id: 1,
-    name: "Throwback Hip Bag",
-    href: "#",
-    color: "Salmon",
-    price: "$90.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-01.jpg",
-    imageAlt:
-      "Salmon orange fabric pouch with match zipper, gray zipper pull, and adjustable hip belt.",
-  },
-  {
-    id: 2,
-    name: "Medium Stuff Satchel",
-    href: "#",
-    color: "Blue",
-    price: "$32.00",
-    quantity: 1,
-    imageSrc:
-      "https://tailwindui.com/img/ecommerce-images/shopping-cart-page-04-product-02.jpg",
-    imageAlt:
-      "Front of satchel with blue canvas body, black straps and handle, drawstring top, and front zipper pouch.",
-  },
-  // More products...
-];
-
-const Addresses = [
-  {
-    name: "Leslie Alexander",
-    email: "leslie.alexander@example.com",
-    street: "islamabad",
-    pinCode: 11021,
-    pNumber: "+92321923232",
-  },
-  {
-    name: "Ali Jan",
-    email: "ali-jan@example.com",
-    street: "karachi",
-    pinCode: 11332,
-    pNumber: "+92311523232",
-  },
-];
+import {
+  selectLoggedInUser,
+  updateUserAsync,
+} from "../Features/Auth/authenticationSlice";
+import { newOrderAsync } from "../Features/Order/orderSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.cart);
+  const items = useSelector(selectItems);
+  const itemsTotalAmount = Math.floor(
+    items.reduce((amount, item) => item.price * item.quantity + amount, 0)
+  );
+  const totalItems = items.length;
+  const user = useSelector(selectLoggedInUser);
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
   } = useForm();
+  const [selectAddress, setSelectAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
+  const currentOrder = useSelector((state) => state.order.currentOrder);
 
-  const onSubmit = (data) => {
-    console.log(data);
+  const handleAddresses = (data, e) => {
+    console.log({ ...user, addresses: data });
+    dispatch(
+      updateUserAsync({ ...user, addresses: [...user.addresses, data] })
+    );
     reset();
   };
 
@@ -84,9 +48,34 @@ const CheckoutPage = () => {
   const handleQuantity = (e, product) => {
     dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
   };
+
+  const handleAddress = (e) => {
+    setSelectAddress(user.addresses[e.target.value]);
+  };
+
+  const handlePaymentMethod = (e) => {
+    setPaymentMethod(e.target.value);
+  };
+
+  const handleOrder = () => {
+    const order = {
+      items,
+      itemsTotalAmount,
+      totalItems,
+      user,
+      selectAddress,
+      paymentMethod,
+      status: "pending",
+    };
+    dispatch(newOrderAsync(order));
+  };
+
   return (
     <>
       {!items.length && <Navigate to={"/"} replace={true} />}
+      {currentOrder && (
+        <Navigate to={`/order-success/${currentOrder.id}`} replace={true} />
+      )}
       <Navbar>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-gray-100 p-4 mt-10 grid grid-cols-1 lg:grid-cols-5">
           <div className="lg:col-span-3 ">
@@ -99,7 +88,7 @@ const CheckoutPage = () => {
                   Use a permanent address where you can receive mail.
                 </p>
 
-                <form onSubmit={handleSubmit(onSubmit)}>
+                <form onSubmit={handleSubmit(handleAddresses)}>
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                     <div className="sm:col-span-3">
                       <label
@@ -304,30 +293,40 @@ const CheckoutPage = () => {
                   Choose from existing addreses
                 </p>
                 <ul role="list" className="divide-y divide-gray-100">
-                  {Addresses.map((person) => (
-                    <li
-                      key={person.email}
-                      className="flex justify-between gap-x-6 py-5 border-2 border-gray-200 p-2 m-2"
-                    >
-                      <div className="flex min-w-0 gap-x-4">
-                        <input type="radio" name="address" />
-                        <div className="min-w-0 flex-auto">
-                          <p className="text-sm font-semibold leading-6 text-gray-900">
-                            {person.name}
-                          </p>
-                          <p className="mt-1 truncate text-xs leading-5 text-gray-500">
-                            {person.email}
-                          </p>
+                  {user &&
+                    user.addresses.map((address, index) => (
+                      <li
+                        key={index}
+                        className="flex justify-between gap-x-6 py-5 border-2 border-gray-200 p-2 m-2"
+                      >
+                        <div className="flex min-w-0 gap-x-4">
+                          <input
+                            type="radio"
+                            name="address"
+                            value={index}
+                            onChange={handleAddress}
+                          />
+                          <div className="min-w-0 flex-auto">
+                            <p className="text-sm font-semibold leading-6 text-gray-900">
+                              {address.fullname}
+                            </p>
+                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                              {address.email}
+                            </p>
+                            <p className="mt-1 truncate text-xs leading-5 text-gray-500">
+                              {address.zipCode}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                      <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
-                        <p className="text-sm leading-6 text-gray-900">
-                          {person.pNumber}
-                        </p>
-                        {person.pinCode}
-                      </div>
-                    </li>
-                  ))}
+                        <div className="hidden shrink-0 sm:flex sm:flex-col sm:items-end">
+                          <p className="text-sm leading-6 text-gray-900">
+                            {address.city}
+                          </p>
+                          <p>{address.region}</p>
+                          <p>{address.city}</p>
+                        </div>
+                      </li>
+                    ))}
                 </ul>
                 <div className="mt-10 space-y-10">
                   <fieldset>
@@ -342,6 +341,9 @@ const CheckoutPage = () => {
                         <input
                           id="cash"
                           name="payments"
+                          value={"cash"}
+                          onChange={handlePaymentMethod}
+                          checked={paymentMethod === "cash"}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -355,7 +357,10 @@ const CheckoutPage = () => {
                       <div className="flex items-center gap-x-3">
                         <input
                           id="card"
+                          value={"card"}
                           name="payments"
+                          onChange={handlePaymentMethod}
+                          checked={paymentMethod === "card"}
                           type="radio"
                           className="h-4 w-4 border-gray-300 text-indigo-600 focus:ring-indigo-600"
                         />
@@ -395,7 +400,7 @@ const CheckoutPage = () => {
                               <h3>
                                 <a href={product.title}>{product.title}</a>
                               </h3>
-                              <p className="ml-4">{product.price}</p>
+                              <p className="ml-4">${product.price}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {product.color}
@@ -440,20 +445,26 @@ const CheckoutPage = () => {
               </div>
 
               <div className="border-t border-gray-200 px-4 py-6 sm:px-0 mt-4">
-                <div className="flex justify-between text-base font-medium text-gray-900">
-                  <p>Subtotal</p>
-                  <p>$262.00</p>
+                <div className="flex flex-col space-y-[5px] text-base font-medium text-gray-900">
+                  <div className="flex justify-between text-sm">
+                    <p>Total Items</p>
+                    <p>{totalItems}</p>
+                  </div>
+                  <div className="flex justify-between">
+                    <p>Subtotal</p>
+                    <p>${itemsTotalAmount}</p>
+                  </div>
                 </div>
                 <p className="mt-0.5 text-sm text-gray-500">
                   Shipping and taxes calculated at checkout.
                 </p>
                 <div className="mt-6">
-                  <Link
-                    to={"/checkout"}
-                    className="flex items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
+                  <div
+                    onClick={handleOrder}
+                    className="flex cursor-pointer items-center justify-center rounded-md border border-transparent bg-indigo-600 px-6 py-3 text-base font-medium text-white shadow-sm hover:bg-indigo-700"
                   >
-                    Checkout
-                  </Link>
+                    Order Now
+                  </div>
                 </div>
                 <div className="mt-6 flex justify-center text-center text-sm text-gray-500">
                   <p>
