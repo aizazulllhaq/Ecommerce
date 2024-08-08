@@ -1,11 +1,51 @@
 import axios from "axios";
 
-export async function getUsers() {
+export async function addToCart(item) {
   try {
-    const response = await axios.get("http://localhost:8000/users");
-    console.log(response)
+    const response = await axios.post("http://localhost:8000/cart", item, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
-    console.log("Error Occurred : ", error);
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function getCartItemByUserId(userId) {
+  try {
+    const response = await axios.get(
+      `http://localhost:8000/cart?user=${userId}`
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function updateCart(product) {
+  try {
+    const response = await axios.patch(
+      `http://localhost:8000/cart/${product.id}`,
+      product,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function deleteCartItem(id) {
+  try {
+    const response = await axios.delete(`http://localhost:8000/cart?id=${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
   }
 }

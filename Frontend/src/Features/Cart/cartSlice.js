@@ -1,37 +1,104 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { getUsers } from "./cartApi";
+import {
+  addToCart,
+  deleteCartItem,
+  getCartItemByUserId,
+  updateCart,
+} from "./cartApi";
 
-export const getUsersAsync = createAsyncThunk("auth/getUsers", async () => {
-  const response = await getUsers();
-  return response;
-});
+export const addToCartAsync = createAsyncThunk(
+  "cart/addToCart",
+  async (item) => {
+    const response = await addToCart(item);
+    return response;
+  }
+);
+
+export const updateCartAsync = createAsyncThunk(
+  "cart/updateCart",
+  async (product) => {
+    const response = await updateCart(product);
+    return response;
+  }
+);
+
+export const deleteCartItemAsync = createAsyncThunk(
+  "cart/deleteCartItem",
+  async (id) => {
+    const response = await deleteCartItem(id);
+    return response;
+  }
+);
+
+export const getCartItemByUserIdAsync = createAsyncThunk(
+  "cart/getCartItemByUserId",
+  async (userId) => {
+    const response = await getCartItemByUserId(userId);
+    return response;
+  }
+);
 
 const initialState = {
   status: "idle",
-  users: null,
-  user: null,
-  isLoggedIn: false,
   error: null,
+  items: [],
 };
 
-export const authSlice = createSlice({
-  name: "auth",
+export const cartSlice = createSlice({
+  name: "cart",
   initialState,
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getUsersAsync.pending, (state) => {
+      .addCase(addToCartAsync.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(getUsersAsync.fulfilled, (state, action) => {
+      .addCase(addToCartAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.users = action.payload;
+        state.items.push(action.payload);
       })
-      .addCase(getUsersAsync.rejected, (state, action) => {
+      .addCase(addToCartAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
+      })
+      .addCase(updateCartAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(updateCartAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.items.findIndex(
+          (el) => el.id === action.payload.id
+        );
+        state.items[index] = action.payload;
+      })
+      .addCase(updateCartAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
+      })
+      .addCase(deleteCartItemAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteCartItemAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.items.findIndex((el) => el.id === action.payload);
+        state.items.splice(index, 1);
+      })
+      .addCase(deleteCartItemAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
+      })
+      .addCase(getCartItemByUserIdAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(getCartItemByUserIdAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.items = action.payload;
+      })
+      .addCase(getCartItemByUserIdAsync.rejected, (state, action) => {
         state.status = "idle";
         state.error = action.error;
       });
   },
 });
 
-export default authSlice.reducer;
+export default cartSlice.reducer;

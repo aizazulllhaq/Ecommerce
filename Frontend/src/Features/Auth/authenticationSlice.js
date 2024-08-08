@@ -54,4 +54,6 @@ export const authenticationSlice = createSlice({
   },
 });
 
+export const selectLoggedInUser = (state) => state.auth.loggedInUser;
+
 export default authenticationSlice.reducer;
