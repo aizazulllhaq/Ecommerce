@@ -62,10 +62,8 @@ export async function getAllBrands() {
 }
 
 export async function getProductById(id) {
-  console.log(id);
   try {
     const response = await axios.get(`http://localhost:8000/products/${id}`);
-    console.log(response.data);
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

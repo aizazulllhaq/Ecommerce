@@ -12,6 +12,9 @@ import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
 import PageNotFound from "./Pages/PageNotFound";
 import OrderSuccess from "./Features/Order/OrderSuccess";
+import UserOrders from "./Features/User/Components/UserOrders";
+import UserProfile from "./Features/User/Components/UserProfile";
+import UserOrdersPage from "./Pages/UserOrdersPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -69,6 +72,22 @@ const App = () => {
       element: (
         <Protected>
           <OrderSuccess />
+        </Protected>
+      ),
+    },
+    {
+      path: "/profile/orders",
+      element: (
+        <Protected>
+          <UserOrdersPage />
+        </Protected>
+      ),
+    },
+    {
+      path: "/profile",
+      element: (
+        <Protected>
+          <UserProfile />
         </Protected>
       ),
     },

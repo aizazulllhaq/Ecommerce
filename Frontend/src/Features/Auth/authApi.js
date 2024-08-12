@@ -45,10 +45,8 @@ export async function updateUser(data) {
         },
       }
     );
-    console.log("update user : ", response);
     return response.data;
   } catch (error) {
-    console.log(error);
     console.log("Error Occurred :", error.message);
   }
 }

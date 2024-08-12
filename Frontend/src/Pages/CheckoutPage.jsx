@@ -21,7 +21,7 @@ const CheckoutPage = () => {
   const itemsTotalAmount = Math.floor(
     items.reduce((amount, item) => item.price * item.quantity + amount, 0)
   );
-  const totalItems = items.length;
+  const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const user = useSelector(selectLoggedInUser);
   const {
     register,
@@ -34,7 +34,6 @@ const CheckoutPage = () => {
   const currentOrder = useSelector((state) => state.order.currentOrder);
 
   const handleAddresses = (data, e) => {
-    console.log({ ...user, addresses: data });
     dispatch(
       updateUserAsync({ ...user, addresses: [...user.addresses, data] })
     );
@@ -90,7 +89,7 @@ const CheckoutPage = () => {
 
                 <form onSubmit={handleSubmit(handleAddresses)}>
                   <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
-                    <div className="sm:col-span-3">
+                    <div className="col-span-4 sm:col-span-3">
                       <label
                         htmlFor="first-name"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -115,7 +114,7 @@ const CheckoutPage = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-3">
+                    <div className="col-span-4 sm:col-span-3">
                       <label
                         htmlFor="email"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -140,7 +139,7 @@ const CheckoutPage = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-2">
+                    <div className="col-span-4 sm:col-span-2">
                       <label
                         htmlFor="country"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -193,7 +192,7 @@ const CheckoutPage = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-2 sm:col-start-1">
+                    <div className="col-span-4 sm:col-span-2 sm:col-start-1">
                       <label
                         htmlFor="city"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -218,7 +217,7 @@ const CheckoutPage = () => {
                       </div>
                     </div>
 
-                    <div className="sm:col-span-2">
+                    <div className="col-span-4 sm:col-span-2">
                       <label
                         htmlFor="region"
                         className="block text-sm font-medium leading-6 text-gray-900"
@@ -385,7 +384,10 @@ const CheckoutPage = () => {
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
                     {items.map((product) => (
-                      <li key={product.id} className="flex py-6">
+                      <li
+                        key={product.id}
+                        className="flex sm:flex-row flex-col py-6"
+                      >
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
                             alt={product.title}

@@ -11,10 +11,8 @@ export async function newOrder(orderData) {
         },
       }
     );
-    console.log("order response : ", response);
     return response.data;
   } catch (error) {
-    console.log(error);
     console.log("Error Occurred : ", error.message);
   }
 }
