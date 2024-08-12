@@ -40,9 +40,9 @@ const UserProfile = () => {
     setValue("region", address.region);
   };
 
-  const handleRemove = (index) => {
+  const handleRemove = (el) => {
     const userData = { ...user, addresses: [...user.addresses] };
-    userData.addresses.splice(index, 1);
+    userData.addresses.filter((addr)=>addr.fullname !== el.fullname)
     dispatch(updateUserAsync(userData));
     setLocalAddresses(userData.addresses);
   };
@@ -53,6 +53,7 @@ const UserProfile = () => {
     setShowAddAddrsForm(false);
     setLocalAddresses(newUser.addresses);
     reset();
+    console.log(newUser);
   };
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white py-2 mt-10">
@@ -62,7 +63,7 @@ const UserProfile = () => {
       </h1>
 
       <button
-        onClick={() => setShowAddAddrsForm(true)}
+        onClick={() => {setShowAddAddrsForm(true);setSelectedEditAddress(-1)}}
         className="px-[15px] py-[6px] bg-green-400 my-[20px] text-white rounded-md"
       >
         Add Address
@@ -496,7 +497,7 @@ const UserProfile = () => {
                 </button>
                 <button
                   className="text-blue-700 cursor-pointer"
-                  onClick={() => handleRemove(index)}
+                  onClick={() => handleRemove(address.fullname)}
                 >
                   Remove
                 </button>
