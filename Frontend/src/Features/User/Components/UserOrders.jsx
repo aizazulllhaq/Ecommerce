@@ -2,8 +2,6 @@ import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersAsync, selectUserOrders } from "../userSlice";
 import { selectLoggedInUser } from "../../Auth/authenticationSlice";
-import Navbar from "../../Navbar/Navbar";
-import { Link } from "react-router-dom";
 
 const UserOrders = () => {
   const dispatch = useDispatch();
@@ -13,7 +11,6 @@ const UserOrders = () => {
   useEffect(() => {
     dispatch(getUserOrdersAsync(user.id));
   }, [dispatch]);
-  console.log("user orders items : ", userOrders);
   return (
     <>
       {userOrders.map((order) => (

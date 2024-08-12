@@ -11,9 +11,9 @@ import {
 import { useForm } from "react-hook-form";
 import {
   selectLoggedInUser,
-  updateUserAsync,
 } from "../Features/Auth/authenticationSlice";
 import { newOrderAsync } from "../Features/Order/orderSlice";
+import { selectUserInfo, updateUserAsync } from "../Features/User/userSlice";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -22,16 +22,17 @@ const CheckoutPage = () => {
     items.reduce((amount, item) => item.price * item.quantity + amount, 0)
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
-  const user = useSelector(selectLoggedInUser);
+  const user = useSelector(selectUserInfo);
+  
+  const [selectAddress, setSelectAddress] = useState(null);
+  const [paymentMethod, setPaymentMethod] = useState("cash");
   const {
     register,
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();
-  const [selectAddress, setSelectAddress] = useState(null);
-  const [paymentMethod, setPaymentMethod] = useState("cash");
-  const currentOrder = useSelector((state) => state.order.currentOrder);
+  } = useForm();const currentOrder = useSelector((state) => state.order.currentOrder);
+  
 
   const handleAddresses = (data, e) => {
     dispatch(

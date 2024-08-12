@@ -34,19 +34,4 @@ export async function signInUser(data) {
   }
 }
 
-export async function updateUser(data) {
-  try {
-    const response = await axios.patch(
-      `http://localhost:8000/users/${data.id}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log("Error Occurred :", error.message);
-  }
-}
+

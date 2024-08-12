@@ -13,31 +13,31 @@
       "email": "admin@gmail.com",
       "addresses": [
         {
-          "fullname": "dfdfd",
-          "email": "admin@xyz.coms",
-          "country": "Canada",
-          "streetAddress": "343",
-          "city": "343",
-          "region": "34",
-          "zipCode": "1"
+          "fullname": "as",
+          "email": "admin@gmail.com",
+          "country": "United States",
+          "streetAddress": "as",
+          "city": "as",
+          "region": "ss",
+          "zipCode": "111"
         },
         {
-          "fullname": "aizaz",
-          "email": "aizazu@gmail.com",
-          "country": "Canada",
-          "streetAddress": "kpk nowshera",
-          "city": "nowshera kalan",
-          "region": "khyber pukhton khwa ",
-          "zipCode": "42323323"
+          "fullname": "a",
+          "email": "aizazu88@gmail.com",
+          "country": "United States",
+          "streetAddress": "aaa",
+          "city": "a",
+          "region": "a",
+          "zipCode": "a"
         },
         {
-          "fullname": "Ihtisham",
-          "email": "i@ihtisham.com",
-          "country": "Mexico",
-          "streetAddress": "kpk pakistan",
-          "city": "nowshera kalam",
-          "region": "kpk",
-          "zipCode": "230000"
+          "fullname": "df",
+          "email": "admin@gmail.com",
+          "country": "United States",
+          "streetAddress": "df",
+          "city": "df",
+          "region": "d",
+          "zipCode": "3333"
         }
       ],
       "password": "easySecret"
@@ -6279,492 +6279,67 @@
   ],
   "cart": [
     {
-      "title": "Essence Mascara Lash Princess",
-      "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
+      "title": "Powder Canister",
+      "description": "The Powder Canister is a finely milled setting powder designed to set makeup and control shine. With a lightweight and translucent formula, it provides a smooth and matte finish.",
       "category": "beauty",
-      "price": 9.99,
-      "discountPercentage": 7.17,
-      "rating": 4.94,
-      "stock": 5,
+      "price": 14.99,
+      "discountPercentage": 18.14,
+      "rating": 3.82,
+      "stock": 59,
       "tags": [
         "beauty",
-        "mascara"
+        "face powder"
       ],
-      "brand": "Essence",
-      "sku": "RCH45Q1A",
-      "weight": 2,
+      "brand": "Velvet Touch",
+      "sku": "9EN8WLT2",
+      "weight": 8,
       "dimensions": {
-        "width": 23.17,
-        "height": 14.43,
-        "depth": 28.01
+        "width": 24.16,
+        "height": 10.7,
+        "depth": 11.07
       },
-      "warrantyInformation": "1 month warranty",
-      "shippingInformation": "Ships in 1 month",
-      "availabilityStatus": "Low Stock",
-      "reviews": [
-        {
-          "rating": 2,
-          "comment": "Very unhappy with my purchase!",
-          "date": "2024-05-23T08:56:21.618Z",
-          "reviewerName": "John Doe",
-          "reviewerEmail": "john.doe@x.dummyjson.com"
-        },
-        {
-          "rating": 2,
-          "comment": "Not as described!",
-          "date": "2024-05-23T08:56:21.618Z",
-          "reviewerName": "Nolan Gonzalez",
-          "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
-        },
-        {
-          "rating": 5,
-          "comment": "Very satisfied!",
-          "date": "2024-05-23T08:56:21.618Z",
-          "reviewerName": "Scarlett Wright",
-          "reviewerEmail": "scarlett.wright@x.dummyjson.com"
-        }
-      ],
-      "returnPolicy": "30 days return policy",
-      "minimumOrderQuantity": 24,
-      "meta": {
-        "createdAt": "2024-05-23T08:56:21.618Z",
-        "updatedAt": "2024-05-23T08:56:21.618Z",
-        "barcode": "9164035109868",
-        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-      },
-      "images": [
-        "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
-      ],
-      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-      "quantity": 3,
-      "user": 2,
-      "id": 1
-    },
-    {
-      "title": "Chanel Coco Noir Eau De",
-      "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
-      "category": "fragrances",
-      "price": 129.99,
-      "discountPercentage": 18.64,
-      "rating": 2.76,
-      "stock": 41,
-      "tags": [
-        "fragrances",
-        "perfumes"
-      ],
-      "brand": "Chanel",
-      "sku": "K71HBCGS",
-      "weight": 4,
-      "dimensions": {
-        "width": 21.27,
-        "height": 28,
-        "depth": 11.89
-      },
-      "warrantyInformation": "1 week warranty",
-      "shippingInformation": "Ships in 1 month",
+      "warrantyInformation": "2 year warranty",
+      "shippingInformation": "Ships in 1-2 business days",
       "availabilityStatus": "In Stock",
       "reviews": [
         {
-          "rating": 1,
-          "comment": "Disappointing product!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Lincoln Kelly",
-          "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+          "rating": 5,
+          "comment": "Very happy with my purchase!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Ethan Thompson",
+          "reviewerEmail": "ethan.thompson@x.dummyjson.com"
         },
         {
           "rating": 4,
-          "comment": "Great product!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Lincoln Kelly",
-          "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
+          "comment": "Great value for money!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Levi Hicks",
+          "reviewerEmail": "levi.hicks@x.dummyjson.com"
         },
         {
-          "rating": 4,
-          "comment": "Excellent quality!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Lucas Allen",
-          "reviewerEmail": "lucas.allen@x.dummyjson.com"
+          "rating": 5,
+          "comment": "Highly impressed!",
+          "date": "2024-05-23T08:56:21.618Z",
+          "reviewerName": "Hazel Gardner",
+          "reviewerEmail": "hazel.gardner@x.dummyjson.com"
         }
       ],
       "returnPolicy": "60 days return policy",
-      "minimumOrderQuantity": 5,
+      "minimumOrderQuantity": 25,
       "meta": {
-        "createdAt": "2024-05-23T08:56:21.619Z",
-        "updatedAt": "2024-05-23T08:56:21.619Z",
-        "barcode": "1435582999795",
+        "createdAt": "2024-05-23T08:56:21.618Z",
+        "updatedAt": "2024-05-23T08:56:21.618Z",
+        "barcode": "0516267971277",
         "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
       },
       "images": [
-        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
-        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/2.png",
-        "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/3.png"
+        "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/1.png"
       ],
-      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
+      "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Powder%20Canister/thumbnail.png",
       "quantity": 2,
       "user": 2,
-      "id": 2
-    },
-    {
-      "title": "Dior J'adore",
-      "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-      "category": "fragrances",
-      "price": 89.99,
-      "discountPercentage": 17.44,
-      "rating": 3.31,
-      "stock": 91,
-      "tags": [
-        "fragrances",
-        "perfumes"
-      ],
-      "brand": "Dior",
-      "sku": "E70NB03B",
-      "weight": 10,
-      "dimensions": {
-        "width": 21.51,
-        "height": 7,
-        "depth": 26.51
-      },
-      "warrantyInformation": "Lifetime warranty",
-      "shippingInformation": "Ships in 2 weeks",
-      "availabilityStatus": "In Stock",
-      "reviews": [
-        {
-          "rating": 5,
-          "comment": "Fast shipping!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Zoe Nicholson",
-          "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
-        },
-        {
-          "rating": 4,
-          "comment": "Excellent quality!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Addison Wright",
-          "reviewerEmail": "addison.wright@x.dummyjson.com"
-        },
-        {
-          "rating": 4,
-          "comment": "Would buy again!",
-          "date": "2024-05-23T08:56:21.619Z",
-          "reviewerName": "Clara Berry",
-          "reviewerEmail": "clara.berry@x.dummyjson.com"
-        }
-      ],
-      "returnPolicy": "7 days return policy",
-      "minimumOrderQuantity": 8,
-      "meta": {
-        "createdAt": "2024-05-23T08:56:21.619Z",
-        "updatedAt": "2024-05-23T08:56:21.619Z",
-        "barcode": "0887083199279",
-        "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-      },
-      "images": [
-        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
-        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
-        "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
-      ],
-      "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
-      "quantity": 3,
-      "user": 2,
-      "id": 3
+      "id": 1
     }
   ],
-  "orders": [
-    {
-      "items": [
-        {
-          "title": "Essence Mascara Lash Princess",
-          "description": "The Essence Mascara Lash Princess is a popular mascara known for its volumizing and lengthening effects. Achieve dramatic lashes with this long-lasting and cruelty-free formula.",
-          "category": "beauty",
-          "price": 9.99,
-          "discountPercentage": 7.17,
-          "rating": 4.94,
-          "stock": 5,
-          "tags": [
-            "beauty",
-            "mascara"
-          ],
-          "brand": "Essence",
-          "sku": "RCH45Q1A",
-          "weight": 2,
-          "dimensions": {
-            "width": 23.17,
-            "height": 14.43,
-            "depth": 28.01
-          },
-          "warrantyInformation": "1 month warranty",
-          "shippingInformation": "Ships in 1 month",
-          "availabilityStatus": "Low Stock",
-          "reviews": [
-            {
-              "rating": 2,
-              "comment": "Very unhappy with my purchase!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "John Doe",
-              "reviewerEmail": "john.doe@x.dummyjson.com"
-            },
-            {
-              "rating": 2,
-              "comment": "Not as described!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Nolan Gonzalez",
-              "reviewerEmail": "nolan.gonzalez@x.dummyjson.com"
-            },
-            {
-              "rating": 5,
-              "comment": "Very satisfied!",
-              "date": "2024-05-23T08:56:21.618Z",
-              "reviewerName": "Scarlett Wright",
-              "reviewerEmail": "scarlett.wright@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "30 days return policy",
-          "minimumOrderQuantity": 24,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.618Z",
-            "updatedAt": "2024-05-23T08:56:21.618Z",
-            "barcode": "9164035109868",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/1.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/beauty/Essence%20Mascara%20Lash%20Princess/thumbnail.png",
-          "quantity": 3,
-          "user": 2,
-          "id": 1
-        }
-      ],
-      "itemsTotalAmount": 29,
-      "totalItems": 3,
-      "user": {
-        "id": 2,
-        "name": "Asfand",
-        "email": "admin@gmail.com",
-        "addresses": [
-          {
-            "fullname": "dfdfd",
-            "email": "admin@xyz.coms",
-            "country": "Canada",
-            "streetAddress": "343",
-            "city": "343",
-            "region": "34",
-            "zipCode": "1"
-          },
-          {
-            "fullname": "aizaz",
-            "email": "aizazu@gmail.com",
-            "country": "Canada",
-            "streetAddress": "kpk nowshera",
-            "city": "nowshera kalan",
-            "region": "khyber pukhton khwa ",
-            "zipCode": "42323323"
-          },
-          {
-            "fullname": "Ihtisham",
-            "email": "i@ihtisham.com",
-            "country": "Mexico",
-            "streetAddress": "kpk pakistan",
-            "city": "nowshera kalam",
-            "region": "kpk",
-            "zipCode": "230000"
-          }
-        ],
-        "password": "easySecret"
-      },
-      "selectAddress": {
-        "fullname": "aizaz",
-        "email": "aizazu@gmail.com",
-        "country": "Canada",
-        "streetAddress": "kpk nowshera",
-        "city": "nowshera kalan",
-        "region": "khyber pukhton khwa ",
-        "zipCode": "42323323"
-      },
-      "paymentMethod": "card",
-      "status": "pending",
-      "id": 1
-    },
-    {
-      "items": [
-        {
-          "title": "Chanel Coco Noir Eau De",
-          "description": "Coco Noir by Chanel is an elegant and mysterious fragrance, featuring notes of grapefruit, rose, and sandalwood. Perfect for evening occasions.",
-          "category": "fragrances",
-          "price": 129.99,
-          "discountPercentage": 18.64,
-          "rating": 2.76,
-          "stock": 41,
-          "tags": [
-            "fragrances",
-            "perfumes"
-          ],
-          "brand": "Chanel",
-          "sku": "K71HBCGS",
-          "weight": 4,
-          "dimensions": {
-            "width": 21.27,
-            "height": 28,
-            "depth": 11.89
-          },
-          "warrantyInformation": "1 week warranty",
-          "shippingInformation": "Ships in 1 month",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 1,
-              "comment": "Disappointing product!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Lincoln Kelly",
-              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Great product!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Lincoln Kelly",
-              "reviewerEmail": "lincoln.kelly@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Excellent quality!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Lucas Allen",
-              "reviewerEmail": "lucas.allen@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "60 days return policy",
-          "minimumOrderQuantity": 5,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.619Z",
-            "updatedAt": "2024-05-23T08:56:21.619Z",
-            "barcode": "1435582999795",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/1.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/2.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/3.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Chanel%20Coco%20Noir%20Eau%20De/thumbnail.png",
-          "quantity": 2,
-          "user": 2,
-          "id": 2
-        },
-        {
-          "title": "Dior J'adore",
-          "description": "J'adore by Dior is a luxurious and floral fragrance, known for its blend of ylang-ylang, rose, and jasmine. It embodies femininity and sophistication.",
-          "category": "fragrances",
-          "price": 89.99,
-          "discountPercentage": 17.44,
-          "rating": 3.31,
-          "stock": 91,
-          "tags": [
-            "fragrances",
-            "perfumes"
-          ],
-          "brand": "Dior",
-          "sku": "E70NB03B",
-          "weight": 10,
-          "dimensions": {
-            "width": 21.51,
-            "height": 7,
-            "depth": 26.51
-          },
-          "warrantyInformation": "Lifetime warranty",
-          "shippingInformation": "Ships in 2 weeks",
-          "availabilityStatus": "In Stock",
-          "reviews": [
-            {
-              "rating": 5,
-              "comment": "Fast shipping!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Zoe Nicholson",
-              "reviewerEmail": "zoe.nicholson@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Excellent quality!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Addison Wright",
-              "reviewerEmail": "addison.wright@x.dummyjson.com"
-            },
-            {
-              "rating": 4,
-              "comment": "Would buy again!",
-              "date": "2024-05-23T08:56:21.619Z",
-              "reviewerName": "Clara Berry",
-              "reviewerEmail": "clara.berry@x.dummyjson.com"
-            }
-          ],
-          "returnPolicy": "7 days return policy",
-          "minimumOrderQuantity": 8,
-          "meta": {
-            "createdAt": "2024-05-23T08:56:21.619Z",
-            "updatedAt": "2024-05-23T08:56:21.619Z",
-            "barcode": "0887083199279",
-            "qrCode": "https://assets.dummyjson.com/public/qr-code.png"
-          },
-          "images": [
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/1.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/2.png",
-            "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/3.png"
-          ],
-          "thumbnail": "https://cdn.dummyjson.com/products/images/fragrances/Dior%20J'adore/thumbnail.png",
-          "quantity": 3,
-          "user": 2,
-          "id": 3
-        }
-      ],
-      "itemsTotalAmount": 529,
-      "totalItems": 5,
-      "user": {
-        "id": 2,
-        "name": "Asfand",
-        "email": "admin@gmail.com",
-        "addresses": [
-          {
-            "fullname": "dfdfd",
-            "email": "admin@xyz.coms",
-            "country": "Canada",
-            "streetAddress": "343",
-            "city": "343",
-            "region": "34",
-            "zipCode": "1"
-          },
-          {
-            "fullname": "aizaz",
-            "email": "aizazu@gmail.com",
-            "country": "Canada",
-            "streetAddress": "kpk nowshera",
-            "city": "nowshera kalan",
-            "region": "khyber pukhton khwa ",
-            "zipCode": "42323323"
-          },
-          {
-            "fullname": "Ihtisham",
-            "email": "i@ihtisham.com",
-            "country": "Mexico",
-            "streetAddress": "kpk pakistan",
-            "city": "nowshera kalam",
-            "region": "kpk",
-            "zipCode": "230000"
-          }
-        ],
-        "password": "easySecret"
-      },
-      "selectAddress": {
-        "fullname": "Ihtisham",
-        "email": "i@ihtisham.com",
-        "country": "Mexico",
-        "streetAddress": "kpk pakistan",
-        "city": "nowshera kalam",
-        "region": "kpk",
-        "zipCode": "230000"
-      },
-      "paymentMethod": "card",
-      "status": "pending",
-      "id": 2
-    }
-  ]
+  "orders": []
 }

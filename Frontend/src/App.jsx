@@ -12,20 +12,22 @@ import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
 import PageNotFound from "./Pages/PageNotFound";
 import OrderSuccess from "./Features/Order/OrderSuccess";
-import UserOrders from "./Features/User/Components/UserOrders";
 import UserProfile from "./Features/User/Components/UserProfile";
 import UserOrdersPage from "./Pages/UserOrdersPage";
+import { getUserInfoAsync, selectUserInfo } from "./Features/User/userSlice";
+import UserProfilePage from "./Pages/UserProfilePage";
 
 const App = () => {
   const dispatch = useDispatch();
-  const loggedInUser = useSelector((state) => state.auth.loggedInUser);
+  const user = useSelector((state) => state.auth.loggedInUser);
+
 
   useEffect(() => {
-    if (loggedInUser) {
-      dispatch(getCartItemByUserIdAsync(loggedInUser.id));
+    if (user) {
+      dispatch(getCartItemByUserIdAsync(user.id));
+      dispatch(getUserInfoAsync(user.id));
     }
-  }, [dispatch, loggedInUser]);
-
+  }, [dispatch, user]);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -87,7 +89,7 @@ const App = () => {
       path: "/profile",
       element: (
         <Protected>
-          <UserProfile />
+          <UserProfilePage />
         </Protected>
       ),
     },
