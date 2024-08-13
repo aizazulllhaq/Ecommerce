@@ -1,5 +1,39 @@
 import axios from "axios";
 
+export async function addProduct(newProduct) {
+  try {
+    const response = await axios.post(
+      "http://localhost:8000/products",
+      newProduct,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function updateProduct(updatedProduct) {
+  try {
+    const response = await axios.patch(
+      `http://localhost:8000/products/${updatedProduct.id}`,
+      updatedProduct,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
 export async function getAllProducts() {
   try {
     const response = await axios.get("http://localhost:8000/products");

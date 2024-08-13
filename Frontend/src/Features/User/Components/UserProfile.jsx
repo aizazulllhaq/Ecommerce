@@ -28,7 +28,6 @@ const UserProfile = () => {
   };
 
   const handleEditForm = (index) => {
-    console.log(index)
     setSelectedEditAddress(index);
     const address = user.addresses[index];
     setValue("fullname", address.fullname);
@@ -53,13 +52,12 @@ const UserProfile = () => {
     setShowAddAddrsForm(false);
     setLocalAddresses(newUser.addresses);
     reset();
-    console.log(newUser);
   };
   return (
     <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white py-2 mt-10">
       <h1 className="text-2xl font-bold">Name : {user.name}</h1>
       <h1 className="text-xl font-semibold text-red-800">
-        Email : {user.email}
+        Email : {user.email} and Role : {user.role}
       </h1>
 
       <button

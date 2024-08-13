@@ -25,9 +25,9 @@ import {
   getAllBrandsAsync,
   getAllCategoriesAsync,
   getProductsByFilterAsync,
-} from "../productSlice";
+} from "../Product-List/productSlice";
 import { Link } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../../../App/constant";
+import { ITEM_PER_PAGE } from "../../App/constant";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -39,12 +39,11 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function ProductList() {
+export default function AdminProductList() {
   const dispatch = useDispatch();
   const { products, totalItems, categories, brands } = useSelector(
     (state) => state.product
   );
-  const filterProducts = products.filter((p) => !p.deleted);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
@@ -115,7 +114,7 @@ export default function ProductList() {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+              All Products
             </h1>
 
             <div className="flex items-center">
@@ -190,55 +189,78 @@ export default function ProductList() {
               <div className="lg:col-span-3">
                 {/* <ProductGrid products={products} /> */}
                 <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
+                  <Link
+                    to={"/admin/add-product"}
+                    className="px-[15px] py-[8px] text-white bg-green-600 rounded-md"
+                  >
+                    Add Product
+                  </Link>
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {filterProducts &&
-                      filterProducts.map((product, index) => (
-                        <Link
-                          to={`/product-detail/${product.id}`}
-                          key={index}
-                          className="group relative"
+                    {products &&
+                      products.map((product) => (
+                        <div
+                          key={product.id}
+                          className="flex flex-col justify-between"
                         >
-                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                            <img
-                              alt={product.title}
-                              src={product.thumbnail}
-                              className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                            />
-                          </div>
-                          <div className="mt-4 flex justify-between">
-                            <div>
-                              <h3 className="text-sm text-gray-700">
-                                <div>
-                                  <span
-                                    aria-hidden="true"
-                                    className="absolute inset-0"
-                                  />
-                                  {product.title}ddd
-                                </div>
-                              </h3>
-                              <p className="mt-1 text-sm text-gray-500">
-                                {product.color}
+                          <Link
+                            to={`/product-detail/${product.id}`}
+                            className="group relative"
+                          >
+                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                              <img
+                                alt={product.title}
+                                src={product.thumbnail}
+                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                              />
+                            </div>
+                            <div className="mt-4 flex justify-between">
+                              <div>
+                                <h3 className="text-sm text-gray-700">
+                                  <span>
+                                    <span
+                                      aria-hidden="true"
+                                      className="absolute inset-0"
+                                    />
+                                    {product.title}
+                                  </span>
+                                </h3>
+                                <p className="mt-1 text-sm text-gray-500">
+                                  {product.color}
+                                </p>
+                              </div>
+                              <p className="text-sm font-medium text-gray-900 line-through">
+                                {product.price}
                               </p>
                             </div>
-                            <p className="text-sm font-medium text-gray-900 line-through">
-                              {product.price}
-                            </p>
-                          </div>
-                          <div className="flex justify-between">
-                            <div className="text-sm font-medium text-gray-900">
-                              <p>
-                                <StarIcon />
-                                {product.rating}
+                            <div className="flex justify-between">
+                              <div className="text-sm font-medium text-gray-900">
+                                <p>
+                                  <StarIcon />
+                                  {product.rating}
+                                </p>
+                              </div>
+                              <p className="text-sm font-medium text-gray-900">
+                                {Math.floor(
+                                  product.price *
+                                    (1 - product.discountPercentage / 100)
+                                )}
                               </p>
                             </div>
-                            <p className="text-sm font-medium text-gray-900">
-                              {Math.floor(
-                                product.price *
-                                  (1 - product.discountPercentage / 100)
-                              )}
-                            </p>
-                          </div>
-                        </Link>
+                            {product.deleted && (
+                              <div>
+                                <p className="text-sm text-red-400">
+                                  product deleted
+                                </p>
+                              </div>
+                            )}
+                          </Link>
+                          <Link
+                            to={`/admin/product/${product.id}`}
+                            className="px-[12px] py-[7px] text-white bg-indigo-500 rounded-md mt-[10px] self-end"
+                          >
+                            Edit Product
+                          </Link>
+                        </div>
                       ))}
                   </div>
                 </div>
@@ -400,7 +422,6 @@ function Pagination({ page, totalItems, handlePage }) {
             {/* Current: "z-10 bg-indigo-600 text-white focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600", Default: "text-gray-900 ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0" */}
             {Array.from({ length: totalPages }).map((el, index) => (
               <div
-                key={index}
                 onClick={(e) => handlePage(index + 1)}
                 aria-current="page"
                 className={`relative z-10 inline-flex items-center ${

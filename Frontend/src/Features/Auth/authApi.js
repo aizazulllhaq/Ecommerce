@@ -34,4 +34,7 @@ export async function signInUser(data) {
   }
 }
 
-
+export function LogoutUser() {
+  const response = { success: true };
+  return response;
+}

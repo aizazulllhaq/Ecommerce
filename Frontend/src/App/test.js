@@ -5553,4 +5553,4 @@ const brandObj = {
   ],
 };
 
-console.log(brandObj);
+// console.log(brandObj);

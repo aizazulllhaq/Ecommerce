@@ -18,9 +18,9 @@ const PageNotFound = () => {
           >
             Go back home
           </a>
-          <a href="#" className="text-sm font-semibold text-gray-900">
+          <Link to="#" className="text-sm font-semibold text-gray-900">
             Contact support <span aria-hidden="true">&rarr;</span>
-          </a>
+          </Link>
         </div>
       </div>
     </main>

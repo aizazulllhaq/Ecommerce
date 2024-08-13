@@ -12,15 +12,17 @@ import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
 import PageNotFound from "./Pages/PageNotFound";
 import OrderSuccess from "./Features/Order/OrderSuccess";
-import UserProfile from "./Features/User/Components/UserProfile";
 import UserOrdersPage from "./Pages/UserOrdersPage";
-import { getUserInfoAsync, selectUserInfo } from "./Features/User/userSlice";
+import { getUserInfoAsync } from "./Features/User/userSlice";
 import UserProfilePage from "./Pages/UserProfilePage";
+import Logout from "./Features/Auth/Components/Logout";
+import AdminHomePage from "./Pages/AdminHomePage";
+import AdminAddProductPage from "./Pages/AdminAddProductPage";
+import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
 
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.loggedInUser);
-
 
   useEffect(() => {
     if (user) {
@@ -40,6 +42,10 @@ const App = () => {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/logout",
+      element: <Logout />,
     },
     {
       path: "/signup",
@@ -91,6 +97,30 @@ const App = () => {
         <Protected>
           <UserProfilePage />
         </Protected>
+      ),
+    },
+    {
+      path: "/admin",
+      element: (
+        <ProtectedAdmin>
+          <AdminHomePage />
+        </ProtectedAdmin>
+      ),
+    },
+    {
+      path: "/admin/add-product",
+      element: (
+        <ProtectedAdmin>
+          <AdminAddProductPage />
+        </ProtectedAdmin>
+      ),
+    },
+    {
+      path: "/admin/product/:id",
+      element: (
+        <ProtectedAdmin>
+          <AdminAddProductPage/>
+        </ProtectedAdmin>
       ),
     },
     {

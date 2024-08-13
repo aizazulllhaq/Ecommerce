@@ -26,12 +26,12 @@ const navigation = [
   { name: "Team", link: "/", current: false },
   { name: "Projects", link: "/", current: false },
   { name: "Calendar", link: "/", current: false },
-  { name: "logout", link: "/", current: false },
+  { name: "logout", link: "/logout", current: false },
 ];
 const userNavigation = [
   { name: "Your Profile", link: "/profile" },
   { name: "My Orders", link: "/profile/orders" },
-  { name: "Sign out", link: "#" },
+  { name: "Sign out", link: "/logout" },
 ];
 
 function classNames(...classes) {
