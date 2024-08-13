@@ -1,6 +1,7 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getUserOrdersAsync, selectUserInfo, selectUserOrders } from "../userSlice";
+import { discountPrice } from "../../../App/constant";
 
 const UserOrders = () => {
   const dispatch = useDispatch();
@@ -36,9 +37,9 @@ const UserOrders = () => {
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                              <Link to={product.title}>{product.title}</Link>
+                              {product.title}
                             </h3>
-                            <p className="ml-4">${product.price}</p>
+                            <p className="ml-4">${discountPrice(product)}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {product.color}

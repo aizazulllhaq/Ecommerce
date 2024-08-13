@@ -24,7 +24,6 @@ const AdminOrders = () => {
 
   const handleSort = (sortOption) => {
     const sort = { _sort: sortOption.sort, _order: sortOption.order };
-    console.log(sort);
     setSort(sort);
   };
 
@@ -46,7 +45,6 @@ const AdminOrders = () => {
   };
 
   const handleOrderStatus = (e, order) => {
-    console.log(order);
     const updatedOrder = { ...order, status: e.target.value };
     dispatch(updateOrderAsync(updatedOrder));
     setEditibleStatus(-1);

@@ -208,8 +208,8 @@ const AdminAddProduct = () => {
                   Colors
                 </label>
                 <div className="mt-2">
-                  {colors.map((color) => (
-                    <span className="mr-[10px] opacity-80">
+                  {colors.map((color, index) => (
+                    <span className="mr-[10px] opacity-80" key={index}>
                       <input
                         type="checkbox"
                         {...register("colors", {})}
@@ -231,8 +231,8 @@ const AdminAddProduct = () => {
                   Sizes
                 </label>
                 <div className="mt-2">
-                  {sizes.map((size) => (
-                    <span className="mr-[10px] opacity-80">
+                  {sizes.map((size,index) => (
+                    <span className="mr-[10px] opacity-80" key={index}>
                       <input
                         type="checkbox"
                         {...register("sizes", {})}
