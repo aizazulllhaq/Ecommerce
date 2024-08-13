@@ -27,7 +27,11 @@ import {
   getProductsByFilterAsync,
 } from "../productSlice";
 import { Link } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../../../App/constant";
+import {
+  discountPrice,
+  ITEM_PER_ORDERS_PAGE,
+  ITEM_PER_PAGE,
+} from "../../../App/constant";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -232,10 +236,7 @@ export default function ProductList() {
                               </p>
                             </div>
                             <p className="text-sm font-medium text-gray-900">
-                              {Math.floor(
-                                product.price *
-                                  (1 - product.discountPercentage / 100)
-                              )}
+                              {discountPrice(product)}
                             </p>
                           </div>
                         </Link>
@@ -354,8 +355,10 @@ function MobileFilter({
   );
 }
 
-function Pagination({ page, totalItems, handlePage }) {
-  const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
+export function Pagination({ page, totalItems, handlePage, state = "NORMAL" }) {
+  const IPP = state === "ADMIN" ? ITEM_PER_ORDERS_PAGE : ITEM_PER_PAGE;
+  const totalPages = Math.ceil(totalItems / IPP);
+
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
@@ -375,12 +378,9 @@ function Pagination({ page, totalItems, handlePage }) {
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing{" "}
-            <span className="font-medium">{(page - 1) * ITEM_PER_PAGE}</span> to{" "}
+            Showing <span className="font-medium">{(page - 1) * IPP}</span> to{" "}
             <span className="font-medium">
-              {page * ITEM_PER_PAGE > totalItems
-                ? totalItems
-                : page * ITEM_PER_PAGE}
+              {page * IPP > totalItems ? totalItems : page * IPP}
             </span>{" "}
             of <span className="font-medium">{totalItems}</span> results
           </p>
@@ -466,9 +466,7 @@ function ProductGrid({ products }) {
                     </p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    {Math.floor(
-                      product.price * (1 - product.discountPercentage / 100)
-                    )}
+                    {discountPrice(product)}
                   </p>
                 </div>
               </div>

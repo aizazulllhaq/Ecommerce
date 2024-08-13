@@ -9,21 +9,22 @@ import {
   updateCartAsync,
 } from "../Features/Cart/cartSlice";
 import { useForm } from "react-hook-form";
-import {
-  selectLoggedInUser,
-} from "../Features/Auth/authenticationSlice";
 import { newOrderAsync } from "../Features/Order/orderSlice";
 import { selectUserInfo, updateUserAsync } from "../Features/User/userSlice";
+import { discountPrice } from "../App/constant";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
   const itemsTotalAmount = Math.floor(
-    items.reduce((amount, item) => item.price * item.quantity + amount, 0)
+    items.reduce(
+      (amount, item) => discountPrice(item) * item.quantity + amount,
+      0
+    )
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const user = useSelector(selectUserInfo);
-  
+
   const [selectAddress, setSelectAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const {
@@ -31,10 +32,10 @@ const CheckoutPage = () => {
     handleSubmit,
     reset,
     formState: { errors },
-  } = useForm();const currentOrder = useSelector((state) => state.order.currentOrder);
-  
+  } = useForm();
+  const currentOrder = useSelector((state) => state.order.currentOrder);
 
-  const handleAddresses = (data, e) => {
+  const handleAddresses = (data) => {
     dispatch(
       updateUserAsync({ ...user, addresses: [...user.addresses, data] })
     );
@@ -403,7 +404,7 @@ const CheckoutPage = () => {
                               <h3>
                                 <Link to={product.title}>{product.title}</Link>
                               </h3>
-                              <p className="ml-4">${product.price}</p>
+                              <p className="ml-4">${discountPrice(product)}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
                               {product.color}

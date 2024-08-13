@@ -11,13 +11,17 @@ import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../Navbar/Navbar";
 import { deleteCartItemAsync, updateCartAsync } from "./cartSlice";
+import { discountPrice } from "../../App/constant";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const { items } = useSelector((state) => state.cart);
   const totalItems = items.length;
   const totalItemsAmount = Math.floor(
-    items.reduce((amount, item) => item.price * item.quantity + amount, 0)
+    items.reduce(
+      (amount, item) => discountPrice(item) * item.quantity + amount,
+      0
+    )
   );
   const handleDeleteItem = (id) => {
     dispatch(deleteCartItemAsync(id));
@@ -52,7 +56,7 @@ const Cart = () => {
                             <h3>
                               <Link to={product.title}>{product.title}</Link>
                             </h3>
-                            <p className="ml-4">{product.price}</p>
+                            <p className="ml-4">{discountPrice(product)}</p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
                             {product.color}

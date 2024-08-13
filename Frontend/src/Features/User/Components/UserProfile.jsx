@@ -6,9 +6,8 @@ import { useForm } from "react-hook-form";
 const UserProfile = () => {
   const dispatch = useDispatch();
   const user = useSelector(selectUserInfo);
-  const [selectedEditAddress, setSelectedEditAddress] = useState(-1);
-  const [showAddAddrsForm, setShowAddAddrsForm] = useState(false);
-  const [localAddresses, setLocalAddresses] = useState(user.addresses);
+  const [selectedEditIndex, setSelectedEditIndex] = useState(-1);
+  const [showAddAddressForm, setShowAddAddressForm] = useState(false);
 
   const {
     register,
@@ -22,13 +21,13 @@ const UserProfile = () => {
     const updatedUser = { ...user, addresses: [...user.addresses] };
     updatedUser.addresses.splice(index, 1, data);
     dispatch(updateUserAsync(updatedUser));
-    setSelectedEditAddress(-1);
+    setSelectedEditIndex(-1);
     reset();
-    setLocalAddresses(updatedUser.addresses);
   };
 
   const handleEditForm = (index) => {
-    setSelectedEditAddress(index);
+    setShowAddAddressForm(false);
+    setSelectedEditIndex(index);
     const address = user.addresses[index];
     setValue("fullname", address.fullname);
     setValue("streetAddress", address.streetAddress);
@@ -39,18 +38,17 @@ const UserProfile = () => {
     setValue("region", address.region);
   };
 
-  const handleRemove = (el) => {
+  const handleRemove = (index) => {
     const userData = { ...user, addresses: [...user.addresses] };
-    userData.addresses.filter((addr)=>addr.fullname !== el.fullname)
+    userData.addresses.splice(index, 1);
     dispatch(updateUserAsync(userData));
-    setLocalAddresses(userData.addresses);
   };
 
   const handleAddAddress = (data) => {
+    reset();
     const newUser = { ...user, addresses: [...user.addresses, data] };
     dispatch(updateUserAsync(newUser));
-    setShowAddAddrsForm(false);
-    setLocalAddresses(newUser.addresses);
+    setShowAddAddressForm(false);
     reset();
   };
   return (
@@ -61,13 +59,17 @@ const UserProfile = () => {
       </h1>
 
       <button
-        onClick={() => {setShowAddAddrsForm(true);setSelectedEditAddress(-1)}}
+        onClick={() => {
+          setShowAddAddressForm(true);
+          setSelectedEditIndex(-1);
+          reset();
+        }}
         className="px-[15px] py-[6px] bg-green-400 my-[20px] text-white rounded-md"
       >
         Add Address
       </button>
 
-      {showAddAddrsForm && (
+      {showAddAddressForm && (
         <form onSubmit={handleSubmit(handleAddAddress)}>
           <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
             <div className="col-span-4 sm:col-span-3">
@@ -246,7 +248,7 @@ const UserProfile = () => {
           </div>
           <div className="mt-6 flex items-center justify-end gap-x-6">
             <button
-              onClick={() => setSelectedEditAddress(-1)}
+              onClick={() => setSelectedEditIndex(-1)}
               type="button"
               className="text-sm font-semibold leading-6 text-gray-900"
             >
@@ -264,9 +266,9 @@ const UserProfile = () => {
 
       <p className="mt-1 text-sm leading-6 text-gray-600">Addresses :</p>
 
-      {localAddresses.map((address, index) => (
+      {user.addresses.map((address, index) => (
         <div key={index}>
-          {selectedEditAddress === index ? (
+          {selectedEditIndex === index && (
             <form onSubmit={handleSubmit((data) => handleEdit(data, index))}>
               <div className="mt-10 grid grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
                 <div className="col-span-4 sm:col-span-3">
@@ -449,7 +451,7 @@ const UserProfile = () => {
               </div>
               <div className="mt-6 flex items-center justify-end gap-x-6">
                 <button
-                  onClick={() => setSelectedEditAddress(-1)}
+                  onClick={() => setSelectedEditIndex(-1)}
                   type="button"
                   className="text-sm font-semibold leading-6 text-gray-900"
                 >
@@ -459,11 +461,11 @@ const UserProfile = () => {
                   type="submit"
                   className="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
                 >
-                  Add Address
+                  Edit Address
                 </button>
               </div>
             </form>
-          ) : null}
+          )}
           <ul role="list" className="divide-y divide-gray-100">
             <li className="flex justify-between gap-x-6 py-5 border-2 border-gray-200 p-2 m-2">
               <div className="flex min-w-0 gap-x-4">
@@ -495,7 +497,7 @@ const UserProfile = () => {
                 </button>
                 <button
                   className="text-blue-700 cursor-pointer"
-                  onClick={() => handleRemove(address.fullname)}
+                  onClick={() => handleRemove(index)}
                 >
                   Remove
                 </button>

@@ -27,7 +27,7 @@ import {
   getProductsByFilterAsync,
 } from "../Product-List/productSlice";
 import { Link } from "react-router-dom";
-import { ITEM_PER_PAGE } from "../../App/constant";
+import { discountPrice, ITEM_PER_PAGE } from "../../App/constant";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -115,6 +115,7 @@ export default function AdminProductList() {
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
               All Products
+              <Link to={"/admin/orders"}>Orders</Link>
             </h1>
 
             <div className="flex items-center">
@@ -240,10 +241,7 @@ export default function AdminProductList() {
                                 </p>
                               </div>
                               <p className="text-sm font-medium text-gray-900">
-                                {Math.floor(
-                                  product.price *
-                                    (1 - product.discountPercentage / 100)
-                                )}
+                                {discountPrice(product)}
                               </p>
                             </div>
                             {product.deleted && (
@@ -487,9 +485,7 @@ function ProductGrid({ products }) {
                     </p>
                   </div>
                   <p className="text-sm font-medium text-gray-900">
-                    {Math.floor(
-                      product.price * (1 - product.discountPercentage / 100)
-                    )}
+                    {discountPrice(product)}
                   </p>
                 </div>
               </div>

@@ -4,9 +4,10 @@ import { Radio, RadioGroup } from "@headlessui/react";
 import { useDispatch, useSelector } from "react-redux";
 import { getProductByIdAsync, selectProduct } from "../productSlice";
 import { useParams } from "react-router-dom";
-import { addToCartAsync } from "../../Cart/cartSlice";
+import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import Navbar from "../../Navbar/Navbar";
 import { selectLoggedInUser } from "../../Auth/authenticationSlice";
+import { discountPrice } from "../../../App/constant";
 
 const breadcrumbs = [
   { id: 1, name: "Men", href: "#" },
@@ -43,6 +44,7 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState("red");
   const [selectedSize, setSelectedSize] = useState("green");
+  const cartItems = useSelector(selectItems);
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector(selectProduct);
@@ -56,7 +58,18 @@ export default function ProductDetail() {
     e.preventDefault();
     const newItem = { ...product };
     delete newItem["id"];
-    dispatch(addToCartAsync({ ...newItem, quantity: 1, user: user.id }));
+    if (cartItems.find((item) => item.productId === product.id)) {
+      alert("Item Already Added");
+    } else {
+      dispatch(
+        addToCartAsync({
+          ...newItem,
+          productId: product.id,
+          quantity: 1,
+          user: user.id,
+        })
+      );
+    }
   };
 
   return (
@@ -152,10 +165,7 @@ export default function ProductDetail() {
                   ${product.price}
                 </p>
                 <p className="text-3xl tracking-tight text-gray-900">
-                  $
-                  {Math.floor(
-                    product.price * (1 - product.discountPercentage / 100)
-                  )}
+                  ${discountPrice(product)}
                 </p>
 
                 {/* Reviews */}

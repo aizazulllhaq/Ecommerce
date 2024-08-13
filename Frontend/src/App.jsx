@@ -19,6 +19,7 @@ import Logout from "./Features/Auth/Components/Logout";
 import AdminHomePage from "./Pages/AdminHomePage";
 import AdminAddProductPage from "./Pages/AdminAddProductPage";
 import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
+import AdminOrdersPage from "./Pages/AdminOrdersPage";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -122,6 +123,12 @@ const App = () => {
           <AdminAddProductPage/>
         </ProtectedAdmin>
       ),
+    },
+    {
+      path:"/admin/orders",
+      element:<ProtectedAdmin>
+        <AdminOrdersPage/>
+      </ProtectedAdmin>
     },
     {
       path: "*",
