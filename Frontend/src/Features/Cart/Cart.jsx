@@ -12,6 +12,7 @@ import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../Navbar/Navbar";
 import { deleteCartItemAsync, updateCartAsync } from "./cartSlice";
 import { discountPrice } from "../../App/constant";
+import Modal from "../Common/Modal";
 
 const Cart = () => {
   const dispatch = useDispatch();
@@ -23,6 +24,8 @@ const Cart = () => {
       0
     )
   );
+  const [openModal, setOpenModal] = useState(null);
+
   const handleDeleteItem = (id) => {
     dispatch(deleteCartItemAsync(id));
   };
@@ -83,9 +86,18 @@ const Cart = () => {
                             </select>
                           </div>
 
+                          <Modal
+                            title={`Delete ${product.title}`}
+                            msg={"Do you want to delete this item ? "}
+                            dangerOption={"Delete"}
+                            cancelOption={"Cancel"}
+                            cancelAction={()=>setOpenModal(-1)}
+                            dangerAction={() => handleDeleteItem(product.id)}
+                            showModal={openModal === product.id}
+                          />
                           <div className="flex">
                             <button
-                              onClick={() => handleDeleteItem(product.id)}
+                              onClick={() => setOpenModal(product.id)}
                               type="button"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                             >

@@ -8,6 +8,7 @@ import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import Navbar from "../../Navbar/Navbar";
 import { selectLoggedInUser } from "../../Auth/authenticationSlice";
 import { discountPrice } from "../../../App/constant";
+import { useAlert } from "react-alert";
 
 const breadcrumbs = [
   { id: 1, name: "Men", href: "#" },
@@ -49,6 +50,7 @@ export default function ProductDetail() {
   const { id } = useParams();
   const product = useSelector(selectProduct);
   const user = useSelector(selectLoggedInUser);
+  const alert = useAlert();
 
   useEffect(() => {
     dispatch(getProductByIdAsync(id));
@@ -59,7 +61,7 @@ export default function ProductDetail() {
     const newItem = { ...product };
     delete newItem["id"];
     if (cartItems.find((item) => item.productId === product.id)) {
-      alert("Item Already Added");
+      alert.show("item already added");
     } else {
       dispatch(
         addToCartAsync({
@@ -69,6 +71,7 @@ export default function ProductDetail() {
           user: user.id,
         })
       );
+      alert.success("ITEM ADDED TO CART");
     }
   };
 

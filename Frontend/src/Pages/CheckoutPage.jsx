@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { newOrderAsync } from "../Features/Order/orderSlice";
 import { selectUserInfo, updateUserAsync } from "../Features/User/userSlice";
 import { discountPrice } from "../App/constant";
+import { useAlert } from "react-alert";
 
 const CheckoutPage = () => {
   const dispatch = useDispatch();
@@ -24,7 +25,6 @@ const CheckoutPage = () => {
   );
   const totalItems = items.reduce((amount, item) => item.quantity + amount, 0);
   const user = useSelector(selectUserInfo);
-
   const [selectAddress, setSelectAddress] = useState(null);
   const [paymentMethod, setPaymentMethod] = useState("cash");
   const {
@@ -34,6 +34,7 @@ const CheckoutPage = () => {
     formState: { errors },
   } = useForm();
   const currentOrder = useSelector((state) => state.order.currentOrder);
+  const alert = useAlert();
 
   const handleAddresses = (data) => {
     dispatch(
@@ -69,6 +70,7 @@ const CheckoutPage = () => {
       status: "pending",
     };
     dispatch(newOrderAsync(order));
+    alert.success("Item Ordered");
   };
 
   return (

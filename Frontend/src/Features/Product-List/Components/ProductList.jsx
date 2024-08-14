@@ -32,6 +32,8 @@ import {
   ITEM_PER_ORDERS_PAGE,
   ITEM_PER_PAGE,
 } from "../../../App/constant";
+import { Grid } from "react-loader-spinner";
+import Modal from "../../Common/Modal";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -45,7 +47,7 @@ function classNames(...classes) {
 
 export default function ProductList() {
   const dispatch = useDispatch();
-  const { products, totalItems, categories, brands } = useSelector(
+  const { products, totalItems, categories, brands, status } = useSelector(
     (state) => state.product
   );
   const filterProducts = products.filter((p) => !p.deleted);
@@ -189,6 +191,18 @@ export default function ProductList() {
                 handleFilter={handleFilter}
                 filters={filters}
               />
+              {status === "loading" && (
+                  <Grid
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="grid-loading"
+                  radius="12.5"
+                  wrapperStyle={{}}
+                  wrapperClass="grid-wrapper"
+                />
+              )}
 
               {/* Product grid */}
               <div className="lg:col-span-3">

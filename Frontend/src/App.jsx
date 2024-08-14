@@ -20,6 +20,8 @@ import AdminHomePage from "./Pages/AdminHomePage";
 import AdminAddProductPage from "./Pages/AdminAddProductPage";
 import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
+import { useAlert } from "react-alert";
+import Footer from "./Features/Common/Footer";
 
 const App = () => {
   const dispatch = useDispatch();
@@ -73,6 +75,7 @@ const App = () => {
       element: (
         <Protected>
           <ProductDetail />
+          <Footer/>
         </Protected>
       ),
     },
@@ -120,15 +123,17 @@ const App = () => {
       path: "/admin/product/:id",
       element: (
         <ProtectedAdmin>
-          <AdminAddProductPage/>
+          <AdminAddProductPage />
         </ProtectedAdmin>
       ),
     },
     {
-      path:"/admin/orders",
-      element:<ProtectedAdmin>
-        <AdminOrdersPage/>
-      </ProtectedAdmin>
+      path: "/admin/orders",
+      element: (
+        <ProtectedAdmin>
+          <AdminOrdersPage />
+        </ProtectedAdmin>
+      ),
     },
     {
       path: "*",

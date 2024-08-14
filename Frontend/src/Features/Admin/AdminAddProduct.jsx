@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   addProductAsync,
@@ -9,6 +9,8 @@ import {
 } from "../Product-List/productSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
+import Modal from "../Common/Modal";
+import { useAlert } from "react-alert";
 
 const colors = [
   {
@@ -55,6 +57,8 @@ const AdminAddProduct = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const product = useSelector((state) => state.product.product);
+  const [openModal, setOpenModal] = useState(false);
+  const alert = useAlert();
 
   useEffect(() => {
     dispatch(getAllBrandsAsync());
@@ -114,6 +118,7 @@ const AdminAddProduct = () => {
   const handleDeleteProduct = (product) => {
     const deleteProduct = { ...product, deleted: true };
     dispatch(updateProductAsync(deleteProduct));
+    alert.success("Item Temporary Deleted");
     navigate("/admin");
   };
 
@@ -231,7 +236,7 @@ const AdminAddProduct = () => {
                   Sizes
                 </label>
                 <div className="mt-2">
-                  {sizes.map((size,index) => (
+                  {sizes.map((size, index) => (
                     <span className="mr-[10px] opacity-80" key={index}>
                       <input
                         type="checkbox"
@@ -585,9 +590,12 @@ const AdminAddProduct = () => {
             Cancel
           </button>
 
-          {product && id && (
+          {product && !product.deleted && (
             <button
-              onClick={() => handleDeleteProduct(product)}
+              onClick={(e) => {
+                e.preventDefault();
+                setOpenModal(true);
+              }}
               className="rounded-md bg-red-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-red-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
             >
               Delete
@@ -602,6 +610,17 @@ const AdminAddProduct = () => {
           </button>
         </div>
       </form>
+      {product && (
+        <Modal
+          title={`Delete ${product.title}`}
+          msg={"Do you want to delete this item ?"}
+          dangerOption={"Delete"}
+          cancelOption={"Cancel"}
+          cancelAction={() => setOpenModal(false)}
+          dangerAction={() => handleDeleteProduct(product)}
+          showModal={openModal}
+        />
+      )}
     </>
   );
 };
