@@ -20,7 +20,6 @@ import AdminHomePage from "./Pages/AdminHomePage";
 import AdminAddProductPage from "./Pages/AdminAddProductPage";
 import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
-import { useAlert } from "react-alert";
 import Footer from "./Features/Common/Footer";
 
 const App = () => {
@@ -33,6 +32,7 @@ const App = () => {
       dispatch(getUserInfoAsync(user.id));
     }
   }, [dispatch, user]);
+  console.log("user : ",user);
   const router = createBrowserRouter([
     {
       path: "/",

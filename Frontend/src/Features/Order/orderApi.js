@@ -1,16 +1,12 @@
-import axios from "axios";
+import apiClient from "../Common/apiClient";
 
 export async function newOrder(orderData) {
   try {
-    const response = await axios.post(
-      "http://localhost:8000/orders",
-      orderData,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await apiClient.post("/orders", orderData, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -29,9 +25,7 @@ export async function getAllOrders(sort, pagination) {
   }
 
   try {
-    const response = await axios.get(
-      `http://localhost:8000/orders?${queryString}`
-    );
+    const response = await apiClient.get(`/orders?${queryString}`);
     const totalItems = response.headers["x-total-count"];
     return {
       data: response.data,
@@ -44,8 +38,8 @@ export async function getAllOrders(sort, pagination) {
 
 export async function updateOrder(updatedOrder) {
   try {
-    const response = await axios.patch(
-      `http://localhost:8000/orders/${updatedOrder.id}`,
+    const response = await apiClient.patch(
+      `/orders/${updatedOrder.id}`,
       updatedOrder,
       {
         headers: {

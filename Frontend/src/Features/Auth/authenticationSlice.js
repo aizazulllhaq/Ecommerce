@@ -40,6 +40,7 @@ export const authenticationSlice = createSlice({
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUser = action.payload;
+        console.log(action.payload);
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
         state.status = "idle";

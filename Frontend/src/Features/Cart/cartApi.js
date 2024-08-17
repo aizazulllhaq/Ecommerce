@@ -1,8 +1,9 @@
 import axios from "axios";
+import apiClient from "../Common/apiClient";
 
 export async function addToCart(item) {
   try {
-    const response = await axios.post("http://localhost:8000/cart", item, {
+    const response = await apiClient.post("/cart", item, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -15,9 +16,7 @@ export async function addToCart(item) {
 
 export async function getCartItemByUserId(userId) {
   try {
-    const response = await axios.get(
-      `http://localhost:8000/cart?user=${userId}`
-    );
+    const response = await apiClient.get(`/cart?user=${userId}`);
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -26,15 +25,11 @@ export async function getCartItemByUserId(userId) {
 
 export async function updateCart(product) {
   try {
-    const response = await axios.patch(
-      `http://localhost:8000/cart/${product.id}`,
-      product,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await apiClient.patch(`cart/${product.id}`, product, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -43,7 +38,7 @@ export async function updateCart(product) {
 
 export async function deleteCartItem(id) {
   try {
-    const response = await axios.delete(`http://localhost:8000/cart?id=${id}`);
+    const response = await apiClient.delete(`/cart?id=${id}`);
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

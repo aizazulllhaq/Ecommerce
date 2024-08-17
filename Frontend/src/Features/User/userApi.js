@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "../Common/apiClient";
 
 export async function getUserOrders(userID) {
   try {
-    const response = await axios.get(
-      "http://localhost:8000/orders?user.id=" + userID
+    const response = await apiClient.get(
+      "/orders?user.id=" + userID
     );
     return response.data;
   } catch (error) {
@@ -13,8 +13,8 @@ export async function getUserOrders(userID) {
 
 export async function getUserInfo(userID) {
   try {
-    const response = await axios.get(
-      "http://localhost:8000/users?id=" + userID
+    const response = await apiClient.get(
+      "/users?id=" + userID
     );
     return response.data[0];
   } catch (error) {
@@ -24,8 +24,8 @@ export async function getUserInfo(userID) {
 
 export async function updateUser(data) {
   try {
-    const response = await axios.patch(
-      `http://localhost:8000/users/${data.id}`,
+    const response = await apiClient.patch(
+      `/users/${data.id}`,
       data,
       {
         headers: {

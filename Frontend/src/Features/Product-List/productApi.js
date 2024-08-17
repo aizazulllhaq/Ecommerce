@@ -1,9 +1,9 @@
-import axios from "axios";
+import apiClient from "../Common/apiClient";
 
 export async function addProduct(newProduct) {
   try {
-    const response = await axios.post(
-      "http://localhost:8000/products",
+    const response = await apiClient.post(
+      "/products",
       newProduct,
       {
         headers: {
@@ -19,8 +19,8 @@ export async function addProduct(newProduct) {
 
 export async function updateProduct(updatedProduct) {
   try {
-    const response = await axios.patch(
-      `http://localhost:8000/products/${updatedProduct.id}`,
+    const response = await apiClient.patch(
+      `/products/${updatedProduct.id}`,
       updatedProduct,
       {
         headers: {
@@ -36,7 +36,7 @@ export async function updateProduct(updatedProduct) {
 
 export async function getAllProducts() {
   try {
-    const response = await axios.get("http://localhost:8000/products");
+    const response = await apiClient.get("/products");
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error);
@@ -63,8 +63,8 @@ export async function getProductsByFilter(filter, sort, pagination) {
   }
 
   try {
-    const response = await axios.get(
-      `http://localhost:8000/products?${queryString}`
+    const response = await apiClient.get(
+      `/products?${queryString}`
     );
     const totalItems = response.headers["x-total-count"];
     return { data: response.data, totalItems: totalItems };
@@ -75,7 +75,7 @@ export async function getProductsByFilter(filter, sort, pagination) {
 
 export async function getAllCategries() {
   try {
-    const response = await axios.get("http://localhost:8000/categories");
+    const response = await apiClient.get("/categories");
     return {
       data: response.data,
     };
@@ -86,7 +86,7 @@ export async function getAllCategries() {
 
 export async function getAllBrands() {
   try {
-    const response = await axios.get("http://localhost:8000/brands");
+    const response = await apiClient.get("/brands");
     return {
       data: response.data,
     };
@@ -97,7 +97,7 @@ export async function getAllBrands() {
 
 export async function getProductById(id) {
   try {
-    const response = await axios.get(`http://localhost:8000/products/${id}`);
+    const response = await apiClient.get(`/products/${id}`);
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

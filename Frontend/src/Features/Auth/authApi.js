@@ -1,8 +1,8 @@
-import axios from "axios";
+import apiClient from "../Common/apiClient";
 
 export async function signUpUser(data) {
   try {
-    const response = await axios.post("http://localhost:8000/users", data, {
+    const response = await apiClient.post("/users/signup", data, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -14,21 +14,13 @@ export async function signUpUser(data) {
 }
 
 export async function signInUser(data) {
-  const email = data.email;
-  const password = data.password;
   try {
-    const response = await axios.get(
-      `http://localhost:8000/users?email=${email}`
-    );
-    if (response.data.length) {
-      if (password === response.data[0].password) {
-        return response.data[0];
-      } else {
-        throw new Error("Invalid Credentials");
-      }
-    } else {
-      throw new Error("User Not Found");
-    }
+    const response = await apiClient.post("/users/signin", data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+    return response.data;
   } catch (error) {
     throw new Error(error.message);
   }
