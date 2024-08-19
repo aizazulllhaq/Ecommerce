@@ -6,35 +6,8 @@ import { getProductByIdAsync, selectProduct } from "../productSlice";
 import { useParams } from "react-router-dom";
 import { addToCartAsync, selectItems } from "../../Cart/cartSlice";
 import Navbar from "../../Navbar/Navbar";
-import { selectLoggedInUser } from "../../Auth/authenticationSlice";
 import { discountPrice } from "../../../App/constant";
 import { useAlert } from "react-alert";
-
-const breadcrumbs = [
-  { id: 1, name: "Men", href: "#" },
-  { id: 2, name: "Clothing", href: "#" },
-];
-const colors = [
-  { name: "White", class: "bg-white", selectedClass: "ring-gray-400" },
-  { name: "Gray", class: "bg-gray-200", selectedClass: "ring-gray-400" },
-  { name: "Black", class: "bg-gray-900", selectedClass: "ring-gray-900" },
-];
-const sizes = [
-  { name: "XXS", inStock: false },
-  { name: "XS", inStock: true },
-  { name: "S", inStock: true },
-  { name: "M", inStock: true },
-  { name: "L", inStock: true },
-  { name: "XL", inStock: true },
-  { name: "2XL", inStock: true },
-  { name: "3XL", inStock: true },
-];
-const highlights = [
-  "Hand cut and sewn locally",
-  "Dyed with our proprietary colors",
-  "Pre-washed & pre-shrunk",
-  "Ultra-soft 100% cotton",
-];
 
 const reviews = { href: "#", average: 4, totalCount: 117 };
 
@@ -49,26 +22,24 @@ export default function ProductDetail() {
   const dispatch = useDispatch();
   const { id } = useParams();
   const product = useSelector(selectProduct);
-  const user = useSelector(selectLoggedInUser);
   const alert = useAlert();
 
   useEffect(() => {
     dispatch(getProductByIdAsync(id));
   }, [id]);
 
-  const handleCart = (e, product) => {
+  const handleCart = (e) => {
     e.preventDefault();
     const newItem = { ...product };
     delete newItem["id"];
-    if (cartItems.find((item) => item.productId === product.id)) {
+    if (cartItems.find((item) => item.product.id === product.id)) {
       alert.show("item already added");
     } else {
       dispatch(
+        // TODO : user.id must be added from BACKEND side
         addToCartAsync({
-          ...newItem,
-          productId: product.id,
+          product: product.id,
           quantity: 1,
-          user: user.id,
         })
       );
       alert.success("ITEM ADDED TO CART");
@@ -85,28 +56,6 @@ export default function ProductDetail() {
                 role="list"
                 className="mx-auto flex max-w-2xl items-center space-x-2 px-4 sm:px-6 lg:max-w-7xl lg:px-8"
               >
-                {breadcrumbs.map((breadcrumb) => (
-                  <li key={breadcrumb.id}>
-                    <div className="flex items-center">
-                      <a
-                        href={breadcrumb.href}
-                        className="mr-2 text-sm font-medium text-gray-900"
-                      >
-                        {breadcrumb.name}
-                      </a>
-                      <svg
-                        fill="currentColor"
-                        width={16}
-                        height={20}
-                        viewBox="0 0 16 20"
-                        aria-hidden="true"
-                        className="h-5 w-4 text-gray-300"
-                      >
-                        <path d="M5.697 4.34L8.98 16.532h1.327L7.025 4.341H5.697z" />
-                      </svg>
-                    </div>
-                  </li>
-                ))}
                 <li className="text-sm">
                   <a
                     href={product.title}
@@ -210,9 +159,9 @@ export default function ProductDetail() {
                         onChange={setSelectedColor}
                         className="flex items-center space-x-3"
                       >
-                        {colors.map((color) => (
+                        {product.colors.map((color, index) => (
                           <Radio
-                            key={color.name}
+                            key={index}
                             value={color}
                             aria-label={color.name}
                             className={classNames(
@@ -253,9 +202,9 @@ export default function ProductDetail() {
                         onChange={setSelectedSize}
                         className="grid grid-cols-4 gap-4 sm:grid-cols-8 lg:grid-cols-4"
                       >
-                        {sizes.map((size) => (
+                        {product.sizes.map((size, index) => (
                           <Radio
-                            key={size.name}
+                            key={index}
                             value={size}
                             disabled={!size.inStock}
                             className={classNames(
@@ -299,7 +248,7 @@ export default function ProductDetail() {
                   </div>
 
                   <button
-                    onClick={(e) => handleCart(e, product)}
+                    onClick={(e) => handleCart(e)}
                     type="submit"
                     className="mt-10 flex w-full items-center justify-center rounded-md border border-transparent bg-indigo-600 px-8 py-3 text-base font-medium text-white hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2"
                   >
@@ -330,8 +279,8 @@ export default function ProductDetail() {
                       role="list"
                       className="list-disc space-y-2 pl-4 text-sm"
                     >
-                      {highlights.map((highlight) => (
-                        <li key={highlight} className="text-gray-400">
+                      {product.highlights.map((highlight, index) => (
+                        <li key={index} className="text-gray-400">
                           <span className="text-gray-600">{highlight}</span>
                         </li>
                       ))}

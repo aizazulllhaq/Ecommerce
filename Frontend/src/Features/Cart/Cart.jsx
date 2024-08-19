@@ -1,22 +1,16 @@
-import React, { useEffect } from "react";
+import React from "react";
 import { useState } from "react";
-import {
-  Dialog,
-  DialogBackdrop,
-  DialogPanel,
-  DialogTitle,
-} from "@headlessui/react";
-import { XMarkIcon } from "@heroicons/react/24/outline";
+
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../Navbar/Navbar";
-import { deleteCartItemAsync, updateCartAsync } from "./cartSlice";
+import { deleteCartItemAsync, selectItems, updateCartAsync } from "./cartSlice";
 import { discountPrice } from "../../App/constant";
 import Modal from "../Common/Modal";
 
 const Cart = () => {
   const dispatch = useDispatch();
-  const { items } = useSelector((state) => state.cart);
+  const items = useSelector(selectItems);
   const totalItems = items.length;
   const totalItemsAmount = Math.floor(
     items.reduce(
@@ -30,8 +24,9 @@ const Cart = () => {
     dispatch(deleteCartItemAsync(id));
   };
 
-  const handleQuantity = (e, product) => {
-    dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
+  const handleQuantity = (e, pid) => {
+    const data = { pid, quantity: +e.target.value };
+    dispatch(updateCartAsync(data));
   };
   return (
     <>
@@ -43,12 +38,12 @@ const Cart = () => {
             <div className="flow-root">
               <ul role="list" className="-my-6 divide-y divide-gray-200">
                 {items &&
-                  items.map((product) => (
-                    <li key={product.id} className="flex py-6 my-[5px]">
+                  items.map((item) => (
+                    <li key={item.product.id} className="flex py-6 my-[5px]">
                       <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                         <img
-                          alt={product.title}
-                          src={product.thumbnail}
+                          alt={item.product.title}
+                          src={item.product.thumbnail}
                           className="h-full w-full object-cover object-center"
                         />
                       </div>
@@ -57,12 +52,16 @@ const Cart = () => {
                         <div>
                           <div className="flex justify-between text-base font-medium text-gray-900">
                             <h3>
-                              <Link to={product.title}>{product.title}</Link>
+                              <Link to={item.product.title}>
+                                {item.product.title}
+                              </Link>
                             </h3>
-                            <p className="ml-4">{discountPrice(product)}</p>
+                            <p className="ml-4">
+                              {discountPrice(item.product)}
+                            </p>
                           </div>
                           <p className="mt-1 text-sm text-gray-500">
-                            {product.color}
+                            {item.product.color}
                           </p>
                         </div>
                         <div className="flex flex-1 items-end justify-between text-sm">
@@ -77,8 +76,10 @@ const Cart = () => {
                               name=""
                               id=""
                               className="rounded-sm"
-                              value={product.quantity}
-                              onChange={(e) => handleQuantity(e, product)}
+                              value={item.product.quantity}
+                              onChange={(e) =>
+                                handleQuantity(e, item.product.id)
+                              }
                             >
                               <option value="1">1</option>
                               <option value="2">2</option>
@@ -87,17 +88,17 @@ const Cart = () => {
                           </div>
 
                           <Modal
-                            title={`Delete ${product.title}`}
+                            title={`Delete ${item.product.title}`}
                             msg={"Do you want to delete this item ? "}
                             dangerOption={"Delete"}
                             cancelOption={"Cancel"}
-                            cancelAction={()=>setOpenModal(-1)}
-                            dangerAction={() => handleDeleteItem(product.id)}
-                            showModal={openModal === product.id}
+                            cancelAction={() => setOpenModal(-1)}
+                            dangerAction={() => handleDeleteItem(item.product.id)}
+                            showModal={openModal === item.product.id}
                           />
                           <div className="flex">
                             <button
-                              onClick={() => setOpenModal(product.id)}
+                              onClick={() => setOpenModal(item.product.id)}
                               type="button"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                             >

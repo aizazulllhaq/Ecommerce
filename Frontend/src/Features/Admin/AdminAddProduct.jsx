@@ -103,7 +103,6 @@ const AdminAddProduct = () => {
     delete newProduct.image1;
     delete newProduct.image2;
     delete newProduct.image3;
-
     if (!id) {
       dispatch(addProductAsync(newProduct));
       reset();

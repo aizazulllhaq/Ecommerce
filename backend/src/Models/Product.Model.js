@@ -46,12 +46,12 @@ const productSchema = new Schema({
   },
   sizes: [
     {
-      type: [Schema.Types.Mixed],
+      type: Schema.Types.Mixed,
     },
   ],
   colors: [
     {
-      type: [Schema.Types.Mixed],
+      type: Schema.Types.Mixed,
     },
   ],
   highlights: {

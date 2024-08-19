@@ -3,7 +3,6 @@ import {
   createProduct,
   deleteProductPermanently,
   deleteProductTemporary,
-  GAP,
   getAllProducts,
   getSingleProduct,
   updateProduct,
@@ -13,7 +12,6 @@ const productRoutes = Router();
 
 productRoutes
   .get("/", getAllProducts)
-  .get("/GAP", GAP)
   .post("/new", createProduct)
   .get("/:pid", getSingleProduct)
   .patch("/:pid", updateProduct)

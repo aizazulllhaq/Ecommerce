@@ -1,21 +1,14 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import {
   addProduct,
+  deleteProductPermanently,
+  deleteProductTemporary,
   getAllBrands,
   getAllCategries,
-  getAllProducts,
   getProductById,
   getProductsByFilter,
   updateProduct,
 } from "./productApi";
-
-export const getAllProductsAsync = createAsyncThunk(
-  "product/getAllProducts",
-  async () => {
-    const response = await getAllProducts();
-    return response;
-  }
-);
 
 export const getProductsByFilterAsync = createAsyncThunk(
   "product/getProductsByFilter",
@@ -65,6 +58,22 @@ export const updateProductAsync = createAsyncThunk(
   }
 );
 
+export const deleteProductTemporaryAsync = createAsyncThunk(
+  "product/deleteProductTemporary",
+  async (id) => {
+    const response = await deleteProductTemporary(id);
+    return response;
+  }
+);
+
+export const deleteProductPermanentlyAsync = createAsyncThunk(
+  "product/deleteProductPermanently",
+  async (id) => {
+    const response = await deleteProductPermanently(id);
+    return response;
+  }
+);
+
 const initialState = {
   status: "idle",
   products: [],
@@ -80,13 +89,6 @@ export const productSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(getAllProductsAsync.pending, (state) => {
-        state.status = "loading";
-      })
-      .addCase(getAllProductsAsync.fulfilled, (state, action) => {
-        state.status = "idle";
-        state.products = action.payload;
-      })
       .addCase(getProductsByFilterAsync.pending, (state) => {
         state.status = "loading";
       })
@@ -94,6 +96,9 @@ export const productSlice = createSlice({
         state.status = "idle";
         state.products = action.payload.data;
         state.totalItems = action.payload.totalItems;
+      })
+      .addCase(getProductsByFilterAsync.rejected, (state, action) => {
+        state.status = "idle";
       })
       .addCase(getAllCategoriesAsync.pending, (state) => {
         state.status = "loading";
@@ -132,6 +137,26 @@ export const productSlice = createSlice({
           (p) => p.id === action.payload.id
         );
         state.products[index] = action.payload;
+      })
+      .addCase(deleteProductTemporaryAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteProductTemporaryAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.products.findIndex(
+          (p) => p.id === action.payload.id
+        );
+        state.products[index] = action.payload;
+      })
+      .addCase(deleteProductPermanentlyAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(deleteProductPermanentlyAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        const index = state.products.findIndex(
+          (p) => p.id === action.payload.id
+        );
+        state.products.splice(index, 1);
       });
   },
 });

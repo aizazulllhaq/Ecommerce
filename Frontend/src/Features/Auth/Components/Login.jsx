@@ -1,12 +1,14 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { signInUserAsync } from "../authenticationSlice";
+import { getUserInfoAsync, selectUserInfo } from "../../User/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { loggedInUser } = useSelector((state) => state.auth);
+  const { loggedInUserToken } = useSelector((state) => state.auth);
+  const userInfo = useSelector(selectUserInfo);
 
   const {
     register,
@@ -19,12 +21,15 @@ const Login = () => {
     dispatch(signInUserAsync(data));
     reset();
   };
+
+  useEffect(() => {
+    dispatch(getUserInfoAsync());
+  }, []);
+
   return (
     <>
-      {loggedInUser && (
-        <Navigate
-          to={loggedInUser.role === "admin" ? "/admin" : "/"}
-        ></Navigate>
+      {loggedInUserToken && (
+        <Navigate to={userInfo.role === "ADMIN" ? "/admin" : "/"}></Navigate>
       )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

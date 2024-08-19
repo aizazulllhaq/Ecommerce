@@ -7,8 +7,8 @@ import { getUserInfo, getUserOrders, updateUser } from "./userApi";
 
 export const getUserOrdersAsync = createAsyncThunk(
   "user/getUserOrders",
-  async (userID) => {
-    const response = await getUserOrders(userID);
+  async () => {
+    const response = await getUserOrders();
     return response;
   }
 );
@@ -23,8 +23,8 @@ export const updateUserAsync = createAsyncThunk(
 
 export const getUserInfoAsync = createAsyncThunk(
   "user/getUserInfo",
-  async (userID) => {
-    const response = await getUserInfo(userID);
+  async () => {
+    const response = await getUserInfo();
     return response;
   }
 );

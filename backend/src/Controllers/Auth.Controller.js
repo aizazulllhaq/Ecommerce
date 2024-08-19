@@ -1,3 +1,4 @@
+import { uploadOnCloudinary } from "../Config/CloudinaryConfig.js";
 import User from "../Models/User.Modal.js";
 import ApiError from "../Utils/ApiError.js";
 import ApiResponse from "../Utils/ApiResponse.js";
@@ -10,16 +11,23 @@ export const signUp = wrapAsync(async (req, res, next) => {
   // Validate required fields; signUpValidation.js
   // get (name,email,password,)
   const { name, email, password } = req.body;
+  // const profileImg = req.file;
+  console.log("body : ", req.body);
 
   // check if account exists with this email;
   const isUser = await User.findOne({ email });
 
   if (isUser) return next(new ApiError(false, 400, "User already Exists"));
 
+  // const result = await uploadOnCloudinary(profileImg.path);
+
+  // console.log(result);
+
   const newUser = new User({
     name,
     email,
     password,
+    // profileImg: result.secure_url,
     role: "NORMAL",
     isVerified: true,
   });
@@ -31,7 +39,7 @@ export const signUp = wrapAsync(async (req, res, next) => {
     .status(201)
     .cookie("accessToken", accessToken, {
       httpOnly: true,
-      sameSite: none,
+      sameSite: "none",
     })
     .json(new ApiResponse(true, "User Created Successfull", accessToken));
 });
@@ -41,7 +49,7 @@ export const signIn = wrapAsync(async (req, res, next) => {
   // Validation required fields ( email , password ); signInValidation => AuthValidation.js
   // get required fields
   const { email, password } = req.body;
-  
+
   const isUser = await User.findOne({ email });
 
   if (!isUser) return next(new ApiError(false, 401, "Invalid Credentials"));
@@ -57,7 +65,7 @@ export const signIn = wrapAsync(async (req, res, next) => {
     .status(200)
     .cookie("accessToken", accessToken, {
       httpOnly: true,
-      sameSite: "none",
+      SameSite: "none",
     })
     .json(new ApiResponse(true, "Login Successfull", accessToken));
 });

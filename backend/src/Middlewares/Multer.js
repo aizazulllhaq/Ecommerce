@@ -9,7 +9,7 @@ const storage = multer.diskStorage({
   filename: function (req, file, cb) {
     const allowedTypes = ["image/jpeg", "image/png", "image/jpg"];
     if (allowedTypes.includes(file.mimetype)) {
-      const filterOriginalFilename = path.basename(file.originalname);
+      const filterOriginalFilename = path.basename(file.originalname.replace(/\s+/g, ''));
       const fileName = `${Date.now()}-${filterOriginalFilename}`;
       cb(null, fileName);
     } else {

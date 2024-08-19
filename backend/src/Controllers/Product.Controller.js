@@ -9,17 +9,18 @@ import ApiError from "../Utils/ApiError.js";
 export const createProduct = wrapAsync(async (req, res, next) => {
   // we already know that we can get a valid data from frontend , which we set in reactjs
   // Create a new product in database and save newProduct;
-  const product = new Product(req.body);
 
-  product.discountPrice = Math.round(
-    product.price * (1 - product.discountPercentage / 100)
+  const newProduct = new Product(req.body);
+
+  newProduct.discountPrice = Math.round(
+    newProduct.price * (1 - newProduct.discountPercentage / 100)
   );
 
-  await product.save();
+  await newProduct.save();
   // return response;
   return res
     .status(201)
-    .json(new ApiResponse(true, "Product Created", product));
+    .json(new ApiResponse(true, "Product Created", newProduct));
 });
 
 export const getSingleProduct = wrapAsync(async (req, res, next) => {
@@ -47,8 +48,6 @@ export const getAllProducts = wrapAsync(async (req, res, next) => {
   // filter : {"category":["smartphone","laptops"]}
   // sort : {_sort:"price",_order:"desc"}
   // Pagination : {_page:1,_limit:10}
-  console.log(req.url);
-
   let condition = {};
 
   if (!req.query.admin) {
@@ -182,7 +181,7 @@ export const deleteProductPermanently = wrapAsync(async (req, res, next) => {
   if (!product.deleted) {
     product.deleted = true;
     await product.save();
-    
+
     return res
       .status(200)
       .json(

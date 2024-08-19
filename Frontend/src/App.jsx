@@ -8,7 +8,10 @@ import Cart from "./Features/Cart/Cart";
 import CheckoutPage from "./Pages/CheckoutPage";
 import ProductDetail from "./Features/Product-List/Components/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
-import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
+import {
+  getCartItemByUserIdAsync,
+  selectItems,
+} from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
 import PageNotFound from "./Pages/PageNotFound";
 import OrderSuccess from "./Features/Order/OrderSuccess";
@@ -24,15 +27,15 @@ import Footer from "./Features/Common/Footer";
 
 const App = () => {
   const dispatch = useDispatch();
-  const user = useSelector((state) => state.auth.loggedInUser);
+  const user = useSelector((state) => state.auth.loggedInUserToken);
+  const items = useSelector(selectItems);
 
   useEffect(() => {
     if (user) {
-      dispatch(getCartItemByUserIdAsync(user.id));
-      dispatch(getUserInfoAsync(user.id));
+      dispatch(getCartItemByUserIdAsync());
     }
   }, [dispatch, user]);
-  console.log("user : ",user);
+  console.log("items form start : ", items);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -75,7 +78,7 @@ const App = () => {
       element: (
         <Protected>
           <ProductDetail />
-          <Footer/>
+          <Footer />
         </Protected>
       ),
     },

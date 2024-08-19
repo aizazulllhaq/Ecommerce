@@ -33,7 +33,6 @@ import {
   ITEM_PER_PAGE,
 } from "../../../App/constant";
 import { Grid } from "react-loader-spinner";
-import Modal from "../../Common/Modal";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -50,7 +49,6 @@ export default function ProductList() {
   const { products, totalItems, categories, brands, status } = useSelector(
     (state) => state.product
   );
-  const filterProducts = products.filter((p) => !p.deleted);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
@@ -192,7 +190,7 @@ export default function ProductList() {
                 filters={filters}
               />
               {status === "loading" && (
-                  <Grid
+                <Grid
                   visible={true}
                   height="80"
                   width="80"
@@ -209,8 +207,8 @@ export default function ProductList() {
                 {/* <ProductGrid products={products} /> */}
                 <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {filterProducts &&
-                      filterProducts.map((product, index) => (
+                    {products.length &&
+                      products.map((product, index) => (
                         <Link
                           to={`/product-detail/${product.id}`}
                           key={index}
@@ -313,54 +311,55 @@ function MobileFilter({
             <form className="mt-4 border-t border-gray-200">
               <h3 className="sr-only">Categories</h3>
 
-              {filters.map((section) => (
-                <Disclosure
-                  key={section.id}
-                  as="div"
-                  className="border-t border-gray-200 px-4 py-6"
-                >
-                  <h3 className="-mx-2 -my-3 flow-root">
-                    <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                      <span className="font-medium text-gray-900">
-                        {section.name}
-                      </span>
-                      <span className="ml-6 flex items-center">
-                        <PlusIcon
-                          aria-hidden="true"
-                          className="h-5 w-5 group-data-[open]:hidden"
-                        />
-                        <MinusIcon
-                          aria-hidden="true"
-                          className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                        />
-                      </span>
-                    </DisclosureButton>
-                  </h3>
-                  <DisclosurePanel className="pt-6">
-                    <div className="space-y-6">
-                      {section.options.map((option, optionIdx) => (
-                        <div key={option.value} className="flex items-center">
-                          <input
-                            defaultValue={option.value}
-                            defaultChecked={option.checked}
-                            id={`filter-mobile-${section.id}-${optionIdx}`}
-                            name={`${section.id}[]`}
-                            type="checkbox"
-                            onChange={(e) => handleFilter(e, section, option)}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              {filters &&
+                filters.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-t border-gray-200 px-4 py-6"
+                  >
+                    <h3 className="-mx-2 -my-3 flow-root">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 group-data-[open]:hidden"
                           />
-                          <label
-                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                            className="ml-3 min-w-0 flex-1 text-gray-500"
-                          >
-                            {option.label}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </DisclosurePanel>
-                </Disclosure>
-              ))}
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                          />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel className="pt-6">
+                      <div className="space-y-6">
+                        {section.options.map((option, optionIdx) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              defaultValue={option.value}
+                              defaultChecked={option.checked}
+                              id={`filter-mobile-${section.id}-${optionIdx}`}
+                              name={`${section.id}[]`}
+                              type="checkbox"
+                              onChange={(e) => handleFilter(e, section, option)}
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                              className="ml-3 min-w-0 flex-1 text-gray-500"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
+                ))}
             </form>
           </DialogPanel>
         </div>

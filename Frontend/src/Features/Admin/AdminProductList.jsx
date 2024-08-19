@@ -97,6 +97,7 @@ export default function AdminProductList() {
     dispatch(getProductsByFilterAsync({ filter, sort, pagination }));
   }, [filter, sort, page]);
 
+
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
     dispatch(getAllBrandsAsync());
@@ -197,7 +198,7 @@ export default function AdminProductList() {
                     Add Product
                   </Link>
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {products &&
+                    {products.length &&
                       products.map((product) => (
                         <div
                           key={product.id}
@@ -318,54 +319,55 @@ function MobileFilter({
             <form className="mt-4 border-t border-gray-200">
               <h3 className="sr-only">Categories</h3>
 
-              {filters.map((section) => (
-                <Disclosure
-                  key={section.id}
-                  as="div"
-                  className="border-t border-gray-200 px-4 py-6"
-                >
-                  <h3 className="-mx-2 -my-3 flow-root">
-                    <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
-                      <span className="font-medium text-gray-900">
-                        {section.name}
-                      </span>
-                      <span className="ml-6 flex items-center">
-                        <PlusIcon
-                          aria-hidden="true"
-                          className="h-5 w-5 group-data-[open]:hidden"
-                        />
-                        <MinusIcon
-                          aria-hidden="true"
-                          className="h-5 w-5 [.group:not([data-open])_&]:hidden"
-                        />
-                      </span>
-                    </DisclosureButton>
-                  </h3>
-                  <DisclosurePanel className="pt-6">
-                    <div className="space-y-6">
-                      {section.options.map((option, optionIdx) => (
-                        <div key={option.value} className="flex items-center">
-                          <input
-                            defaultValue={option.value}
-                            defaultChecked={option.checked}
-                            id={`filter-mobile-${section.id}-${optionIdx}`}
-                            name={`${section.id}[]`}
-                            type="checkbox"
-                            onChange={(e) => handleFilter(e, section, option)}
-                            className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+              {filters &&
+                filters.map((section) => (
+                  <Disclosure
+                    key={section.id}
+                    as="div"
+                    className="border-t border-gray-200 px-4 py-6"
+                  >
+                    <h3 className="-mx-2 -my-3 flow-root">
+                      <DisclosureButton className="group flex w-full items-center justify-between bg-white px-2 py-3 text-gray-400 hover:text-gray-500">
+                        <span className="font-medium text-gray-900">
+                          {section.name}
+                        </span>
+                        <span className="ml-6 flex items-center">
+                          <PlusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 group-data-[open]:hidden"
                           />
-                          <label
-                            htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
-                            className="ml-3 min-w-0 flex-1 text-gray-500"
-                          >
-                            {option.label}
-                          </label>
-                        </div>
-                      ))}
-                    </div>
-                  </DisclosurePanel>
-                </Disclosure>
-              ))}
+                          <MinusIcon
+                            aria-hidden="true"
+                            className="h-5 w-5 [.group:not([data-open])_&]:hidden"
+                          />
+                        </span>
+                      </DisclosureButton>
+                    </h3>
+                    <DisclosurePanel className="pt-6">
+                      <div className="space-y-6">
+                        {section.options.map((option, optionIdx) => (
+                          <div key={option.value} className="flex items-center">
+                            <input
+                              defaultValue={option.value}
+                              defaultChecked={option.checked}
+                              id={`filter-mobile-${section.id}-${optionIdx}`}
+                              name={`${section.id}[]`}
+                              type="checkbox"
+                              onChange={(e) => handleFilter(e, section, option)}
+                              className="h-4 w-4 rounded border-gray-300 text-indigo-600 focus:ring-indigo-500"
+                            />
+                            <label
+                              htmlFor={`filter-mobile-${section.id}-${optionIdx}`}
+                              className="ml-3 min-w-0 flex-1 text-gray-500"
+                            >
+                              {option.label}
+                            </label>
+                          </div>
+                        ))}
+                      </div>
+                    </DisclosurePanel>
+                  </Disclosure>
+                ))}
             </form>
           </DialogPanel>
         </div>
@@ -446,56 +448,56 @@ function Pagination({ page, totalItems, handlePage }) {
   );
 }
 
-function ProductGrid({ products }) {
-  return (
-    <>
-      {/* Product List Section  */}
-      <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
-        <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-          {products &&
-            products.map((product) => (
-              <div key={product.id} className="group relative">
-                <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                  <img
-                    alt={product.title}
-                    src={product.thumbnail}
-                    className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                  />
-                </div>
-                <div className="mt-4 flex justify-between">
-                  <div>
-                    <h3 className="text-sm text-gray-700">
-                      <Link to={product.href}>
-                        <span aria-hidden="true" className="absolute inset-0" />
-                        {product.title}
-                      </Link>
-                    </h3>
-                    <p className="mt-1 text-sm text-gray-500">
-                      {product.color}
-                    </p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900 line-through">
-                    {product.price}
-                  </p>
-                </div>
-                <div className="flex justify-between">
-                  <div className="text-sm font-medium text-gray-900">
-                    <p>
-                      <StarIcon />
-                      {product.rating}
-                    </p>
-                  </div>
-                  <p className="text-sm font-medium text-gray-900">
-                    {discountPrice(product)}
-                  </p>
-                </div>
-              </div>
-            ))}
-        </div>
-      </div>
-    </>
-  );
-}
+// function ProductGrid({ products }) {
+//   return (
+//     <>
+//       {/* Product List Section  */}
+//       <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
+//         <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
+//           {products &&
+//             products.map((product) => (
+//               <div key={product.id} className="group relative">
+//                 <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+//                   <img
+//                     alt={product.title}
+//                     src={product.thumbnail}
+//                     className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+//                   />
+//                 </div>
+//                 <div className="mt-4 flex justify-between">
+//                   <div>
+//                     <h3 className="text-sm text-gray-700">
+//                       <Link to={product.href}>
+//                         <span aria-hidden="true" className="absolute inset-0" />
+//                         {product.title}
+//                       </Link>
+//                     </h3>
+//                     <p className="mt-1 text-sm text-gray-500">
+//                       {product.color}
+//                     </p>
+//                   </div>
+//                   <p className="text-sm font-medium text-gray-900 line-through">
+//                     {product.price}
+//                   </p>
+//                 </div>
+//                 <div className="flex justify-between">
+//                   <div className="text-sm font-medium text-gray-900">
+//                     <p>
+//                       <StarIcon />
+//                       {product.rating}
+//                     </p>
+//                   </div>
+//                   <p className="text-sm font-medium text-gray-900">
+//                     {discountPrice(product)}
+//                   </p>
+//                 </div>
+//               </div>
+//             ))}
+//         </div>
+//       </div>
+//     </>
+//   );
+// }
 
 function DesktopFilter({ handleFilter, filters }) {
   return (

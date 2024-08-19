@@ -1,16 +1,13 @@
+import axios from "axios";
 import apiClient from "../Common/apiClient";
 
 export async function addProduct(newProduct) {
   try {
-    const response = await apiClient.post(
-      "/products",
-      newProduct,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await apiClient.post("/product/new", newProduct, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -20,7 +17,7 @@ export async function addProduct(newProduct) {
 export async function updateProduct(updatedProduct) {
   try {
     const response = await apiClient.patch(
-      `/products/${updatedProduct.id}`,
+      `/product/edit/${updatedProduct.id}`,
       updatedProduct,
       {
         headers: {
@@ -31,15 +28,6 @@ export async function updateProduct(updatedProduct) {
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
-  }
-}
-
-export async function getAllProducts() {
-  try {
-    const response = await apiClient.get("/products");
-    return response.data;
-  } catch (error) {
-    console.log("Error Occurred : ", error);
   }
 }
 
@@ -63,11 +51,10 @@ export async function getProductsByFilter(filter, sort, pagination) {
   }
 
   try {
-    const response = await apiClient.get(
-      `/products?${queryString}`
-    );
+    const response = await apiClient.get(`/product?${queryString}`);
+
     const totalItems = response.headers["x-total-count"];
-    return { data: response.data, totalItems: totalItems };
+    return { data: response.data.data, totalItems: totalItems };
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
@@ -77,7 +64,7 @@ export async function getAllCategries() {
   try {
     const response = await apiClient.get("/categories");
     return {
-      data: response.data,
+      data: response.data.data,
     };
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -88,7 +75,7 @@ export async function getAllBrands() {
   try {
     const response = await apiClient.get("/brands");
     return {
-      data: response.data,
+      data: response.data.data,
     };
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -97,7 +84,25 @@ export async function getAllBrands() {
 
 export async function getProductById(id) {
   try {
-    const response = await apiClient.get(`/products/${id}`);
+    const response = await apiClient.get(`/product/${id}`);
+    return response.data.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function deleteProductTemporary(id) {
+  try {
+    const response = await apiClient.put(`/product/temp/${id}`);
+    return response.data;
+  } catch (error) {
+    console.log("Error Occurred : ", error.message);
+  }
+}
+
+export async function deleteProductPermanently(id) {
+  try {
+    const response = await apiClient.delete(`/product/del/${id}`);
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

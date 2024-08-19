@@ -1,22 +1,18 @@
 import apiClient from "../Common/apiClient";
 
-export async function getUserOrders(userID) {
+export async function getUserOrders() {
   try {
-    const response = await apiClient.get(
-      "/orders?user.id=" + userID
-    );
+    const response = await apiClient.get("/orders/user");
     return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
 }
 
-export async function getUserInfo(userID) {
+export async function getUserInfo() {
   try {
-    const response = await apiClient.get(
-      "/users?id=" + userID
-    );
-    return response.data[0];
+    const response = await apiClient.get(`/users/info`);
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
@@ -24,15 +20,11 @@ export async function getUserInfo(userID) {
 
 export async function updateUser(data) {
   try {
-    const response = await apiClient.patch(
-      `/users/${data.id}`,
-      data,
-      {
-        headers: {
-          "Content-Type": "application/json",
-        },
-      }
-    );
+    const response = await apiClient.patch(`/users/update/${data.id}`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
     return response.data;
   } catch (error) {
     console.log("Error Occurred :", error.message);

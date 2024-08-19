@@ -5,19 +5,13 @@ const cartSchema = new Schema({
     type: Schema.Types.ObjectId,
     ref: "Product",
   },
-  quantity: {
-    type: Number,
-    requried: true,
-  },
   uid: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  size: {
-    type: Schema.Types.Mixed,
-  },
-  color: {
-    type: Schema.Types.Mixed,
+  quantity: {
+    type: Number,
+    required: true,
   },
 });
 

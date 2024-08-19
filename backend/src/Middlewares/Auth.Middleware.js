@@ -26,7 +26,6 @@ export const checkForAuthentication = (req, res, next) => {
 
 export const restrictFromSecureRoutes = (role = []) => {
   return (req, res, next) => {
-    console.log(req.user);
     if (!req.user) return next(new ApiError(false, 401, "Please First Login"));
 
     if (!req.user.isVerified)

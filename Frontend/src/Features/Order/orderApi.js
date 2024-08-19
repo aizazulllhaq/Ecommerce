@@ -1,8 +1,9 @@
+import axios from "axios";
 import apiClient from "../Common/apiClient";
 
 export async function newOrder(orderData) {
   try {
-    const response = await apiClient.post("/orders", orderData, {
+    const response = await apiClient.post("/orders/new", orderData, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -39,7 +40,7 @@ export async function getAllOrders(sort, pagination) {
 export async function updateOrder(updatedOrder) {
   try {
     const response = await apiClient.patch(
-      `/orders/${updatedOrder.id}`,
+      `/orders/edit/${updatedOrder.id}`,
       updatedOrder,
       {
         headers: {
