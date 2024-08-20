@@ -14,14 +14,14 @@ const Cart = () => {
   const totalItems = items.length;
   const totalItemsAmount = Math.floor(
     items.reduce(
-      (amount, item) => discountPrice(item) * item.quantity + amount,
+      (amount, item) => discountPrice(item.product) * item.quantity + amount,
       0
     )
   );
   const [openModal, setOpenModal] = useState(null);
 
-  const handleDeleteItem = (id) => {
-    dispatch(deleteCartItemAsync(id));
+  const handleDeleteItem = (itemID) => {
+    dispatch(deleteCartItemAsync(itemID));
   };
 
   const handleQuantity = (e, pid) => {
@@ -76,7 +76,7 @@ const Cart = () => {
                               name=""
                               id=""
                               className="rounded-sm"
-                              value={item.product.quantity}
+                              value={item.quantity}
                               onChange={(e) =>
                                 handleQuantity(e, item.product.id)
                               }
@@ -93,12 +93,12 @@ const Cart = () => {
                             dangerOption={"Delete"}
                             cancelOption={"Cancel"}
                             cancelAction={() => setOpenModal(-1)}
-                            dangerAction={() => handleDeleteItem(item.product.id)}
-                            showModal={openModal === item.product.id}
+                            dangerAction={() => handleDeleteItem(item.id)}
+                            showModal={openModal === item.id}
                           />
                           <div className="flex">
                             <button
-                              onClick={() => setOpenModal(item.product.id)}
+                              onClick={() => setOpenModal(item.id)}
                               type="button"
                               className="font-medium text-indigo-600 hover:text-indigo-500"
                             >

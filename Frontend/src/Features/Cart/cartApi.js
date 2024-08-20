@@ -23,7 +23,6 @@ export async function getCartItemByUserId() {
 }
 
 export async function updateCart(data) {
-  console.log(data);
   try {
     const response = await apiClient.patch(
       `/cart/edit/${data.pid}`,
@@ -36,28 +35,25 @@ export async function updateCart(data) {
         },
       }
     );
-    console.log("updateCart : ", response);
     return response.data.data;
   } catch (error) {
-    console.log(error);
     console.log("Error Occurred : ", error.message);
   }
 }
 
-export async function deleteCartItem(id) {
+export async function deleteCartItem(itemID) {
   try {
-    const response = await apiClient.delete(`/cart/del/${id}`);
-    console.log("deleteCartItem : ", response);
-    return response.data;
+    const response = await apiClient.delete(`/cart/del/${itemID}`);
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
 }
 
-export async function resetCart(userID) {
+export async function resetCart() {
   try {
-    const response = await getCartItemByUserId(userID);
-    const items = response.data;
+    const response = await getCartItemByUserId();
+    const items = response;
     for (let item of items) {
       await deleteCartItem(item.id);
     }

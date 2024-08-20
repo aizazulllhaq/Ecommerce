@@ -24,7 +24,7 @@ const Login = () => {
 
   useEffect(() => {
     dispatch(getUserInfoAsync());
-  }, []);
+  }, [dispatch, loggedInUserToken]);
 
   return (
     <>

@@ -39,4 +39,14 @@ export const updateCart = wrapAsync(async (req, res, next) => {
     .json(new ApiResponse(true, "Cart Quantity Updated", updatedCart));
 });
 
-export const deleteCartItemById = wrapAsync(async (req, res, next) => {});
+export const deleteCartItemById = wrapAsync(async (req, res, next) => {
+  const { itemID } = req.params;
+
+  const deletedItem = await Cart.findByIdAndDelete(itemID);
+
+  console.log("deleted item : ", deletedItem);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(true, "Cart Item Deleted", deletedItem));
+});

@@ -28,7 +28,6 @@ import Footer from "./Features/Common/Footer";
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.loggedInUserToken);
-  const items = useSelector(selectItems);
 
   useEffect(() => {
     if (user) {

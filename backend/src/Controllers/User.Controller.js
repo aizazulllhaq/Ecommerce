@@ -63,3 +63,16 @@ export const updateUser = wrapAsync(async (req, res, next) => {
 
   return res.status(200).json(new ApiResponse(true, "User Updated", user));
 });
+
+export const updateUserAddresses = wrapAsync(async (req, res, next) => {
+  console.log(req.body);
+  const uid = req.user.id;
+
+  const user = await User.findByIdAndUpdate(uid, req.body, { new: true });
+
+  console.log("updated user : ", user);
+
+  return res
+    .status(200)
+    .json(new ApiResponse(true, "User Addresses Updated", user));
+});

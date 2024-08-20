@@ -19,11 +19,11 @@ export const getAllOrdersAsync = createAsyncThunk(
 
 export const updateOrderAsync = createAsyncThunk(
   "order/updateOrder",
-  async(updatedOrder)=>{
+  async (updatedOrder) => {
     const response = await updateOrder(updatedOrder);
     return response;
   }
-)
+);
 
 const initialState = {
   status: "idle",
@@ -68,7 +68,9 @@ export const orderSlice = createSlice({
       })
       .addCase(updateOrderAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        const index = state.orders.findIndex((order)=>order.id===action.payload.id);
+        const index = state.orders.findIndex(
+          (order) => order._id === action.payload._id
+        );
         state.orders[index] = action.payload;
       });
   },

@@ -54,6 +54,7 @@ const AdminOrders = () => {
     const pagination = { _page: page, _limit: ITEM_PER_ORDERS_PAGE };
     dispatch(getAllOrdersAsync({ sort, pagination }));
   }, [dispatch, page, sort]);
+
   return (
     <>
       {/* component */}
@@ -177,26 +178,27 @@ const AdminOrders = () => {
           <tbody>
             {/* First Row  */}
             {orders &&
-              orders.map((order) => (
-                <tr>
+              orders.map((order, index) => (
+                <tr key={index}>
                   <td className="p-4 border-b border-blue-gray-50">
-                    <div className="flex items-center gap-3">{order.id}</div>
+                    <div className="flex items-center gap-3">{order._id}</div>
                   </td>
                   <td className="p-4 border-b border-blue-gray-50">
-                    {order.items.map((item) => (
-                      <div className="flex items-center gap-3">
+                    {order.items.map((item, indx) => (
+                      <div className="flex items-center gap-3" key={indx}>
                         <img
-                          src={item.thumbnail}
-                          alt={item.title}
+                          src={item.product.thumbnail}
+                          alt={item.product.title}
                           className="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md"
                         />
                         <div className="flex flex-col">
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            {item.title}
+                            {item.product.title}
                           </p>
                           <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">
-                            QTY : {item.quantity} * ${discountPrice(item)} = $
-                            {item.quantity * discountPrice(item)}
+                            QTY : {item.quantity} * $
+                            {discountPrice(item.product)} = $
+                            {item.quantity * discountPrice(item.product)}
                           </p>
                         </div>
                       </div>
@@ -222,7 +224,7 @@ const AdminOrders = () => {
                     </div>
                   </td>
                   <td className="p-4 border-b border-blue-gray-50">
-                    {order.id === editibleStatus ? (
+                    {order._id === editibleStatus ? (
                       <select onChange={(e) => handleOrderStatus(e, order)}>
                         <option value="pending">Pending</option>
                         <option value="dispatched">Dispatched</option>
@@ -246,7 +248,7 @@ const AdminOrders = () => {
                       <button
                         className="relative align-middle select-none font-sans font-medium text-center uppercase transition-all disabled:opacity-50 disabled:shadow-none disabled:pointer-events-none w-10 max-w-[40px] h-10 max-h-[40px] rounded-lg text-xs text-blue-gray-500 hover:bg-blue-gray-500/10 active:bg-blue-gray-500/30"
                         type="button"
-                        onClick={() => setEditibleStatus(order.id)}
+                        onClick={() => setEditibleStatus(order._id)}
                       >
                         <span className="absolute top-1/2 left-1/2 transform -translate-y-1/2 -translate-x-1/2">
                           <svg

@@ -1,26 +1,37 @@
 import { model, Schema } from "mongoose";
 
 const orderSchema = new Schema({
-  items: {
-    type: [Schema.Types.Mixed],
-    required: true,
-  },
+  items: [
+    {
+      type: Schema.Types.Mixed,
+      required: true,
+    },
+  ],
   uid: {
     type: Schema.Types.ObjectId,
     ref: "User",
   },
-  totalItemsAmount: {
+  itemsTotalAmount: {
     type: Number,
     required: true,
   },
-  selectedAddress: {
-    type: [Schema.Types.Mixed],
+  selectAddress: {
+    type: Schema.Types.Mixed,
     required: true,
   },
   paymentStatus: {
     type: String,
     enum: ["PENDING", "SUCCESS", "DELIVERED", "DISPATCHED", "CANCEL"],
     default: "PENDING",
+  },
+  paymentMethod: {
+    type: String,
+    enum: ["cash", "card"],
+    required: true,
+  },
+  totalItems: {
+    type: Number,
+    required: true,
   },
   status: {
     type: String,

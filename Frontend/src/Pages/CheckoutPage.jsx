@@ -19,7 +19,7 @@ const CheckoutPage = () => {
   const items = useSelector(selectItems);
   const itemsTotalAmount = Math.floor(
     items.reduce(
-      (amount, item) => discountPrice(item) * item.quantity + amount,
+      (amount, item) => discountPrice(item.product) * item.quantity + amount,
       0
     )
   );
@@ -37,9 +37,8 @@ const CheckoutPage = () => {
   const alert = useAlert();
 
   const handleAddresses = (data) => {
-    dispatch(
-      updateUserAsync({ ...user, addresses: [...user.addresses, data] })
-    );
+    const updatedData = { ...user, addresses: [...user.addresses, data] };
+    dispatch(updateUserAsync(updatedData));
     reset();
   };
 
@@ -47,8 +46,9 @@ const CheckoutPage = () => {
     dispatch(deleteCartItemAsync(id));
   };
 
-  const handleQuantity = (e, product) => {
-    dispatch(updateCartAsync({ ...product, quantity: +e.target.value }));
+  const handleQuantity = (e, pid) => {
+    const data = { pid, quantity: +e.target.value };
+    dispatch(updateCartAsync(data));
   };
 
   const handleAddress = (e) => {
@@ -60,11 +60,11 @@ const CheckoutPage = () => {
   };
 
   const handleOrder = () => {
+    // TODO : user.id needed here
     const order = {
       items,
       itemsTotalAmount,
       totalItems,
-      user,
       selectAddress,
       paymentMethod,
       status: "pending",
@@ -77,7 +77,7 @@ const CheckoutPage = () => {
     <>
       {!items.length && <Navigate to={"/"} replace={true} />}
       {currentOrder && (
-        <Navigate to={`/order-success/${currentOrder.id}`} replace={true} />
+        <Navigate to={`/order-success/${currentOrder._id}`} replace={true} />
       )}
       <Navbar>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-gray-100 p-4 mt-10 grid grid-cols-1 lg:grid-cols-5">
@@ -387,15 +387,15 @@ const CheckoutPage = () => {
                 <h1 className="text-3xl font-bold py-4">Cart</h1>
                 <div className="flow-root">
                   <ul role="list" className="-my-6 divide-y divide-gray-200">
-                    {items.map((product) => (
+                    {items.map((item) => (
                       <li
-                        key={product.id}
+                        key={item.product.id}
                         className="flex sm:flex-row flex-col py-6"
                       >
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            alt={product.title}
-                            src={product.thumbnail}
+                            alt={item.product.title}
+                            src={item.product.thumbnail}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -404,12 +404,16 @@ const CheckoutPage = () => {
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
                               <h3>
-                                <Link to={product.title}>{product.title}</Link>
+                                <Link to={item.product.title}>
+                                  {item.product.title}
+                                </Link>
                               </h3>
-                              <p className="ml-4">${discountPrice(product)}</p>
+                              <p className="ml-4">
+                                ${discountPrice(item.product)}
+                              </p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
-                              {product.color}
+                              {item.product.color}
                             </p>
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
@@ -424,8 +428,10 @@ const CheckoutPage = () => {
                                 name=""
                                 id=""
                                 className="rounded-sm"
-                                value={product.quantity}
-                                onChange={(e) => handleQuantity(e, product)}
+                                value={item.quantity}
+                                onChange={(e) =>
+                                  handleQuantity(e, item.product.id)
+                                }
                               >
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -435,7 +441,7 @@ const CheckoutPage = () => {
 
                             <div className="flex">
                               <button
-                                onClick={() => handleDeleteItem(product.id)}
+                                onClick={() => handleDeleteItem(item.id)}
                                 type="button"
                                 className="font-medium text-indigo-600 hover:text-indigo-500"
                               >

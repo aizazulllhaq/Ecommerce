@@ -1,4 +1,3 @@
-import axios from "axios";
 import apiClient from "../Common/apiClient";
 
 export async function newOrder(orderData) {
@@ -8,7 +7,7 @@ export async function newOrder(orderData) {
         "Content-Type": "application/json",
       },
     });
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
@@ -27,10 +26,9 @@ export async function getAllOrders(sort, pagination) {
 
   try {
     const response = await apiClient.get(`/orders?${queryString}`);
-    const totalItems = response.headers["x-total-count"];
     return {
-      data: response.data,
-      totalOrders: totalItems,
+      data: response.data.data.Orders,
+      totalOrders: response.data.data.totalDocs,
     };
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -40,7 +38,7 @@ export async function getAllOrders(sort, pagination) {
 export async function updateOrder(updatedOrder) {
   try {
     const response = await apiClient.patch(
-      `/orders/edit/${updatedOrder.id}`,
+      `/orders/edit/${updatedOrder._id}`,
       updatedOrder,
       {
         headers: {
@@ -48,7 +46,7 @@ export async function updateOrder(updatedOrder) {
         },
       }
     );
-    return response.data;
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }

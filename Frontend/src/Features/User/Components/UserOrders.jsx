@@ -19,7 +19,7 @@ const UserOrders = () => {
       {userOrders &&
         userOrders.map((order) => (
           <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white py-2 mt-10">
-            <h1 className="text-2xl font-bold">Order # {order.id}</h1>
+            <h1 className="text-2xl font-bold">Order # {order._id}</h1>
             <h1 className="text-xl font-semibold text-red-800">
               Order Status : {order.status}
             </h1>
@@ -27,12 +27,12 @@ const UserOrders = () => {
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.items &&
-                    order.items.map((product) => (
-                      <li key={product.id} className="flex py-6 my-[5px]">
+                    order.items.map((item) => (
+                      <li key={item.product.id} className="flex py-6 my-[5px]">
                         <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
                           <img
-                            alt={product.title}
-                            src={product.thumbnail}
+                            alt={item.product.title}
+                            src={item.product.thumbnail}
                             className="h-full w-full object-cover object-center"
                           />
                         </div>
@@ -40,11 +40,11 @@ const UserOrders = () => {
                         <div className="ml-4 flex flex-1 flex-col">
                           <div>
                             <div className="flex justify-between text-base font-medium text-gray-900">
-                              <h3>{product.title}</h3>
-                              <p className="ml-4">${discountPrice(product)}</p>
+                              <h3>{item.product.title}</h3>
+                              <p className="ml-4">${discountPrice(item.product)}</p>
                             </div>
                             <p className="mt-1 text-sm text-gray-500">
-                              {product.color}
+                              {item.product.color}
                             </p>
                           </div>
                           <div className="flex flex-1 items-end justify-between text-sm">
@@ -53,7 +53,7 @@ const UserOrders = () => {
                                 htmlFor="password"
                                 className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
                               >
-                                Qty {product.quantity}
+                                Qty {item.quantity}
                               </label>
                             </div>
                           </div>

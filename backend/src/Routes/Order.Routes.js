@@ -12,6 +12,6 @@ orderRouter
   .get("/", getAllOrders)
   .get("/user", getOrdersByUserId)
   .post("/new", newOrder)
-  .patch("/edit/:oid", updateOrder);
+  .patch("/edit/:orderID", updateOrder);
 
 export default orderRouter;

@@ -9,7 +9,6 @@ import Navbar from "../Navbar/Navbar";
 const OrderSuccess = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
-  const user = useSelector(selectLoggedInUser);
 
   useEffect(() => {
     dispatch(resetCartAsync()); // user.id

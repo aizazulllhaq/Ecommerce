@@ -12,6 +12,6 @@ cartRouter
   .post("/new", addToCart)
   .get("/my/items", getCartItemsByUserId)
   .patch("/edit/:pid", updateCart)
-  .delete("/del/:cid", deleteCartItemById);
+  .delete("/del/:itemID", deleteCartItemById);
 
 export default cartRouter;

@@ -7,6 +7,6 @@ export async function getUsers() {
     const response = await axios.get("http://localhost:8000/users");
     return response.data;
   } catch (error) {
-    console.log("Error Occurred : ", error);
+    console.log("Error Occurred : ", error.message);
   }
 }
