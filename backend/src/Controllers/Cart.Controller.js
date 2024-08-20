@@ -44,8 +44,6 @@ export const deleteCartItemById = wrapAsync(async (req, res, next) => {
 
   const deletedItem = await Cart.findByIdAndDelete(itemID);
 
-  console.log("deleted item : ", deletedItem);
-
   return res
     .status(200)
     .json(new ApiResponse(true, "Cart Item Deleted", deletedItem));

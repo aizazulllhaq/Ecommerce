@@ -12,7 +12,6 @@ export const signUp = wrapAsync(async (req, res, next) => {
   // get (name,email,password,)
   const { name, email, password } = req.body;
   // const profileImg = req.file;
-  console.log("body : ", req.body);
 
   // check if account exists with this email;
   const isUser = await User.findOne({ email });
@@ -91,6 +90,5 @@ export const forgetPassword = wrapAsync(async (req, res, next) => {
 
   await user.save();
 
-  console.log("Forget Password user : ", user);
   return res.status(200).json(new ApiResponse(true, "Password Updated", user));
 });

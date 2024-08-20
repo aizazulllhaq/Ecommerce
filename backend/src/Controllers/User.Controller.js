@@ -9,7 +9,6 @@ import ApiResponse from "../Utils/ApiResponse.js";
 import wrapAsync from "../Utils/wrapAsync.js";
 
 export const getUserOrders = wrapAsync(async (req, res, next) => {
-  console.log("user : ", req.user);
   const uid = req.user?.id;
 
   const userOrders = await Order.find({ uid });
@@ -65,12 +64,9 @@ export const updateUser = wrapAsync(async (req, res, next) => {
 });
 
 export const updateUserAddresses = wrapAsync(async (req, res, next) => {
-  console.log(req.body);
   const uid = req.user.id;
 
   const user = await User.findByIdAndUpdate(uid, req.body, { new: true });
-
-  console.log("updated user : ", user);
 
   return res
     .status(200)

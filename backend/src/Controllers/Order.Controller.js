@@ -9,8 +9,6 @@ export const newOrder = wrapAsync(async (req, res, next) => {
 
   const newOrder = await Order.create({ ...req.body, uid: uid });
 
-  console.log(newOrder);
-
   return res
     .status(201)
     .json(new ApiResponse(true, "New Order Created", newOrder));
@@ -20,8 +18,6 @@ export const getOrdersByUserId = wrapAsync(async (req, res, next) => {
   const uid = req.user.id;
 
   const userOrders = await Order.find({ uid });
-
-  console.log("user orders : ", userOrders);
 
   return res.status(200).json(new ApiResponse(true, "User Orders", userOrders));
 });
