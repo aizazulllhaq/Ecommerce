@@ -46,7 +46,6 @@ export const authenticationSlice = createSlice({
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = action.payload;
-        console.log("signup : loggedInUserToken : ", action.payload);
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
         state.status = "idle";
@@ -58,7 +57,6 @@ export const authenticationSlice = createSlice({
       .addCase(signInUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.loggedInUserToken = action.payload;
-        console.log("signin : loggedInUserToken : ", action.payload);
       })
       .addCase(signInUserAsync.rejected, (state, action) => {
         state.status = "idle";

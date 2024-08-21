@@ -30,7 +30,6 @@ export async function signInUser(data) {
 export async function checkAuth() {
   try {
     const response = await apiClient.get("/auth/check");
-    console.log(response);
     return response.data;
   } catch (error) {
     throw new Error(error.message);

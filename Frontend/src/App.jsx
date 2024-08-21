@@ -46,7 +46,6 @@ const App = () => {
       dispatch(getCartItemByUserIdAsync());
     }
   }, [dispatch, user]);
-  console.log(user);
   const router = createBrowserRouter([
     {
       path: "/",
