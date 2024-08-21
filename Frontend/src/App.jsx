@@ -8,15 +8,11 @@ import Cart from "./Features/Cart/Cart";
 import CheckoutPage from "./Pages/CheckoutPage";
 import ProductDetail from "./Features/Product-List/Components/ProductDetail";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getCartItemByUserIdAsync,
-  selectItems,
-} from "./Features/Cart/cartSlice";
+import { getCartItemByUserIdAsync } from "./Features/Cart/cartSlice";
 import Protected from "./Features/Auth/Components/Protected";
 import PageNotFound from "./Pages/PageNotFound";
 import OrderSuccess from "./Features/Order/OrderSuccess";
 import UserOrdersPage from "./Pages/UserOrdersPage";
-import { getUserInfoAsync } from "./Features/User/userSlice";
 import UserProfilePage from "./Pages/UserProfilePage";
 import Logout from "./Features/Auth/Components/Logout";
 import AdminHomePage from "./Pages/AdminHomePage";
@@ -24,6 +20,22 @@ import AdminAddProductPage from "./Pages/AdminAddProductPage";
 import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
 import Footer from "./Features/Common/Footer";
+import { transitions, positions, Provider as AlertProvider } from "react-alert";
+import AlertTemplate from "react-alert-template-basic";
+import {
+  checkAuthAsync,
+  selectCheckAuth,
+} from "./Features/Auth/authenticationSlice";
+
+// optional configuration
+const options = {
+  // you can also just use 'bottom center'
+  position: positions.BOTTOM_CENTER,
+  timeout: 5000,
+  offset: "30px",
+  // you can also just use 'scale'
+  transition: transitions.SCALE,
+};
 
 const App = () => {
   const dispatch = useDispatch();
@@ -34,6 +46,7 @@ const App = () => {
       dispatch(getCartItemByUserIdAsync());
     }
   }, [dispatch, user]);
+  console.log(user);
   const router = createBrowserRouter([
     {
       path: "/",
@@ -141,7 +154,21 @@ const App = () => {
       element: <PageNotFound />,
     },
   ]);
-  return <RouterProvider router={router} />;
+
+  const checkAuth = useSelector(selectCheckAuth);
+
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, [dispatch]);
+  return (
+    <>
+      {checkAuth && (
+        <AlertProvider template={AlertTemplate} {...options}>
+          <RouterProvider router={router} />
+        </AlertProvider>
+      )}
+    </>
+  );
 };
 
 export default App;

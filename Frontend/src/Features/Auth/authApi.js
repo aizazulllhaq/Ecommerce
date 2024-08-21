@@ -7,7 +7,7 @@ export async function signUpUser(data) {
         "Content-Type": "application/json",
       },
     });
-    return response.data.data;
+    return response.data;
   } catch (error) {
     console.log("Error Occurred : ", error);
   }
@@ -21,13 +21,27 @@ export async function signInUser(data) {
       },
     });
 
-    return response.data.data;
+    return response.data;
   } catch (error) {
     throw new Error(error.message);
   }
 }
 
-export function LogoutUser() {
-  const response = { success: true };
-  return response;
+export async function checkAuth() {
+  try {
+    const response = await apiClient.get("/auth/check");
+    console.log(response);
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
+}
+
+export async function LogoutUser() {
+  try {
+    const response = await apiClient.get("/auth/logout");
+    return response.data;
+  } catch (error) {
+    throw new Error(error.message);
+  }
 }

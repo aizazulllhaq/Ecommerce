@@ -1,8 +1,4 @@
-import {
-  buildCreateSlice,
-  createAsyncThunk,
-  createSlice,
-} from "@reduxjs/toolkit";
+import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { getUserInfo, getUserOrders, updateUser } from "./userApi";
 
 export const getUserOrdersAsync = createAsyncThunk(
@@ -70,6 +66,9 @@ export const userSlice = createSlice({
       .addCase(getUserInfoAsync.fulfilled, (state, action) => {
         state.status = "idle";
         state.userInfo = action.payload;
+      })
+      .addCase(getUserInfoAsync.rejected, (state, action) => {
+        state.status = "idle";
       });
   },
 });

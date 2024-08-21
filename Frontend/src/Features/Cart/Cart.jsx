@@ -4,13 +4,19 @@ import { useState } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import Navbar from "../Navbar/Navbar";
-import { deleteCartItemAsync, selectItems, updateCartAsync } from "./cartSlice";
+import {
+  deleteCartItemAsync,
+  selectCartLoaded,
+  selectItems,
+  updateCartAsync,
+} from "./cartSlice";
 import { discountPrice } from "../../App/constant";
 import Modal from "../Common/Modal";
 
 const Cart = () => {
   const dispatch = useDispatch();
   const items = useSelector(selectItems);
+  const cartLoaded = useSelector(selectCartLoaded);
   const totalItems = items.length;
   const totalItemsAmount = Math.floor(
     items.reduce(
@@ -30,7 +36,9 @@ const Cart = () => {
   };
   return (
     <>
-      {!items.length && <Navigate to={"/"} replace={true} />}
+      {!items.length && cartLoaded && (
+        <Navigate to={"/"} replace={true} />
+      )}
       <Navbar>
         <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 bg-white p-4 mt-10">
           <div className="mt-8">

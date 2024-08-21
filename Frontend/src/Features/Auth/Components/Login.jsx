@@ -3,12 +3,10 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { signInUserAsync } from "../authenticationSlice";
-import { getUserInfoAsync, selectUserInfo } from "../../User/userSlice";
 
 const Login = () => {
   const dispatch = useDispatch();
   const { loggedInUserToken } = useSelector((state) => state.auth);
-  const userInfo = useSelector(selectUserInfo);
 
   const {
     register,
@@ -22,14 +20,10 @@ const Login = () => {
     reset();
   };
 
-  useEffect(() => {
-    dispatch(getUserInfoAsync());
-  }, [dispatch, loggedInUserToken]);
-
   return (
     <>
       {loggedInUserToken && (
-        <Navigate to={userInfo.role === "ADMIN" ? "/admin" : "/"}></Navigate>
+        <Navigate to={loggedInUserToken.role === "ADMIN" ? "/admin" : "/"}></Navigate>
       )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">

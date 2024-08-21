@@ -1,8 +1,9 @@
-import { uploadOnCloudinary } from "../Config/CloudinaryConfig.js";
+import { JWT_SECRET } from "../constant.js";
 import User from "../Models/User.Modal.js";
 import ApiError from "../Utils/ApiError.js";
 import ApiResponse from "../Utils/ApiResponse.js";
 import wrapAsync from "../Utils/wrapAsync.js";
+import jwt from "jsonwebtoken";
 
 // api/v1/users
 
@@ -40,7 +41,12 @@ export const signUp = wrapAsync(async (req, res, next) => {
       httpOnly: true,
       sameSite: "none",
     })
-    .json(new ApiResponse(true, "User Created Successfull", accessToken));
+    .json(
+      new ApiResponse(true, "User Created Successfull", {
+        id: newUser._id,
+        role: newUser.role,
+      })
+    );
 });
 
 // /signin :
@@ -66,7 +72,12 @@ export const signIn = wrapAsync(async (req, res, next) => {
       httpOnly: true,
       SameSite: "none",
     })
-    .json(new ApiResponse(true, "Login Successfull", accessToken));
+    .json(
+      new ApiResponse(true, "Login Successfull", {
+        id: isUser._id,
+        role: isUser.role,
+      })
+    );
 });
 
 export const forgetPassword = wrapAsync(async (req, res, next) => {
@@ -92,3 +103,32 @@ export const forgetPassword = wrapAsync(async (req, res, next) => {
 
   return res.status(200).json(new ApiResponse(true, "Password Updated", user));
 });
+
+export const checkAuthentication = wrapAsync(async (req, res, next) => {
+  const accessToken = req.cookies?.accessToken;
+
+  if (accessToken) {
+    const user = jwt.verify(accessToken, JWT_SECRET);
+
+    req.user = user;
+
+    console.log("check : ", user);
+
+    return res.status(200).json({
+      id: user.id,
+      role: user.role,
+    });
+  }
+
+  return next(new ApiError(false, 401, "Authorized"));
+});
+
+export const logoutUser = (req, res) => {
+  res
+    .status(200)
+    .clearCookie("accessToken", {
+      httpOnly: true,
+      SameSite: "none",
+    })
+    .json(new ApiResponse(true, "User Logout", {}));
+};
