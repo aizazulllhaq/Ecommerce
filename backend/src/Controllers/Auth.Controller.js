@@ -21,8 +21,6 @@ export const signUp = wrapAsync(async (req, res, next) => {
 
   // const result = await uploadOnCloudinary(profileImg.path);
 
-  // console.log(result);
-
   const newUser = new User({
     name,
     email,
@@ -111,8 +109,6 @@ export const checkAuthentication = wrapAsync(async (req, res, next) => {
     const user = jwt.verify(accessToken, JWT_SECRET);
 
     req.user = user;
-
-    console.log("check : ", user);
 
     return res.status(200).json({
       id: user.id,

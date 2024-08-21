@@ -5968,8 +5968,6 @@ const filterData = data.map((d) => ({
   brand: d.brand || "laptop",
 }));
 
-// console.log(filterData)
-
 
 
 export default filterData;
