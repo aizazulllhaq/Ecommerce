@@ -21,7 +21,7 @@ export async function signInUser(data) {
       },
     });
 
-    return response.data;
+    return response.data.data;
   } catch (error) {
     throw new Error(error.message);
   }

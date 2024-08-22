@@ -60,8 +60,8 @@ export const updateProductAsync = createAsyncThunk(
 
 export const deleteProductTemporaryAsync = createAsyncThunk(
   "product/deleteProductTemporary",
-  async (id) => {
-    const response = await deleteProductTemporary(id);
+  async (deletedProduct) => {
+    const response = await deleteProductTemporary(deletedProduct);
     return response;
   }
 );
@@ -147,6 +147,7 @@ export const productSlice = createSlice({
           (p) => p.id === action.payload.id
         );
         state.products[index] = action.payload;
+        console.log("products from slice : ",state.products);
       })
       .addCase(deleteProductPermanentlyAsync.pending, (state) => {
         state.status = "loading";

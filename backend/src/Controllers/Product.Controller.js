@@ -2,6 +2,7 @@ import Product from "../Models/Product.Model.js";
 import wrapAsync from "../Utils/wrapAsync.js";
 import ApiResponse from "../Utils/ApiResponse.js";
 import ApiError from "../Utils/ApiError.js";
+import User from "../Models/User.Modal.js";
 
 // Validate Users Authentication; ( Authentication check in middleware ( Auth ) )
 // Controllers for Authenticate Users Only;
@@ -38,8 +39,20 @@ export const getSingleProduct = wrapAsync(async (req, res, next) => {
 
 // test :
 export const GAP = wrapAsync(async (req, res) => {
+  const uid = req.user.id;
+
+  const user = await User.findById(uid);
+
+  if (user.role !== "ADMIN") {
+    const products = await Product.find({ deleted: { $ne: true } });
+
+    return res
+      .status(200)
+      .json(new ApiResponse(true, "User Products List", products));
+  }
+
   const products = await Product.find({});
-  res.json({ products: products });
+  res.status(200).json(new ApiResponse(true, "Admin Products List", products));
 });
 
 export const getAllProducts = wrapAsync(async (req, res, next) => {
@@ -49,8 +62,9 @@ export const getAllProducts = wrapAsync(async (req, res, next) => {
   // sort : {_sort:"price",_order:"desc"}
   // Pagination : {_page:1,_limit:10}
   let condition = {};
+  const user = await User.findById(req.user.id);
 
-  if (!req.query.admin) {
+  if (user.role !== "ADMIN") {
     condition.deleted = { $ne: true };
   }
 
@@ -87,7 +101,13 @@ export const getAllProducts = wrapAsync(async (req, res, next) => {
   const result = await query.exec();
   res.set("X-Total-Count", totalDocs);
   res.json(
-    new ApiResponse(true, "All Filter & Sort & Paginate Product", result)
+    new ApiResponse(
+      true,
+      `All Filter & Sort & Paginate Products for ${
+        user.role === "ADMIN" ? "Admin" : "Users"
+      }`,
+      result
+    )
   );
 });
 
@@ -156,14 +176,16 @@ export const updateProduct = wrapAsync(async (req, res, next) => {
 
 export const deleteProductTemporary = wrapAsync(async (req, res, next) => {
   // Get product id from url parameter;
-  const { pid } = req.params;
+  const deletedProduct = req.body;
 
   // Find product in database & Delete it;
-  const product = await Product.findById(pid);
-
-  product.deleted = true;
-
-  await product.save();
+  const product = await Product.findByIdAndUpdate(
+    deletedProduct.id,
+    deletedProduct,
+    {
+      new: true,
+    }
+  );
 
   // return response;
   return res
@@ -181,7 +203,6 @@ export const deleteProductPermanently = wrapAsync(async (req, res, next) => {
   if (!product.deleted) {
     product.deleted = true;
     await product.save();
-
     return res
       .status(200)
       .json(
@@ -189,12 +210,10 @@ export const deleteProductPermanently = wrapAsync(async (req, res, next) => {
       );
   }
 
-  await Product.findByIdAndDelete(pid);
+  const deletedProduct = await Product.findByIdAndDelete(pid);
 
   // return response;
   return res
     .status(200)
-    .json(
-      new ApiResponse(true, "Product Deleted Permanantly", { success: true })
-    );
+    .json(new ApiResponse(true, "Product Deleted Permanantly", deletedProduct));
 });

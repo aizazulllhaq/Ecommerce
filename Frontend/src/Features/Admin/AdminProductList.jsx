@@ -48,7 +48,6 @@ export default function AdminProductList() {
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
-
   const filters = [
     {
       id: "category",
@@ -96,7 +95,6 @@ export default function AdminProductList() {
     const pagination = { _page: page, _limit: ITEM_PER_PAGE };
     dispatch(getProductsByFilterAsync({ filter, sort, pagination }));
   }, [filter, sort, page]);
-
 
   useEffect(() => {
     dispatch(getAllCategoriesAsync());
@@ -248,11 +246,12 @@ export default function AdminProductList() {
                             {product.deleted && (
                               <div>
                                 <p className="text-sm text-red-400">
-                                  product deleted
+                                  product temporary deleted
                                 </p>
                               </div>
                             )}
                           </Link>
+
                           <Link
                             to={`/admin/product/${product.id}`}
                             className="px-[12px] py-[7px] text-white bg-indigo-500 rounded-md mt-[10px] self-end"

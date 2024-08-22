@@ -15,7 +15,7 @@ productRoutes
   .post("/new", createProduct)
   .get("/:pid", getSingleProduct)
   .patch("/:pid", updateProduct)
-  .put("/temp/:pid", deleteProductTemporary)
+  .patch("/temp/:pid", deleteProductTemporary)
   .delete("/del/:pid", deleteProductPermanently);
 
 export default productRoutes;

@@ -17,7 +17,7 @@ export async function addProduct(newProduct) {
 export async function updateProduct(updatedProduct) {
   try {
     const response = await apiClient.patch(
-      `/product/edit/${updatedProduct.id}`,
+      `/product/${updatedProduct.id}`,
       updatedProduct,
       {
         headers: {
@@ -25,8 +25,10 @@ export async function updateProduct(updatedProduct) {
         },
       }
     );
-    return response.data;
+    console.log(response);
+    return response.data.data;
   } catch (error) {
+    console.log(error);
     console.log("Error Occurred : ", error.message);
   }
 }
@@ -91,19 +93,30 @@ export async function getProductById(id) {
   }
 }
 
-export async function deleteProductTemporary(id) {
+export async function deleteProductTemporary(deletedProduct) {
   try {
-    const response = await apiClient.put(`/product/temp/${id}`);
-    return response.data;
+    const response = await apiClient.patch(
+      `/product/temp/${deletedProduct.id}`,
+      deletedProduct,
+      {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      }
+    );
+    console.log(response.data);
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
 }
 
-export async function deleteProductPermanently(id) {
+export async function deleteProductPermanently(deletedProduct) {
   try {
-    const response = await apiClient.delete(`/product/del/${id}`);
-    return response.data;
+    const response = await apiClient.delete(
+      `/product/del/${deletedProduct.id}`
+    );
+    return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
