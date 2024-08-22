@@ -1,13 +1,14 @@
 import Order from "../Models/Order.Model.js";
-import User from "../Models/User.Modal.js";
-import ApiError from "../Utils/ApiError.js";
 import ApiResponse from "../Utils/ApiResponse.js";
+import { sendOrderMail } from "../Utils/sendMail.js";
 import wrapAsync from "../Utils/wrapAsync.js";
 
 export const newOrder = wrapAsync(async (req, res, next) => {
   const uid = req.user.id;
 
   const newOrder = await Order.create({ ...req.body, uid: uid });
+  
+  sendOrderMail(newOrder);
 
   return res
     .status(201)

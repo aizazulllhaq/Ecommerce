@@ -7418,6 +7418,7 @@ const colors = [
     id: "black",
   },
 ];
+import fs from "fs";
 
 const sizes = ["xxs", "xs", "s", "m", "l", "xl", "2xl"];
 
@@ -7427,17 +7428,19 @@ const updatedProducts = products.map((product, index) => {
   for (let i = 0; i < 3; i++) {
     newImages.push(`https://picsum.photos/200/300?random=${index + 1}`);
   }
-
+  const newPrice = Math.round(
+    product.price * (1 - product.discountPercentage / 100)
+  );
   return {
     ...product,
     sizes: sizes,
     colors: colors[2].name,
     images: [...product.images, ...newImages],
+    discountPrice: newPrice,
   };
 });
 
-import fs from "fs";
 
 const jsonData = JSON.stringify(updatedProducts, null, 2);
 
-fs.writeFileSync("dataForDb.js", jsonData);
+fs.writeFileSync("file.js", jsonData);

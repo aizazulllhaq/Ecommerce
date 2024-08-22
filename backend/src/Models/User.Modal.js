@@ -38,9 +38,12 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    profileImg:{
-      type:String,
-    }
+    profileImg: {
+      type: String,
+    },
+    resetPasswordToken: {
+      type: String,
+    },
   },
   {
     timestamps: true,

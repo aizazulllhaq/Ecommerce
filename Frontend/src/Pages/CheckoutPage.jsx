@@ -483,7 +483,6 @@ const CheckoutPage = () => {
                     or{" "}
                     <Link
                       to={"/"}
-                      onClick={() => setOpen(false)}
                       className="font-medium text-indigo-600 hover:text-indigo-500"
                     >
                       Continue Shopping

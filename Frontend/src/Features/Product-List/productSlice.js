@@ -147,7 +147,6 @@ export const productSlice = createSlice({
           (p) => p.id === action.payload.id
         );
         state.products[index] = action.payload;
-        console.log("products from slice : ", state.products);
       })
       .addCase(deleteProductPermanentlyAsync.pending, (state) => {
         state.status = "loading";

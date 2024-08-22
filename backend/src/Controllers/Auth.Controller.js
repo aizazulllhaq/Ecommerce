@@ -2,6 +2,8 @@ import { JWT_SECRET } from "../constant.js";
 import User from "../Models/User.Modal.js";
 import ApiError from "../Utils/ApiError.js";
 import ApiResponse from "../Utils/ApiResponse.js";
+import generateRandomToken from "../Utils/randomTokenGenerator.js";
+import { sendForgotPasswordMail } from "../Utils/sendMail.js";
 import wrapAsync from "../Utils/wrapAsync.js";
 import jwt from "jsonwebtoken";
 
@@ -78,28 +80,47 @@ export const signIn = wrapAsync(async (req, res, next) => {
     );
 });
 
-export const forgetPassword = wrapAsync(async (req, res, next) => {
-  // get userID from req.user;
-  const uid = req.user.id;
+export const forgotPassword = wrapAsync(async (req, res, next) => {
+  const { email } = req.body;
 
-  // get Old-New Password from req.body;
-  const { oldPassword, newPassword } = req.body;
+  const user = await User.findOne({ email });
 
-  // check is oldPassword is equal to user-password , if equal then update the newPassword;
-  const user = await User.findById(uid).select("password -_id");
+  if (!user) return next(new ApiError(false, 404, "User Not Found"));
 
-  if (!user) return next(new ApiError(false, 401, "Invalid UID"));
+  const token = generateRandomToken(25);
 
-  const isPasswordMatch = await user.isPasswordCorrect(oldPassword);
-
-  if (!isPasswordMatch)
-    return next(new ApiError(false, 401, "Invalid Credentials"));
-
-  user.password = newPassword;
+  user.resetPasswordToken = token;
 
   await user.save();
 
-  return res.status(200).json(new ApiResponse(true, "Password Updated", user));
+  sendForgotPasswordMail(token, user);
+
+  return res
+    .status(200)
+    .json(
+      new ApiResponse(
+        true,
+        "Forgot Password Link has been sent to your email please reset your password",
+        { success: true }
+      )
+    );
+});
+
+export const resetPassword = wrapAsync(async (req, res, next) => {
+  // get Old-New Password from req.body;
+  const { token } = req.query;
+  const { password } = req.body;
+
+  // check is oldPassword is equal to user-password , if equal then update the newPassword;
+  const user = await User.findOne({ resetPasswordToken: token });
+
+  if (!user) return next(new ApiError(false, 401, "Invalid UID"));
+
+  user.password = password;
+
+  await user.save();
+
+  return res.status(200).json(new ApiResponse(true, "Password Updated", {}));
 });
 
 export const checkAuthentication = wrapAsync(async (req, res, next) => {

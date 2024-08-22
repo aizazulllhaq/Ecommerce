@@ -121,7 +121,7 @@ export default function ProductList() {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              New Arrivals
+              Products
             </h1>
 
             <div className="flex items-center">
@@ -231,7 +231,7 @@ export default function ProductList() {
                                     aria-hidden="true"
                                     className="absolute inset-0"
                                   />
-                                  {product.title}ddd
+                                  {product.title}
                                 </div>
                               </h3>
                               <p className="mt-1 text-sm text-gray-500">

@@ -26,7 +26,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 9
   },
   {
     "title": "Eyeshadow Palette with Mirror",
@@ -55,7 +56,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 19
   },
   {
     "title": "Powder Canister",
@@ -84,7 +86,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 12
   },
   {
     "title": "Red Lipstick",
@@ -113,7 +116,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 11
   },
   {
     "title": "Red Nail Polish",
@@ -142,7 +146,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 9
   },
   {
     "title": "Calvin Klein CK One",
@@ -173,7 +178,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 50
   },
   {
     "title": "Chanel Coco Noir Eau De",
@@ -204,7 +210,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 106
   },
   {
     "title": "Dior J'adore",
@@ -235,7 +242,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 74
   },
   {
     "title": "Dolce Shine Eau de",
@@ -266,7 +274,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 62
   },
   {
     "title": "Gucci Bloom Eau de",
@@ -297,7 +306,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 73
   },
   {
     "title": "Annibale Colombo Bed",
@@ -328,7 +338,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1894
   },
   {
     "title": "Annibale Colombo Sofa",
@@ -359,7 +370,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2036
   },
   {
     "title": "Bedside Table African Cherry",
@@ -390,7 +402,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 271
   },
   {
     "title": "Knoll Saarinen Executive Conference Chair",
@@ -421,7 +434,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 424
   },
   {
     "title": "Wooden Bathroom Sink With Mirror",
@@ -452,7 +466,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 710
   },
   {
     "title": "Apple",
@@ -480,7 +495,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Beef Steak",
@@ -508,7 +524,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 11
   },
   {
     "title": "Cat Food",
@@ -536,7 +553,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 8
   },
   {
     "title": "Chicken Meat",
@@ -565,7 +583,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 9
   },
   {
     "title": "Cooking Oil",
@@ -593,7 +612,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 4
   },
   {
     "title": "Cucumber",
@@ -621,7 +641,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1
   },
   {
     "title": "Dog Food",
@@ -649,7 +670,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 9
   },
   {
     "title": "Eggs",
@@ -677,7 +699,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 3
   },
   {
     "title": "Fish Steak",
@@ -705,7 +728,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 14
   },
   {
     "title": "Green Bell Pepper",
@@ -733,7 +757,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1
   },
   {
     "title": "Green Chili Pepper",
@@ -761,7 +786,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1
   },
   {
     "title": "Honey Jar",
@@ -789,7 +815,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 7
   },
   {
     "title": "Ice Cream",
@@ -820,7 +847,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Juice",
@@ -848,7 +876,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 4
   },
   {
     "title": "Kiwi",
@@ -876,7 +905,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Lemon",
@@ -904,7 +934,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1
   },
   {
     "title": "Milk",
@@ -932,7 +963,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 3
   },
   {
     "title": "Mulberry",
@@ -960,7 +992,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 4
   },
   {
     "title": "Nescafe Coffee",
@@ -988,7 +1021,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 7
   },
   {
     "title": "Potatoes",
@@ -1016,7 +1050,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Protein Powder",
@@ -1044,7 +1079,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 20
   },
   {
     "title": "Red Onions",
@@ -1072,7 +1108,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Rice",
@@ -1100,7 +1137,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Soft Drinks",
@@ -1128,7 +1166,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Strawberry",
@@ -1156,7 +1195,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 3
   },
   {
     "title": "Tissue Paper Box",
@@ -1185,7 +1225,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 2
   },
   {
     "title": "Water",
@@ -1213,7 +1254,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1
   },
   {
     "title": "Decoration Swing",
@@ -1243,7 +1285,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 60
   },
   {
     "title": "Family Tree Photo Frame",
@@ -1271,7 +1314,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 30
   },
   {
     "title": "House Showpiece Plant",
@@ -1301,7 +1345,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 32
   },
   {
     "title": "Plant Pot",
@@ -1332,7 +1377,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 15
   },
   {
     "title": "Table Lamp",
@@ -1360,7 +1406,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 50
   },
   {
     "title": "Bamboo Spatula",
@@ -1388,7 +1435,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 8
   },
   {
     "title": "Black Aluminium Cup",
@@ -1417,7 +1465,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Black Whisk",
@@ -1445,7 +1494,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 8
   },
   {
     "title": "Boxed Blender",
@@ -1476,7 +1526,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 37
   },
   {
     "title": "Carbon Steel Wok",
@@ -1504,7 +1555,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 28
   },
   {
     "title": "Chopping Board",
@@ -1532,7 +1584,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 11
   },
   {
     "title": "Citrus Squeezer Yellow",
@@ -1560,7 +1613,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 8
   },
   {
     "title": "Egg Slicer",
@@ -1588,7 +1642,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 6
   },
   {
     "title": "Electric Stove",
@@ -1619,7 +1674,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 42
   },
   {
     "title": "Fine Mesh Strainer",
@@ -1647,7 +1703,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 10
   },
   {
     "title": "Fork",
@@ -1675,7 +1732,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 3
   },
   {
     "title": "Glass",
@@ -1703,7 +1761,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Grater Black",
@@ -1731,7 +1790,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 11
   },
   {
     "title": "Hand Blender",
@@ -1759,7 +1819,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 33
   },
   {
     "title": "Ice Cube Tray",
@@ -1787,7 +1848,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 6
   },
   {
     "title": "Kitchen Sieve",
@@ -1815,7 +1877,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 7
   },
   {
     "title": "Knife",
@@ -1843,7 +1906,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 12
   },
   {
     "title": "Lunch Box",
@@ -1871,7 +1935,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 11
   },
   {
     "title": "Microwave Oven",
@@ -1902,7 +1967,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 73
   },
   {
     "title": "Mug Tree Stand",
@@ -1931,7 +1997,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 14
   },
   {
     "title": "Pan",
@@ -1959,7 +2026,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 23
   },
   {
     "title": "Plate",
@@ -1987,7 +2055,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 3
   },
   {
     "title": "Red Tongs",
@@ -2015,7 +2084,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 6
   },
   {
     "title": "Silver Pot With Glass Cap",
@@ -2043,7 +2113,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 38
   },
   {
     "title": "Slotted Turner",
@@ -2071,7 +2142,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 8
   },
   {
     "title": "Spice Rack",
@@ -2099,7 +2171,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 17
   },
   {
     "title": "Spoon",
@@ -2127,7 +2200,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Tray",
@@ -2155,7 +2229,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 15
   },
   {
     "title": "Wooden Rolling Pin",
@@ -2183,7 +2258,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 10
   },
   {
     "title": "Yellow Peeler",
@@ -2211,7 +2287,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 5
   },
   {
     "title": "Apple MacBook Pro 14 Inch Space Grey",
@@ -2242,7 +2319,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1815
   },
   {
     "title": "Asus Zenbook Pro Dual Screen Laptop",
@@ -2273,7 +2351,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1634
   },
   {
     "title": "Huawei Matebook X Pro",
@@ -2304,7 +2383,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1186
   },
   {
     "title": "Lenovo Yoga 920",
@@ -2335,7 +2415,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1015
   },
   {
     "title": "New DELL XPS 13 9300 Laptop",
@@ -2366,7 +2447,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1324
   },
   {
     "title": "Blue & Black Check Shirt",
@@ -2398,7 +2480,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 30
   },
   {
     "title": "Gigabyte Aorus Men Tshirt",
@@ -2430,7 +2513,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 22
   },
   {
     "title": "Man Plaid Shirt",
@@ -2462,7 +2546,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 29
   },
   {
     "title": "Man Short Sleeve Shirt",
@@ -2494,7 +2579,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 18
   },
   {
     "title": "Men Check Shirt",
@@ -2526,7 +2612,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 24
   },
   {
     "title": "Nike Air Jordan 1 Red And Black",
@@ -2558,7 +2645,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 126
   },
   {
     "title": "Nike Baseball Cleats",
@@ -2590,7 +2678,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 71
   },
   {
     "title": "Puma Future Rider Trainers",
@@ -2622,7 +2711,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 87
   },
   {
     "title": "Sports Sneakers Off White & Red",
@@ -2654,7 +2744,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 106
   },
   {
     "title": "Sports Sneakers Off White Red",
@@ -2686,7 +2777,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 91
   },
   {
     "title": "Brown Leather Belt Watch",
@@ -2717,7 +2809,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 76
   },
   {
     "title": "Longines Master Collection",
@@ -2748,7 +2841,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 1490
   },
   {
     "title": "Rolex Cellini Date Black Dial",
@@ -2779,7 +2873,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 7715
   },
   {
     "title": "Rolex Cellini Moonphase",
@@ -2810,7 +2905,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 12259
   },
   {
     "title": "Rolex Datejust",
@@ -2841,7 +2937,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 9934
   },
   {
     "title": "Rolex Submariner Watch",
@@ -2872,7 +2969,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 13885
   },
   {
     "title": "Amazon Echo Plus",
@@ -2902,7 +3000,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 84
   },
   {
     "title": "Apple Airpods",
@@ -2933,7 +3032,8 @@
       "xl",
       "2xl"
     ],
-    "colors": "Black"
+    "colors": "Black",
+    "discountPrice": 124
   },
   {
     "title": "New Product by Abdullah",
@@ -2964,6 +3064,7 @@
     "delete": false,
     "category": "furniture",
     "brand": "sdACA",
-    "id": 100
+    "id": 100,
+    "discountPrice": 3562
   }
 ]

@@ -11,3 +11,6 @@ export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY;
 export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET;
 
 export const JWT_SECRET = process.env.JWT_SECRET;
+
+export const USER_EMAIL = process.env.USER_EMAIL;
+export const USER_PASS = process.env.USER_PASS;

@@ -26,6 +26,8 @@ import {
   checkAuthAsync,
   selectCheckAuth,
 } from "./Features/Auth/authenticationSlice";
+import ForgetPassword from "./Features/Auth/Components/ForgetPassword";
+import ResetPassword from "./Features/Auth/Components/ResetPassword";
 
 // optional configuration
 const options = {
@@ -58,6 +60,14 @@ const App = () => {
     {
       path: "/login",
       element: <LoginPage />,
+    },
+    {
+      path: "/forget-password",
+      element: <ForgetPassword />,
+    },
+    {
+      path: "/reset-password",
+      element: <ResetPassword />,
     },
     {
       path: "/logout",

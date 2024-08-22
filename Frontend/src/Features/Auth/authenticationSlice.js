@@ -1,5 +1,12 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkAuth, LogoutUser, signInUser, signUpUser } from "./authApi";
+import {
+  checkAuth,
+  forgotPassword,
+  LogoutUser,
+  resetPassword,
+  signInUser,
+  signUpUser,
+} from "./authApi";
 
 export const signUpUserAsync = createAsyncThunk(
   "auth/signUpUser",
@@ -22,16 +29,34 @@ export const checkAuthAsync = createAsyncThunk("auth/checkAuth", async () => {
   return response;
 });
 
-export const LogoutUserAsync = createAsyncThunk("auth/LogoutUser", async() => {
+export const LogoutUserAsync = createAsyncThunk("auth/LogoutUser", async () => {
   const response = await LogoutUser();
   return response;
 });
+
+export const forgotPasswordAsync = createAsyncThunk(
+  "auth/forgotPassword",
+  async (email) => {
+    const response = await forgotPassword(email);
+    return response;
+  }
+);
+
+export const resetPasswordAsync = createAsyncThunk(
+  "auth/resetPassword",
+  async (data) => {
+    const response = await resetPassword(data);
+    return response;
+  }
+);
 
 const initialState = {
   status: "idle",
   loggedInUserToken: null,
   checkAuth: false,
   error: null,
+  resetPassword: false,
+  message: null,
 };
 
 export const authenticationSlice = createSlice({
@@ -77,6 +102,24 @@ export const authenticationSlice = createSlice({
       .addCase(checkAuthAsync.rejected, (state) => {
         state.status = "idle";
         state.checkAuth = true;
+      })
+      .addCase(forgotPasswordAsync.pending, (state) => {
+        state.status = "loading";
+      })
+      .addCase(forgotPasswordAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.resetPassword = true;
+      })
+      .addCase(forgotPasswordAsync.rejected, (state, action) => {
+        state.status = "idle";
+        state.error = action.error;
+      })
+      .addCase(resetPasswordAsync.fulfilled, (state, action) => {
+        state.status = "idle";
+        state.message = action.payload;
+      })
+      .addCase(resetPasswordAsync.rejected, (state) => {
+        state.status = "idle";
       });
   },
 });
