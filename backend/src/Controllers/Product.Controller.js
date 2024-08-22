@@ -106,7 +106,7 @@ export const getAllProducts = wrapAsync(async (req, res, next) => {
       `All Filter & Sort & Paginate Products for ${
         user.role === "ADMIN" ? "Admin" : "Users"
       }`,
-      result
+      { result, totalDocs }
     )
   );
 });

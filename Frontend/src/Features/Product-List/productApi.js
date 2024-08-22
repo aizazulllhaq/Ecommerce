@@ -55,8 +55,8 @@ export async function getProductsByFilter(filter, sort, pagination) {
   try {
     const response = await apiClient.get(`/product?${queryString}`);
 
-    const totalItems = response.headers["x-total-count"];
-    return { data: response.data.data, totalItems: totalItems };
+    const totalItems = response.data.data.totalDocs;
+    return { data: response.data.data.result, totalItems: totalItems };
   } catch (error) {
     console.log("Error Occurred : ", error.message);
   }
