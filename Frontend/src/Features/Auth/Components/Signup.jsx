@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Link, Navigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { signUpUserAsync } from "../authenticationSlice";
+import { useAlert } from "react-alert";
 
 const Signup = () => {
   const dispatch = useDispatch();
-  const loggedInUser = useSelector((state)=>state.auth.loggedInUser);
+  const { loggedInUserToken } = useSelector((state) => state.auth);
+  const { message, signupError } = useSelector((state) => state.auth);
+  const alert = useAlert();
 
   const {
     register,
@@ -19,9 +22,25 @@ const Signup = () => {
     dispatch(signUpUserAsync(data));
     reset();
   };
+
+  useEffect(() => {
+    if (message) {
+      alert.success(message);
+    }
+  }, [message, alert]);
+
+  useEffect(() => {
+    if (signupError) {
+      alert.error(signupError.message);
+    }
+  }, [signupError, alert]);
   return (
     <>
-      {loggedInUser && <Navigate to={"/"} replace={true}></Navigate>}
+      {loggedInUserToken && (
+        <Navigate
+          to={loggedInUserToken.role === "ADMIN" ? "/admin" : "/"}
+        ></Navigate>
+      )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img
@@ -117,9 +136,7 @@ const Signup = () => {
             </div>
 
             <div>
-              <button
-                className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-              >
+              <button className="flex w-full justify-center rounded-md bg-indigo-600 px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">
                 Sign up
               </button>
             </div>

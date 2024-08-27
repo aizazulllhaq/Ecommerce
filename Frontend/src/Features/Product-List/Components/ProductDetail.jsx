@@ -214,33 +214,7 @@ export default function ProductDetail() {
                               "group relative flex items-center justify-center rounded-md border px-4 py-3 text-sm font-medium uppercase hover:bg-gray-50 focus:outline-none data-[focus]:ring-2 data-[focus]:ring-indigo-500 sm:flex-1 sm:py-6"
                             )}
                           >
-                            <span>{size.name}</span>
-                            {size.inStock ? (
-                              <span
-                                aria-hidden="true"
-                                className="pointer-events-none absolute -inset-px rounded-md border-2 border-transparent group-data-[focus]:border group-data-[checked]:border-indigo-500"
-                              />
-                            ) : (
-                              <span
-                                aria-hidden="true"
-                                className="pointer-events-none absolute -inset-px rounded-md border-2 border-gray-200"
-                              >
-                                <svg
-                                  stroke="currentColor"
-                                  viewBox="0 0 100 100"
-                                  preserveAspectRatio="none"
-                                  className="absolute inset-0 h-full w-full stroke-2 text-gray-200"
-                                >
-                                  <line
-                                    x1={0}
-                                    x2={100}
-                                    y1={100}
-                                    y2={0}
-                                    vectorEffect="non-scaling-stroke"
-                                  />
-                                </svg>
-                              </span>
-                            )}
+                            <span>{size}</span>
                           </Radio>
                         ))}
                       </RadioGroup>

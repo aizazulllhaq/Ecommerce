@@ -8,9 +8,9 @@ export async function signUpUser(data) {
         "Content-Type": "application/json",
       },
     });
-    return response.data;
+    return response.data.data ;
   } catch (error) {
-    console.log("Error Occurred : ", error);
+    throw new Error(error.response.data.error);
   }
 }
 
@@ -21,10 +21,9 @@ export async function signInUser(data) {
         "Content-Type": "application/json",
       },
     });
-
     return response.data.data;
   } catch (error) {
-    throw new Error(error.message);
+    throw new Error(error.response.data.error);
   }
 }
 
@@ -67,6 +66,6 @@ export async function resetPassword(data) {
 
     return response.data.msg;
   } catch (error) {
-    throw new Error(error.response.data.error)
+    throw new Error(error.response.data.error);
   }
 }

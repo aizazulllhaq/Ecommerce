@@ -42,6 +42,11 @@ const options = {
 const App = () => {
   const dispatch = useDispatch();
   const user = useSelector((state) => state.auth.loggedInUserToken);
+  const checkAuth = useSelector(selectCheckAuth);
+
+  useEffect(() => {
+    dispatch(checkAuthAsync());
+  }, [dispatch]);
 
   useEffect(() => {
     if (user) {
@@ -98,7 +103,6 @@ const App = () => {
       element: (
         <Protected>
           <ProductDetail />
-          <Footer />
         </Protected>
       ),
     },
@@ -164,11 +168,6 @@ const App = () => {
     },
   ]);
 
-  const checkAuth = useSelector(selectCheckAuth);
-
-  useEffect(() => {
-    dispatch(checkAuthAsync());
-  }, [dispatch]);
   return (
     <>
       {checkAuth && (

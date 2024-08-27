@@ -58,7 +58,7 @@ const AdminOrders = () => {
   return (
     <>
       {/* component */}
-      <div className="p-6 overflow-hidden px-0 bg-white">
+      <div className="p-6  px-0 bg-white overflow-x-auto rounded-md">
         <table className="mt-4 w-full min-w-max table-auto text-left">
           <thead>
             <tr>

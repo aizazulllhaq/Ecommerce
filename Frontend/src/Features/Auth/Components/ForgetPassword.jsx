@@ -81,10 +81,10 @@ const ForgetPassword = () => {
           <p className="mt-10 text-center text-sm text-gray-500">
             Not a member?{" "}
             <Link
-              to={"/signup"}
+              to={"/login"}
               className="font-semibold leading-6 text-indigo-600 hover:text-indigo-500"
             >
-              create your account
+              login to your account
             </Link>
           </p>
         </div>

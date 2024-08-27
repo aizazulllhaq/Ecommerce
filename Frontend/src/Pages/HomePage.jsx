@@ -1,4 +1,3 @@
-import Footer from "../Features/Common/Footer";
 import Navbar from "../Features/Navbar/Navbar";
 import ProductList from "../Features/Product-List/Components/ProductList";
 
@@ -8,7 +7,6 @@ const HomePage = () => {
       <Navbar>
         <ProductList />
       </Navbar>
-      <Footer/>
     </div>
   );
 };

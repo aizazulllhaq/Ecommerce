@@ -57,6 +57,7 @@ const initialState = {
   error: null,
   resetPassword: false,
   message: null,
+  signupError:null,
 };
 
 export const authenticationSlice = createSlice({
@@ -70,11 +71,12 @@ export const authenticationSlice = createSlice({
       })
       .addCase(signUpUserAsync.fulfilled, (state, action) => {
         state.status = "idle";
+        state.message = action.payload.msg;
         state.loggedInUserToken = action.payload;
       })
       .addCase(signUpUserAsync.rejected, (state, action) => {
         state.status = "idle";
-        state.error = action.error;
+        state.signupError = action.error;
       })
       .addCase(signInUserAsync.pending, (state) => {
         state.status = "loading";

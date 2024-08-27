@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, Navigate } from "react-router-dom";
 import { signInUserAsync } from "../authenticationSlice";
+import { useAlert } from "react-alert";
 
 const Login = () => {
   const dispatch = useDispatch();
-  const { loggedInUserToken } = useSelector((state) => state.auth);
-
+  const { loggedInUserToken, error } = useSelector((state) => state.auth);
+  const alert = useAlert();
   const {
     register,
     handleSubmit,
@@ -19,10 +20,18 @@ const Login = () => {
     dispatch(signInUserAsync(data));
     reset();
   };
+
+  useEffect(() => {
+    if (error) {
+      alert.error(error.message);
+    }
+  }, [error, alert]);
   return (
     <>
       {loggedInUserToken && (
-        <Navigate to={loggedInUserToken.role === "ADMIN" ? "/admin" : "/"}></Navigate>
+        <Navigate
+          to={loggedInUserToken.role === "ADMIN" ? "/admin" : "/"}
+        ></Navigate>
       )}
       <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
@@ -101,7 +110,6 @@ const Login = () => {
                 )}
               </div>
             </div>
-
             <div>
               <button
                 type="submit"

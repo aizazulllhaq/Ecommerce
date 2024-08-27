@@ -39,7 +39,7 @@ export const signUp = wrapAsync(async (req, res, next) => {
     .status(201)
     .cookie("accessToken", accessToken, {
       httpOnly: true,
-      sameSite: "none",
+      SameSite: "none",
     })
     .json(
       new ApiResponse(true, "User Created Successfull", {

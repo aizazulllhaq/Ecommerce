@@ -34,6 +34,7 @@ import {
   ITEM_PER_PAGE,
 } from "../../../App/constant";
 import { Grid } from "react-loader-spinner";
+import { checkAuthAsync } from "../../Auth/authenticationSlice";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
