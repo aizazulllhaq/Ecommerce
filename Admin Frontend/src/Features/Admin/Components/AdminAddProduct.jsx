@@ -8,10 +8,10 @@ import {
   getAllCategoriesAsync,
   getProductByIdAsync,
   updateProductAsync,
-} from "../Product-List/productSlice";
+} from "../../Product-List/productSlice";
 import { useForm } from "react-hook-form";
 import { useNavigate, useParams } from "react-router-dom";
-import Modal from "../Common/Modal";
+import Modal from "../../Common/Modal";
 import { useAlert } from "react-alert";
 
 const colors = [
@@ -61,6 +61,7 @@ const AdminAddProduct = () => {
   const product = useSelector((state) => state.product.product);
   const [openModal, setOpenModal] = useState(false);
   const alert = useAlert();
+  console.log(product);
 
   useEffect(() => {
     dispatch(getAllBrandsAsync());
@@ -83,6 +84,14 @@ const AdminAddProduct = () => {
       setValue("highlight2", product.highlights[1]);
       setValue("highlight3", product.highlights[2]);
       setValue("highlight4", product.highlights[3]);
+      setValue(
+        "sizes",
+        product.sizes.map((size) => size.id)
+      );
+      setValue(
+        "colors",
+        product.colors.map((color) => color.id)
+      );
     }
   }, [product, setValue, id]);
 
@@ -95,6 +104,16 @@ const AdminAddProduct = () => {
       data.highlight3,
       data.highlight4,
     ];
+    if (newProduct.colors) {
+      newProduct.colors = newProduct.colors.map((color) =>
+        colors.find((clr) => clr.id === color)
+      );
+    }
+    if (newProduct.sizes) {
+      newProduct.sizes = newProduct.sizes.map((size) =>
+        sizes.find((sz) => sz.id === size)
+      );
+    }
 
     newProduct.price = +data.price;
 

@@ -33,7 +33,7 @@ export const signUp = wrapAsync(async (req, res, next) => {
   });
 
   await newUser.save();
-  const accessToken = await newUser.generateAccessToken();
+  const accessToken = newUser.generateAccessToken();
 
   return res
     .status(201)
@@ -49,14 +49,13 @@ export const signUp = wrapAsync(async (req, res, next) => {
     );
 });
 
-// /signin :
+// /signin : user-login
 export const signIn = wrapAsync(async (req, res, next) => {
   // Validation required fields ( email , password ); signInValidation => AuthValidation.js
   // get required fields
   const { email, password } = req.body;
 
   const isUser = await User.findOne({ email });
-
   if (!isUser) return next(new ApiError(false, 401, "Invalid Credentials"));
 
   const isPasswordMatch = await isUser.isPasswordCorrect(password);
@@ -69,6 +68,39 @@ export const signIn = wrapAsync(async (req, res, next) => {
   return res
     .status(200)
     .cookie("accessToken", accessToken, {
+      httpOnly: true,
+      SameSite: "none",
+    })
+    .json(
+      new ApiResponse(true, "Login Successfull", {
+        id: isUser._id,
+        role: isUser.role,
+      })
+    );
+});
+
+// /admin/signin : admin-login
+export const adminSignin = wrapAsync(async (req, res, next) => {
+  // Validation required fields ( email , password ); signInValidation => AuthValidation.js
+  // get required fields
+  const { email, password } = req.body;
+
+  const isUser = await User.findOne({ email });
+  if (!isUser) return next(new ApiError(false, 401, "Invalid Credentials"));
+
+  const isPasswordMatch = await isUser.isPasswordCorrect(password);
+
+  if (!isPasswordMatch)
+    return next(new ApiError(false, 401, "Invalid Credentials"));
+
+  if (isUser.role !== "ADMIN")
+    return next(new ApiError(false, 400, "Admin Not Found"));
+
+  const accessToken = await isUser.generateAccessToken();
+
+  return res
+    .status(200)
+    .cookie("ADMAccessToken", accessToken, {
       httpOnly: true,
       SameSite: "none",
     })
@@ -144,6 +176,16 @@ export const logoutUser = (req, res) => {
   res
     .status(200)
     .clearCookie("accessToken", {
+      httpOnly: true,
+      SameSite: "none",
+    })
+    .json(new ApiResponse(true, "User Logout", {}));
+};
+
+export const logoutAdmin = (req, res) => {
+  res
+    .status(200)
+    .clearCookie("ADMAccessToken", {
       httpOnly: true,
       SameSite: "none",
     })

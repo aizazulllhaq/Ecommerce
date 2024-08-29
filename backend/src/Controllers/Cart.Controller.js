@@ -4,13 +4,14 @@ import wrapAsync from "../Utils/wrapAsync.js";
 
 export const addToCart = wrapAsync(async (req, res, next) => {
   // TODO : user.id needed to here bcoz we don't put in frontend
-  const { product, quantity } = req.body;
   const uid = req.user.id;
+  const { newItem } = req.body;
+  console.log(newItem);
 
-  const newItem = await Cart.create({ product, quantity, uid });
+  const NewItem = await Cart.create({ product: newItem, uid });
 
-  const result = await newItem.populate("product");
-
+  const result = await NewItem.populate("product");
+  console.log(result);
   return res
     .status(201)
     .json(new ApiResponse(true, "New Item Add to Cart", result));
@@ -25,12 +26,13 @@ export const getCartItemsByUserId = wrapAsync(async (req, res, next) => {
 });
 
 export const updateCart = wrapAsync(async (req, res, next) => {
-  const { pid } = req.params;
-  const { quantity } = req.body;
+  console.log(req.body, req.params);
+  const { cid } = req.params;
+  const { updatedItem } = req.body;
 
-  const updatedCart = await Cart.findOne({ product: pid });
-
-  updatedCart.quantity = quantity;
+  const updatedCart = await Cart.findByIdAndUpdate(cid, updatedItem, {
+    new: true,
+  });
 
   await updatedCart.save();
 

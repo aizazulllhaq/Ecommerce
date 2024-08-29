@@ -25,9 +25,16 @@ import {
   getAllBrandsAsync,
   getAllCategoriesAsync,
   getProductsByFilterAsync,
-} from "../Product-List/productSlice";
+  selectTotalItems,
+} from "../productSlice";
 import { Link } from "react-router-dom";
-import { discountPrice, ITEM_PER_PAGE } from "../../App/constant";
+import {
+  discountPrice,
+  ITEM_PER_ORDERS_PAGE,
+  ITEM_PER_PAGE,
+} from "../../../App/constant";
+import { Grid } from "react-loader-spinner";
+import { checkAuthAsync } from "../../Auth/authenticationSlice";
 
 const sortOptions = [
   { name: "Best rating", sort: "rating", order: "desc", current: false },
@@ -39,15 +46,17 @@ function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
-export default function AdminProductList() {
+export default function ProductList() {
   const dispatch = useDispatch();
-  const { products, totalItems, categories, brands } = useSelector(
+  const { products, categories, brands, status } = useSelector(
     (state) => state.product
   );
+  const totalItems = useSelector(selectTotalItems);
   const [mobileFiltersOpen, setMobileFiltersOpen] = useState(false);
   const [filter, setFilter] = useState({});
   const [sort, setSort] = useState({});
   const [page, setPage] = useState(1);
+
   const filters = [
     {
       id: "category",
@@ -113,8 +122,7 @@ export default function AdminProductList() {
         <main className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-24">
             <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-              All Products
-              <Link to={"/admin/orders"}>Orders</Link>
+              Products
             </h1>
 
             <div className="flex items-center">
@@ -184,81 +192,69 @@ export default function AdminProductList() {
                 handleFilter={handleFilter}
                 filters={filters}
               />
+              {status === "loading" && (
+                <Grid
+                  visible={true}
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="grid-loading"
+                  radius="12.5"
+                  wrapperStyle={{}}
+                  wrapperClass="grid-wrapper"
+                />
+              )}
 
               {/* Product grid */}
               <div className="lg:col-span-3">
                 {/* <ProductGrid products={products} /> */}
                 <div className="mx-auto max-w-2xl px-4 sm:px-6  lg:max-w-7xl lg:px-8">
-                  <Link
-                    to={"/admin/add-product"}
-                    className="px-[15px] py-[8px] text-white bg-green-600 rounded-md"
-                  >
-                    Add Product
-                  </Link>
                   <div className="mt-6 grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-                    {products.length &&
-                      products.map((product) => (
-                        <div
-                          key={product.id}
-                          className="flex flex-col justify-between"
+                    {products.length > 0 &&
+                      products.map((product, index) => (
+                        <Link
+                          to={`/product-detail/${product.id}`}
+                          key={index}
+                          className="group relative"
                         >
-                          <Link
-                            to={`/product-detail/${product.id}`}
-                            className="group relative"
-                          >
-                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                              <img
-                                alt={product.title}
-                                src={product.thumbnail}
-                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                              />
-                            </div>
-                            <div className="mt-4 flex justify-between">
-                              <div>
-                                <h3 className="text-sm text-gray-700">
-                                  <span>
-                                    <span
-                                      aria-hidden="true"
-                                      className="absolute inset-0"
-                                    />
-                                    {product.title}
-                                  </span>
-                                </h3>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {product.color}
-                                </p>
-                              </div>
-                              <p className="text-sm font-medium text-gray-900 line-through">
-                                {product.price}
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <img
+                              alt={product.title}
+                              src={product.thumbnail}
+                              className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            />
+                          </div>
+                          <div className="mt-4 flex justify-between">
+                            <div>
+                              <h3 className="text-sm text-gray-700">
+                                <div>
+                                  <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0"
+                                  />
+                                  {product.title}
+                                </div>
+                              </h3>
+                              <p className="mt-1 text-sm text-gray-500">
+                                {product.color}
                               </p>
                             </div>
-                            <div className="flex justify-between">
-                              <div className="text-sm font-medium text-gray-900">
-                                <p>
-                                  <StarIcon />
-                                  {product.rating}
-                                </p>
-                              </div>
-                              <p className="text-sm font-medium text-gray-900">
-                                {discountPrice(product)}
+                            <p className="text-sm font-medium text-gray-900 line-through">
+                              {product.price}
+                            </p>
+                          </div>
+                          <div className="flex justify-between">
+                            <div className="text-sm font-medium text-gray-900">
+                              <p>
+                                <StarIcon />
+                                {product.rating}
                               </p>
                             </div>
-                            {product.deleted && (
-                              <div>
-                                <p className="text-sm text-red-400">
-                                  product temporary deleted
-                                </p>
-                              </div>
-                            )}
-                          </Link>
-
-                          <Link
-                            to={`/admin/product/${product.id}`}
-                            className="px-[12px] py-[7px] text-white bg-indigo-500 rounded-md mt-[10px] self-end"
-                          >
-                            Edit Product
-                          </Link>
-                        </div>
+                            <p className="text-sm font-medium text-gray-900">
+                              {discountPrice(product)}
+                            </p>
+                          </div>
+                        </Link>
                       ))}
                   </div>
                 </div>
@@ -375,8 +371,10 @@ function MobileFilter({
   );
 }
 
-function Pagination({ page, totalItems, handlePage }) {
-  const totalPages = Math.ceil(totalItems / ITEM_PER_PAGE);
+export function Pagination({ page, totalItems, handlePage, state = "NORMAL" }) {
+  const IPP = state === "ADMIN" ? ITEM_PER_ORDERS_PAGE : ITEM_PER_PAGE;
+  const totalPages = Math.ceil(totalItems / IPP);
+
   return (
     <div className="flex items-center justify-between border-t border-gray-200 bg-white px-4 py-3 sm:px-6">
       <div className="flex flex-1 justify-between sm:hidden">
@@ -396,12 +394,9 @@ function Pagination({ page, totalItems, handlePage }) {
       <div className="hidden sm:flex sm:flex-1 sm:items-center sm:justify-between">
         <div>
           <p className="text-sm text-gray-700">
-            Showing{" "}
-            <span className="font-medium">{(page - 1) * ITEM_PER_PAGE}</span> to{" "}
+            Showing <span className="font-medium">{(page - 1) * IPP}</span> to{" "}
             <span className="font-medium">
-              {page * ITEM_PER_PAGE > totalItems
-                ? totalItems
-                : page * ITEM_PER_PAGE}
+              {page * IPP > totalItems ? totalItems : page * IPP}
             </span>{" "}
             of <span className="font-medium">{totalItems}</span> results
           </p>

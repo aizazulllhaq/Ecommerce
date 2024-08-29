@@ -371,8 +371,8 @@ function MobileFilter({
   );
 }
 
-export function Pagination({ page, totalItems, handlePage, state = "NORMAL" }) {
-  const IPP = state === "ADMIN" ? ITEM_PER_ORDERS_PAGE : ITEM_PER_PAGE;
+export function Pagination({ page, totalItems, handlePage}) {
+  const IPP =  ITEM_PER_PAGE;
   const totalPages = Math.ceil(totalItems / IPP);
 
   return (

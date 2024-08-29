@@ -15,11 +15,7 @@ import OrderSuccess from "./Features/Order/OrderSuccess";
 import UserOrdersPage from "./Pages/UserOrdersPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import Logout from "./Features/Auth/Components/Logout";
-import AdminHomePage from "./Pages/AdminHomePage";
-import AdminAddProductPage from "./Pages/AdminAddProductPage";
-import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
-import AdminOrdersPage from "./Pages/AdminOrdersPage";
-import Footer from "./Features/Common/Footer";
+// import Footer from "./Features/Common/Footer";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import {
@@ -128,38 +124,6 @@ const App = () => {
         <Protected>
           <UserProfilePage />
         </Protected>
-      ),
-    },
-    {
-      path: "/admin",
-      element: (
-        <ProtectedAdmin>
-          <AdminHomePage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/admin/add-product",
-      element: (
-        <ProtectedAdmin>
-          <AdminAddProductPage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/admin/product/:id",
-      element: (
-        <ProtectedAdmin>
-          <AdminAddProductPage />
-        </ProtectedAdmin>
-      ),
-    },
-    {
-      path: "/admin/orders",
-      element: (
-        <ProtectedAdmin>
-          <AdminOrdersPage />
-        </ProtectedAdmin>
       ),
     },
     {

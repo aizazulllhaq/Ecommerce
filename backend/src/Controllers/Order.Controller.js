@@ -5,9 +5,15 @@ import wrapAsync from "../Utils/wrapAsync.js";
 
 export const newOrder = wrapAsync(async (req, res, next) => {
   const uid = req.user.id;
+  console.log(req.body);
+  let order = { items: [...req.body.items], ...req.body, uid: uid };
 
-  const newOrder = await Order.create({ ...req.body, uid: uid });
-  
+  console.log("order create for practice : ", { ...order, uid: uid });
+
+  const newOrder = await (
+    await Order.create({ ...order, uid: uid })
+  ).populate("items");
+  console.log("newOrder : ", newOrder);
   sendOrderMail(newOrder);
 
   return res

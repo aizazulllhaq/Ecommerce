@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../Features/Navbar/Navbar";
-import AdminProductList from "../Features/Admin/AdminProductList";
+import AdminProductList from "../Features/Admin/Components/AdminProductList";
 
 const AdminHomePage = () => {
   return (

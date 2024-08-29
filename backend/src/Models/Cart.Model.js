@@ -1,18 +1,46 @@
 import { model, Schema } from "mongoose";
 
+
+// Define the schema for the sizes
+const SizeSchema = new Schema({
+  name: { type: String },
+  inStock: { type: Boolean },
+  id: { type: String }
+});
+
+// Define the schema for the colors
+const ColorSchema = new Schema({
+  name: { type: String },
+  class: { type: String },
+  selectedClass: { type: String },
+  id: { type: String }
+});
+
+// Define the schema for the product
+const ProductSchema = new Schema({
+  title: { type: String },
+  description: { type: String },
+  price: { type: Number },
+  discountPercentage: { type: Number },
+  stock: { type: Number },
+  brand: { type: String },
+  category: { type: String },
+  thumbnail: { type: String },
+  images: [{ type: String }],
+  sizes: SizeSchema,
+  colors: ColorSchema,
+  highlights: [{ type: String }],
+  deleted: { type: Boolean, default: false },
+  discountPrice: { type: Number },
+  quantity: { type: Number }
+});
+
 const cartSchema = new Schema({
-  product: {
-    type: Schema.Types.ObjectId,
-    ref: "Product",
-  },
+  product: [ProductSchema],
   uid: {
     type: Schema.Types.ObjectId,
     ref: "User",
-  },
-  quantity: {
-    type: Number,
-    required: true,
-  },
+  }
 });
 
 const virtual = cartSchema.virtual("id");

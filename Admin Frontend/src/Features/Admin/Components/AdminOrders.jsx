@@ -6,9 +6,9 @@ import {
   selectOrders,
   selectTotalOrders,
   updateOrderAsync,
-} from "../Order/orderSlice";
-import { discountPrice, ITEM_PER_ORDERS_PAGE } from "../../App/constant";
-import { Pagination } from "../Product-List/Components/ProductList";
+} from "../../Order/orderSlice";
+import { discountPrice, ITEM_PER_ORDERS_PAGE } from "../../../App/constant";
+import { Pagination } from "../../Product-List/Components/ProductList";
 
 const AdminOrders = () => {
   const dispatch = useDispatch();

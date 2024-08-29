@@ -1,12 +1,11 @@
 import { model, Schema } from "mongoose";
 
 const orderSchema = new Schema({
-  items: [
-    {
-      type: Schema.Types.Mixed,
-      required: true,
-    },
-  ],
+  items: {
+    type: [Schema.Types.ObjectId],
+    required: true,
+    ref:"Cart"
+  },
   uid: {
     type: Schema.Types.ObjectId,
     ref: "User",

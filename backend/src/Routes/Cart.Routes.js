@@ -11,7 +11,7 @@ const cartRouter = Router();
 cartRouter
   .post("/new", addToCart)
   .get("/my/items", getCartItemsByUserId)
-  .patch("/edit/:pid", updateCart)
+  .patch("/edit/:cid", updateCart)
   .delete("/del/:itemID", deleteCartItemById);
 
 export default cartRouter;

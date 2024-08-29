@@ -1,0 +1,19 @@
+title: UltraSoft Men's T-Shirt
+description: Experience the ultimate comfort with our UltraSoft Men's T-Shirt, designed for all-day wear. Made from premium fabric, it ensures a perfect fit and breathability.
+price: 29.99
+discountPercentage: 15
+stock: 120
+rating: 4
+  
+highlights:
+    Made from 100% organic cotton,
+    Available in multiple colors and sizes,
+    Breathable and soft fabric for all-day comfort,
+    Machine washable and easy to maintain
+
+thumbnail: https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQX_m4aMs6b7BLE8fY9JdUtb1tVxMLVCazS_vJuEMN9qCbl9I64f9QrJsPZviQpc6wNu3M&usqp=CAU
+
+images:
+   https://rukminim2.flixcart.com/image/850/1000/xif0q/kids-t-shirt/q/d/d/15-16-years-121246527336-c358-gini-jony-original-imaggug2mkpha7jd.jpeg?q=20&crop=false
+   https://m.media-amazon.com/images/I/41WbmQtgxQL._SL1100_.jpg
+   https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQKe2MMnO_NdzY3GBIQfRobPKVGa4VR-2BRbCA18tLZmKR1tlRv0iVkpWakQ_tUIW5m2P0&usqp=CAU

@@ -17,21 +17,11 @@ import { Link } from "react-router-dom";
 import { getUserInfoAsync, selectUserInfo } from "../User/userSlice";
 import { useEffect } from "react";
 
-const user = {
-  name: "Tom Cook",
-  email: "tom@example.com",
-  imageUrl:
-    "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
-};
-const navigation = [
-  { name: "Products", link: "/", NORMAL: true },
-  { name: "Products", link: "/admin", ADMIN: true },
-  { name: "Orders", link: "/admin/orders", ADMIN: true },
-];
+const navigation = [{ name: "Products", link: "/", NORMAL: true }];
 const userNavigation = [
-  { name: "Your Profile", link: "/profile" },
-  { name: "My Orders", link: "/profile/orders" },
-  { name: "Sign out", link: "/logout" },
+  { name: "Your Profile", link: "/profile", NORMAL: true },
+  { name: "My Orders", link: "/profile/orders", NORMAL: true },
+  { name: "Sign out", link: "/logout", NORMAL: true },
 ];
 
 function classNames(...classes) {
@@ -47,6 +37,15 @@ export default function Navbar({ children }) {
     dispatch(getUserInfoAsync());
   }, []);
 
+  let user;
+  if (userInfo) {
+    user = {
+      name: userInfo.name,
+      email: userInfo.email,
+      imageUrl:
+        "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80",
+    };
+  }
   return (
     <>
       {userInfo && (
@@ -56,7 +55,7 @@ export default function Navbar({ children }) {
               <div className="flex h-16 items-center justify-between">
                 <div className="flex items-center">
                   <div className="flex-shrink-0">
-                    <Link to={`${userInfo.role === "ADMIN" ? "/admin" : "/"}`}>
+                    <Link to={"/"}>
                       <img
                         alt="Your Company"
                         src="/logo.png"
@@ -113,7 +112,7 @@ export default function Navbar({ children }) {
                           <span className="sr-only">Open user menu</span>
                           <img
                             alt=""
-                            src={user.imageUrl}
+                            src={user && user.imageUrl}
                             className="h-8 w-8 rounded-full"
                           />
                         </MenuButton>
@@ -122,16 +121,19 @@ export default function Navbar({ children }) {
                         transition
                         className="absolute right-0 z-10 mt-2 w-48 origin-top-right rounded-md bg-white py-1 shadow-lg ring-1 ring-black ring-opacity-5 transition focus:outline-none data-[closed]:scale-95 data-[closed]:transform data-[closed]:opacity-0 data-[enter]:duration-100 data-[leave]:duration-75 data-[enter]:ease-out data-[leave]:ease-in"
                       >
-                        {userNavigation.map((item) => (
-                          <MenuItem key={item.name}>
-                            <Link
-                              to={item.link}
-                              className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
-                            >
-                              {item.name}
-                            </Link>
-                          </MenuItem>
-                        ))}
+                        {userNavigation.map(
+                          (item) =>
+                            item[userInfo.role] && (
+                              <MenuItem key={item.name}>
+                                <Link
+                                  to={item.link}
+                                  className="block px-4 py-2 text-sm text-gray-700 data-[focus]:bg-gray-100"
+                                >
+                                  {item.name}
+                                </Link>
+                              </MenuItem>
+                            )
+                        )}
                       </MenuItems>
                     </Menu>
                   </div>
@@ -178,16 +180,16 @@ export default function Navbar({ children }) {
                   <div className="flex-shrink-0">
                     <img
                       alt=""
-                      src={user.imageUrl}
+                      src={user && user.imageUrl}
                       className="h-10 w-10 rounded-full"
                     />
                   </div>
                   <div className="ml-3">
                     <div className="text-base font-medium leading-none text-white">
-                      {user.name}
+                      {user && user.name}
                     </div>
                     <div className="text-sm font-medium leading-none text-gray-400">
-                      {user.email}
+                      {user && user.email}
                     </div>
                   </div>
 
