@@ -34,7 +34,6 @@ function classNames(...classes) {
 }
 
 export default function Navbar({ children }) {
-  const items = useSelector((state) => state.cart.items);
   const userInfo = useSelector(selectUserInfo);
   const dispatch = useDispatch();
 
@@ -93,22 +92,6 @@ export default function Navbar({ children }) {
                 </div>
                 <div className="hidden md:block">
                   <div className="ml-4 flex items-center md:ml-6">
-                    <Link
-                      to={"/cart"}
-                      className="relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:outline-none focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800"
-                    >
-                      <span className="absolute -inset-1.5" />
-                      <span className="sr-only">View notifications</span>
-                      <ShoppingCartIcon
-                        aria-hidden="true"
-                        className="h-6 w-6"
-                      />
-                    </Link>
-                    {items && items.length > 0 && (
-                      <span className="inline-flex items-center rounded-md bg-pink-50 mb-7 z-10 -ml-3 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
-                        {items.length}
-                      </span>
-                    )}
                     {/* Profile dropdown */}
                     <Menu as="div" className="relative ml-3">
                       <div>
@@ -206,11 +189,6 @@ export default function Navbar({ children }) {
                     <span className="sr-only">View notifications</span>
                     <ShoppingCartIcon aria-hidden="true" className="h-6 w-6" />
                   </Link>
-                  {items.length > 0 && (
-                    <span className="inline-flex items-center rounded-md bg-pink-50 mb-7 z-10 -ml-3 px-2 py-1 text-xs font-medium text-pink-700 ring-1 ring-inset ring-pink-700/10">
-                      {items.length}
-                    </span>
-                  )}
                 </div>
                 <div className="mt-3 space-y-1 px-2">
                   {userNavigation.map((item) => (

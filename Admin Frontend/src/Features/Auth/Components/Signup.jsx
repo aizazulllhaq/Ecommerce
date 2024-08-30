@@ -19,7 +19,6 @@ const Signup = () => {
   } = useForm();
 
   const onSubmit = (data) => {
-    console.log(data);
     dispatch(signUpUserAsync(data));
     reset();
   };

@@ -12,6 +12,7 @@ import {
   resetPassword,
   adminSignin,
   logoutAdmin,
+  adminCheckAuthentication,
 } from "../Controllers/Auth.Controller.js";
 import upload from "../Middlewares/Multer.js";
 
@@ -25,6 +26,7 @@ authRouter
   .get("/check", checkAuthentication)
   .get("/logout", logoutUser)
   .post("/admin/signin", adminSignin)
-  .post("/admin/logout", logoutAdmin);
+  .post("/admin/logout", logoutAdmin)
+  .get("/admin/check", adminCheckAuthentication);
 
 export default authRouter;

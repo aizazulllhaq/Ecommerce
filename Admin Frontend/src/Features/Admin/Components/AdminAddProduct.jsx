@@ -61,7 +61,6 @@ const AdminAddProduct = () => {
   const product = useSelector((state) => state.product.product);
   const [openModal, setOpenModal] = useState(false);
   const alert = useAlert();
-  console.log(product);
 
   useEffect(() => {
     dispatch(getAllBrandsAsync());

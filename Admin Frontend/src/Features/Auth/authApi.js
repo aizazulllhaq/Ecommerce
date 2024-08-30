@@ -8,7 +8,7 @@ export async function signUpUser(data) {
         "Content-Type": "application/json",
       },
     });
-    return response.data.data ;
+    return response.data.data;
   } catch (error) {
     throw new Error(error.response.data.error);
   }
@@ -29,7 +29,7 @@ export async function signInUser(data) {
 
 export async function checkAuth() {
   try {
-    const response = await apiClient.get("/auth/check");
+    const response = await apiClient.get("/auth/admin/check");
     return response.data;
   } catch (error) {
     throw new Error(error.message);

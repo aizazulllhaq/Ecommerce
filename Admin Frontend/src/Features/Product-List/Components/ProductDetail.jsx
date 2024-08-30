@@ -18,7 +18,6 @@ function classNames(...classes) {
 export default function ProductDetail() {
   const [selectedColor, setSelectedColor] = useState(null);
   const [selectedSize, setSelectedSize] = useState(null);
-  console.log(selectedColor);
   const cartItems = useSelector(selectItems);
   const dispatch = useDispatch();
   const { id } = useParams();
@@ -40,7 +39,6 @@ export default function ProductDetail() {
       newItem.sizes = selectedSize;
     }
 
-    console.log(newItem);
     dispatch(
       // TODO : user.id must be added from BACKEND side
       addToCartAsync({

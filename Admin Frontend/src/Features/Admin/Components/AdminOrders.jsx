@@ -13,6 +13,7 @@ import { Pagination } from "../../Product-List/Components/ProductList";
 const AdminOrders = () => {
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
+  console.log("admin orders : ", orders);
   const totalOrders = useSelector(selectTotalOrders);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState({});

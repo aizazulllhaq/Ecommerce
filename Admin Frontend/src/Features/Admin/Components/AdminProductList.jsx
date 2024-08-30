@@ -202,55 +202,50 @@ export default function AdminProductList() {
                           key={product.id}
                           className="flex flex-col justify-between"
                         >
-                          <Link
-                            to={`/product-detail/${product.id}`}
-                            className="group relative"
-                          >
-                            <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
-                              <img
-                                alt={product.title}
-                                src={product.thumbnail}
-                                className="h-full w-full object-cover object-center lg:h-full lg:w-full"
-                              />
-                            </div>
-                            <div className="mt-4 flex justify-between">
-                              <div>
-                                <h3 className="text-sm text-gray-700">
-                                  <span>
-                                    <span
-                                      aria-hidden="true"
-                                      className="absolute inset-0"
-                                    />
-                                    {product.title}
-                                  </span>
-                                </h3>
-                                <p className="mt-1 text-sm text-gray-500">
-                                  {product.color}
-                                </p>
-                              </div>
-                              <p className="text-sm font-medium text-gray-900 line-through">
-                                {product.price}
+                          <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-md bg-gray-200 lg:aspect-none group-hover:opacity-75 lg:h-80">
+                            <img
+                              alt={product.title}
+                              src={product.thumbnail}
+                              className="h-full w-full object-cover object-center lg:h-full lg:w-full"
+                            />
+                          </div>
+                          <div className="mt-4 flex justify-between">
+                            <div>
+                              <h3 className="text-sm text-gray-700">
+                                <span>
+                                  <span
+                                    aria-hidden="true"
+                                    className="absolute inset-0"
+                                  />
+                                  {product.title}
+                                </span>
+                              </h3>
+                              <p className="mt-1 text-sm text-gray-500">
+                                {product.color}
                               </p>
                             </div>
-                            <div className="flex justify-between">
-                              <div className="text-sm font-medium text-gray-900">
-                                <p>
-                                  <StarIcon />
-                                  {product.rating}
-                                </p>
-                              </div>
-                              <p className="text-sm font-medium text-gray-900">
-                                {discountPrice(product)}
+                            <p className="text-sm font-medium text-gray-900 line-through">
+                              {product.price}
+                            </p>
+                          </div>
+                          <div className="flex justify-between">
+                            <div className="text-sm font-medium text-gray-900">
+                              <p>
+                                <StarIcon />
+                                {product.rating}
                               </p>
                             </div>
-                            {product.deleted && (
-                              <div>
-                                <p className="text-sm text-red-400">
-                                  product temporary deleted
-                                </p>
-                              </div>
-                            )}
-                          </Link>
+                            <p className="text-sm font-medium text-gray-900">
+                              {discountPrice(product)}
+                            </p>
+                          </div>
+                          {product.deleted && (
+                            <div>
+                              <p className="text-sm text-red-400">
+                                product temporary deleted
+                              </p>
+                            </div>
+                          )}
 
                           <Link
                             to={`/admin/product/${product.id}`}

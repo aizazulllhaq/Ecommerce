@@ -100,7 +100,7 @@ export const adminSignin = wrapAsync(async (req, res, next) => {
 
   return res
     .status(200)
-    .cookie("ADMAccessToken", accessToken, {
+    .cookie("accessToken", accessToken, {
       httpOnly: true,
       SameSite: "none",
     })
@@ -160,6 +160,27 @@ export const checkAuthentication = wrapAsync(async (req, res, next) => {
 
   if (accessToken) {
     const user = jwt.verify(accessToken, JWT_SECRET);
+
+    req.user = user;
+
+    return res.status(200).json({
+      id: user.id,
+      role: user.role,
+    });
+  }
+
+  return next(new ApiError(false, 401, "Authorized"));
+});
+
+// /admin/check : admin-auth-check
+export const adminCheckAuthentication = wrapAsync(async (req, res, next) => {
+  const accessToken = req.cookies?.accessToken;
+
+  if (accessToken) {
+    const user = jwt.verify(accessToken, JWT_SECRET);
+
+    if (user.role !== "ADMIN")
+      return next(new ApiError(false, 400, "Admin Not Found"));
 
     req.user = user;
 

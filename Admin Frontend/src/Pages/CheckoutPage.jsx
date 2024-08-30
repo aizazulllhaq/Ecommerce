@@ -52,7 +52,6 @@ const CheckoutPage = () => {
 
   const handleQuantity = (e, item, p) => {
     let updatedItem = { ...item, product: { ...p, quantity: +e.target.value } };
-    console.log("handleQuantity : ", updatedItem);
     dispatch(updateCartAsync(updatedItem));
   };
 
@@ -74,7 +73,6 @@ const CheckoutPage = () => {
       paymentMethod,
       status: "pending",
     };
-    console.log(order);
     dispatch(newOrderAsync(order));
     alert.success("Item Ordered");
   };

@@ -27,7 +27,6 @@ const AdminLogin = () => {
       alert.error(error.message);
     }
   }, [error, alert]);
-  console.log(loggedInAdminToken);
   return (
     <>
       {loggedInAdminToken && loggedInAdminToken.role === "ADMIN" && (
