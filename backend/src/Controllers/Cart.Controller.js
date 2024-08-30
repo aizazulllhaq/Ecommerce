@@ -6,12 +6,11 @@ export const addToCart = wrapAsync(async (req, res, next) => {
   // TODO : user.id needed to here bcoz we don't put in frontend
   const uid = req.user.id;
   const { newItem } = req.body;
-  console.log(newItem);
 
   const NewItem = await Cart.create({ product: newItem, uid });
 
   const result = await NewItem.populate("product");
-  console.log(result);
+  
   return res
     .status(201)
     .json(new ApiResponse(true, "New Item Add to Cart", result));
@@ -26,7 +25,6 @@ export const getCartItemsByUserId = wrapAsync(async (req, res, next) => {
 });
 
 export const updateCart = wrapAsync(async (req, res, next) => {
-  console.log(req.body, req.params);
   const { cid } = req.params;
   const { updatedItem } = req.body;
 

@@ -1,9 +1,6 @@
 import React, { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getUserOrdersAsync,
-  selectUserOrders,
-} from "../userSlice";
+import { getUserOrdersAsync, selectUserOrders } from "../userSlice";
 import { discountPrice } from "../../../App/constant";
 
 const UserOrders = () => {
@@ -27,39 +24,41 @@ const UserOrders = () => {
               <div className="flow-root">
                 <ul role="list" className="-my-6 divide-y divide-gray-200">
                   {order.items &&
-                    order.items.map((item) => (
-                      <li key={item.product.id} className="flex py-6 my-[5px]">
-                        <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
-                          <img
-                            alt={item.product.title}
-                            src={item.product.thumbnail}
-                            className="h-full w-full object-cover object-center"
-                          />
-                        </div>
+                    order.items.map((item) =>
+                      item.product.map((p) => (
+                        <li key={p.id} className="flex py-6 my-[5px]">
+                          <div className="h-24 w-24 flex-shrink-0 overflow-hidden rounded-md border border-gray-200">
+                            <img
+                              alt={p.title}
+                              src={p.thumbnail}
+                              className="h-full w-full object-cover object-center"
+                            />
+                          </div>
 
-                        <div className="ml-4 flex flex-1 flex-col">
-                          <div>
-                            <div className="flex justify-between text-base font-medium text-gray-900">
-                              <h3>{item.product.title}</h3>
-                              <p className="ml-4">${discountPrice(item.product)}</p>
+                          <div className="ml-4 flex flex-1 flex-col">
+                            <div>
+                              <div className="flex justify-between text-base font-medium text-gray-900">
+                                <h3>{p.title}</h3>
+                                <p className="ml-4">${discountPrice(p)}</p>
+                              </div>
+                              <p className="mt-1 text-sm text-gray-500">
+                                {p.color}
+                              </p>
                             </div>
-                            <p className="mt-1 text-sm text-gray-500">
-                              {item.product.color}
-                            </p>
-                          </div>
-                          <div className="flex flex-1 items-end justify-between text-sm">
-                            <div className="text-gray-500 rounded-3xl">
-                              <label
-                                htmlFor="password"
-                                className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
-                              >
-                                Qty {item.quantity}
-                              </label>
+                            <div className="flex flex-1 items-end justify-between text-sm">
+                              <div className="text-gray-500 rounded-3xl">
+                                <label
+                                  htmlFor="password"
+                                  className="inline mr-5 text-sm font-medium leading-6 text-gray-900"
+                                >
+                                  Qty {p.quantity}
+                                </label>
+                              </div>
                             </div>
                           </div>
-                        </div>
-                      </li>
-                    ))}
+                        </li>
+                      ))
+                    )}
                 </ul>
               </div>
             </div>

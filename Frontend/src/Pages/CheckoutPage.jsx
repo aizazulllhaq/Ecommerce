@@ -52,7 +52,6 @@ const CheckoutPage = () => {
 
   const handleQuantity = (e, item, p) => {
     let updatedItem = { ...item, product: { ...p, quantity: +e.target.value } };
-    console.log("handleQuantity : ", updatedItem);
     dispatch(updateCartAsync(updatedItem));
   };
 
@@ -63,18 +62,18 @@ const CheckoutPage = () => {
   const handlePaymentMethod = (e) => {
     setPaymentMethod(e.target.value);
   };
+  let uitems = items.map((item) => ({ product: item.product, uid: item.uid }));
 
+  // TODO : user.id needed here
   const handleOrder = () => {
-    // TODO : user.id needed here
     const order = {
-      items: [...items.map((p) => p.id)],
+      items: uitems,
       itemsTotalAmount,
       totalItems,
       selectAddress,
       paymentMethod,
       status: "pending",
     };
-    console.log(order);
     dispatch(newOrderAsync(order));
     alert.success("Item Ordered");
   };

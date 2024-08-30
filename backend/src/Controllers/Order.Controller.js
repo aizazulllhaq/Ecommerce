@@ -5,15 +5,19 @@ import wrapAsync from "../Utils/wrapAsync.js";
 
 export const newOrder = wrapAsync(async (req, res, next) => {
   const uid = req.user.id;
-  console.log(req.body);
-  let order = { items: [...req.body.items], ...req.body, uid: uid };
-
-  console.log("order create for practice : ", { ...order, uid: uid });
+  const {
+    items,
+    itemsTotalAmount,
+    totalItems,
+    status,
+    selectAddress,
+    paymentMethod,
+  } = req.body;
 
   const newOrder = await (
-    await Order.create({ ...order, uid: uid })
+    await Order.create({ ...req.body, items: req.body.items, uid: uid })
   ).populate("items");
-  console.log("newOrder : ", newOrder);
+
   sendOrderMail(newOrder);
 
   return res
@@ -24,16 +28,15 @@ export const newOrder = wrapAsync(async (req, res, next) => {
 export const getOrdersByUserId = wrapAsync(async (req, res, next) => {
   const uid = req.user.id;
 
-  const userOrders = await Order.find({ uid });
-
+  const userOrders = await Order.find({ uid }).populate("items");
   return res.status(200).json(new ApiResponse(true, "User Orders", userOrders));
 });
 
 export const getAllOrders = wrapAsync(async (req, res, next) => {
   // sort = {_sort:"price",_order="desc"}
   // pagination = {_page:1,_limit=10}
-  let query = Order.find({});
-  let totalOrdersQuery = Order.find({});
+  let query = Order.find({}).populate("items");
+  let totalOrdersQuery = Order.find({}).populate("items");
 
   if (req.query._sort && req.query._order) {
     query = query.sort({ [req.query._sort]: req.query._order });
