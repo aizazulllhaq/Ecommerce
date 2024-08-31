@@ -14,12 +14,13 @@ import orderRouter from "./Routes/Order.Routes.js";
 import cbRouter from "./Routes/CB.Routes.js";
 import authAdminRouter from "./Routes/Auth.Admin.Routes.js";
 import adminRouter from "./Routes/Admin.Routes.js";
+import { ADMIN_FRONTEND, USER_FRONTEND } from "./constant.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173", "http://localhost:5174"],
+    origin: [USER_FRONTEND, ADMIN_FRONTEND],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
