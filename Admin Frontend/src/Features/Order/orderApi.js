@@ -25,7 +25,7 @@ export async function getAllOrders(sort, pagination) {
   }
 
   try {
-    const response = await apiClient.get(`/orders?${queryString}`);
+    const response = await apiClient.get(`admin/orders?${queryString}`);
     return {
       data: response.data.data.Orders,
       totalOrders: response.data.data.totalDocs,
@@ -38,7 +38,7 @@ export async function getAllOrders(sort, pagination) {
 export async function updateOrder(updatedOrder) {
   try {
     const response = await apiClient.patch(
-      `/orders/edit/${updatedOrder._id}`,
+      `/admin/orders/edit/${updatedOrder._id}`,
       updatedOrder,
       {
         headers: {

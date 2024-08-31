@@ -3,7 +3,7 @@ import apiClient from "../Common/apiClient";
 
 export async function addProduct(newProduct) {
   try {
-    const response = await apiClient.post("/product/new", newProduct, {
+    const response = await apiClient.post("/admin/product/new", newProduct, {
       headers: {
         "Content-Type": "application/json",
       },
@@ -17,7 +17,7 @@ export async function addProduct(newProduct) {
 export async function updateProduct(updatedProduct) {
   try {
     const response = await apiClient.patch(
-      `/product/${updatedProduct.id}`,
+      `/admin/product/${updatedProduct.id}`,
       updatedProduct,
       {
         headers: {
@@ -51,9 +51,8 @@ export async function getProductsByFilter(filter, sort, pagination) {
   }
 
   try {
-    const response = await apiClient.get(`/product?${queryString}`);
+    const response = await apiClient.get(`admin/products?${queryString}`);
 
-    console.log("product : ", response);
     const totalItems = response.data.data.totalDocs;
     return { data: response.data.data.result, totalItems: totalItems };
   } catch (error) {
@@ -63,7 +62,7 @@ export async function getProductsByFilter(filter, sort, pagination) {
 
 export async function getAllCategries() {
   try {
-    const response = await apiClient.get("/categories");
+    const response = await apiClient.get("admin/categories");
     return {
       data: response.data.data,
     };
@@ -74,7 +73,7 @@ export async function getAllCategries() {
 
 export async function getAllBrands() {
   try {
-    const response = await apiClient.get("/brands");
+    const response = await apiClient.get("admin/brands");
     return {
       data: response.data.data,
     };
@@ -85,7 +84,7 @@ export async function getAllBrands() {
 
 export async function getProductById(id) {
   try {
-    const response = await apiClient.get(`/product/${id}`);
+    const response = await apiClient.get(`admin/product/${id}`);
     return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);
@@ -95,7 +94,7 @@ export async function getProductById(id) {
 export async function deleteProductTemporary(deletedProduct) {
   try {
     const response = await apiClient.patch(
-      `/product/temp/${deletedProduct.id}`,
+      `/admin/product/temp/${deletedProduct.id}`,
       deletedProduct,
       {
         headers: {
@@ -112,7 +111,7 @@ export async function deleteProductTemporary(deletedProduct) {
 export async function deleteProductPermanently(deletedProduct) {
   try {
     const response = await apiClient.delete(
-      `/product/del/${deletedProduct.id}`
+      `/admin/product/del/${deletedProduct.id}`
     );
     return response.data.data;
   } catch (error) {
