@@ -15,7 +15,7 @@ export async function addToCart(item) {
 
 export async function getCartItemByUserId() {
   try {
-    const response = await apiClient.get(`/cart/my/items`);
+    const response = await apiClient.get("/cart/my/items");
     return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

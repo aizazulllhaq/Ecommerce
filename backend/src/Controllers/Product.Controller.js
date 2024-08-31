@@ -7,23 +7,6 @@ import User from "../Models/User.Modal.js";
 // Validate Users Authentication; ( Authentication check in middleware ( Auth ) )
 // Controllers for Authenticate Users Only;
 
-export const createProduct = wrapAsync(async (req, res, next) => {
-  // we already know that we can get a valid data from frontend , which we set in reactjs
-  // Create a new product in database and save newProduct;
-
-  const newProduct = new Product(req.body);
-
-  newProduct.discountPrice = Math.round(
-    newProduct.price * (1 - newProduct.discountPercentage / 100)
-  );
-
-  await newProduct.save();
-  // return response;
-  return res
-    .status(201)
-    .json(new ApiResponse(true, "Product Created", newProduct));
-});
-
 export const getSingleProduct = wrapAsync(async (req, res, next) => {
   // Get product id from url parameter;
   const { pid } = req.params;
@@ -35,24 +18,6 @@ export const getSingleProduct = wrapAsync(async (req, res, next) => {
 
   // return response with product;
   return res.status(200).json(new ApiResponse(true, "Single Product", product));
-});
-
-// test :
-export const GAP = wrapAsync(async (req, res) => {
-  const uid = req.user.id;
-
-  const user = await User.findById(uid);
-
-  if (user.role !== "ADMIN") {
-    const products = await Product.find({ deleted: { $ne: true } });
-
-    return res
-      .status(200)
-      .json(new ApiResponse(true, "User Products List", products));
-  }
-
-  const products = await Product.find({});
-  res.status(200).json(new ApiResponse(true, "Admin Products List", products));
 });
 
 export const getAllProducts = wrapAsync(async (req, res, next) => {
@@ -109,111 +74,4 @@ export const getAllProducts = wrapAsync(async (req, res, next) => {
       { result, totalDocs }
     )
   );
-});
-
-export const updateProduct = wrapAsync(async (req, res, next) => {
-  // Get product id from url parameter;
-  const { pid } = req.params;
-
-  // Find product in database;
-  const product = await Product.findById(pid);
-
-  // Get given fields from request body;
-  const {
-    title,
-    description,
-    price,
-    thumbnail,
-    images,
-    stock,
-    category,
-    brand,
-    discountPercentage,
-  } = req.body;
-
-  // Update given fields in db & otherwise leave old values as it is;
-  if (product.title !== title) {
-    product.title = title;
-  }
-
-  if (product.description !== description) {
-    product.description = description;
-  }
-
-  if (product.price !== price) {
-    product.price = price;
-  }
-
-  if (product.stock !== stock) {
-    product.stock = stock;
-  }
-
-  if (product.price !== price) {
-    product.price = price;
-  }
-
-  if (product.discountPercentage !== discountPercentage) {
-    product.discountPercentage = discountPercentage;
-    product.price = Math.round(price * (1 - discountPercentage / 100));
-  }
-
-  if (product.thumbnail !== thumbnail) {
-    product.thumbnail = thumbnail;
-  }
-
-  if (product.images !== images) {
-    product.images = images;
-  }
-
-  await product.save();
-
-  return res
-    .status(200)
-    .json(new ApiResponse(true, "Product Updated", product));
-
-  // return response;
-});
-
-export const deleteProductTemporary = wrapAsync(async (req, res, next) => {
-  // Get product id from url parameter;
-  const deletedProduct = req.body;
-
-  // Find product in database & Delete it;
-  const product = await Product.findByIdAndUpdate(
-    deletedProduct.id,
-    deletedProduct,
-    {
-      new: true,
-    }
-  );
-
-  // return response;
-  return res
-    .status(200)
-    .json(new ApiResponse(true, "Product Deleted Temporary", product));
-});
-
-export const deleteProductPermanently = wrapAsync(async (req, res, next) => {
-  // Get product id from url parameter;
-  const { pid } = req.params;
-
-  // Check is this product already deleted-temporary ; if ? deleted-it-permanantly : deleted-it-temporary
-  const product = await Product.findById(pid);
-
-  if (!product.deleted) {
-    product.deleted = true;
-    await product.save();
-    return res
-      .status(200)
-      .json(
-        new ApiResponse(true, "Product Deleted Temporary", { success: true })
-      );
-  }
-
-  const deletedProduct = await Product.findByIdAndDelete(pid);
-
-  // return response;
-  return res
-    .status(200)
-    .json(new ApiResponse(true, "Product Deleted Permanantly", deletedProduct));
 });

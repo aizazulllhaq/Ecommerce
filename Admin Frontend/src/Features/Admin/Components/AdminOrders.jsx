@@ -13,7 +13,6 @@ import { Pagination } from "../../Product-List/Components/ProductList";
 const AdminOrders = () => {
   const dispatch = useDispatch();
   const orders = useSelector(selectOrders);
-  console.log("admin orders : ", orders);
   const totalOrders = useSelector(selectTotalOrders);
   const [page, setPage] = useState(1);
   const [sort, setSort] = useState({});
@@ -185,25 +184,26 @@ const AdminOrders = () => {
                     <div className="flex items-center gap-3">{order._id}</div>
                   </td>
                   <td className="p-4 border-b border-blue-gray-50">
-                    {order.items.map((item, indx) => (
-                      <div className="flex items-center gap-3" key={indx}>
-                        <img
-                          src={item.product.thumbnail}
-                          alt={item.product.title}
-                          className="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md"
-                        />
-                        <div className="flex flex-col">
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
-                            {item.product.title}
-                          </p>
-                          <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">
-                            QTY : {item.quantity} * $
-                            {discountPrice(item.product)} = $
-                            {item.quantity * discountPrice(item.product)}
-                          </p>
+                    {order.items.map((item, indx) =>
+                      item.product.map((p) => (
+                        <div className="flex items-center gap-3" key={indx}>
+                          <img
+                            src={p.thumbnail}
+                            alt={p.title}
+                            className="inline-block relative object-cover object-center !rounded-full w-9 h-9 rounded-md"
+                          />
+                          <div className="flex flex-col">
+                            <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal">
+                              {p.title}
+                            </p>
+                            <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">
+                              QTY : {p.quantity} * ${discountPrice(p)} = $
+                              {p.quantity * discountPrice(p)}
+                            </p>
+                          </div>
                         </div>
-                      </div>
-                    ))}
+                      ))
+                    )}
                   </td>
                   <td className="p-4 border-b border-blue-gray-50">
                     <p className="block antialiased font-sans text-sm leading-normal text-blue-gray-900 font-normal opacity-70">

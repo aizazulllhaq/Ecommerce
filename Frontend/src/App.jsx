@@ -15,7 +15,6 @@ import OrderSuccess from "./Features/Order/OrderSuccess";
 import UserOrdersPage from "./Pages/UserOrdersPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import Logout from "./Features/Auth/Components/Logout";
-// import Footer from "./Features/Common/Footer";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import {

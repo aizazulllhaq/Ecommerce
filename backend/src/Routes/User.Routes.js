@@ -7,8 +7,10 @@ import {
 
 const userRouter = Router();
 
+// /api/v1/users/
+
 userRouter
-  .get("/:uid/orders", getUserOrders)
+  .get("/orders", getUserOrders)
   .get("/info", getUserinfo)
   // .patch("/update", upload.single("profileImg"), updateUser);
   .patch("/update", updateUserAddresses);

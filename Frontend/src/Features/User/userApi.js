@@ -2,7 +2,7 @@ import apiClient from "../Common/apiClient";
 
 export async function getUserOrders() {
   try {
-    const response = await apiClient.get("/orders/user");
+    const response = await apiClient.get("/users/orders");
     return response.data.data;
   } catch (error) {
     console.log("Error Occurred : ", error.message);

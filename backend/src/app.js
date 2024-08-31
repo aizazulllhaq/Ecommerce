@@ -5,18 +5,21 @@ import authRouter from "./Routes/Auth.Routes.js";
 import {
   checkForAuthentication,
   restrictFromSecureRoutes,
+  restrictUserFromAdminRoutes,
 } from "./Middlewares/Auth.Middleware.js";
 import productRoutes from "./Routes/Product.Routes.js";
 import cartRouter from "./Routes/Cart.Routes.js";
 import userRouter from "./Routes/User.Routes.js";
 import orderRouter from "./Routes/Order.Routes.js";
 import cbRouter from "./Routes/CB.Routes.js";
+import authAdminRouter from "./Routes/Auth.Admin.Routes.js";
+import adminRouter from "./Routes/Admin.Routes.js";
 
 const app = express();
 
 app.use(
   cors({
-    origin: ["http://localhost:5173","http://localhost:5174"],
+    origin: ["http://localhost:5173", "http://localhost:5174"],
     methods: ["GET", "POST", "PATCH", "PUT", "DELETE"],
     credentials: true,
   })
@@ -30,28 +33,15 @@ app.use(cookieParser());
 app.use(checkForAuthentication);
 
 // Routes
-app.use("/api/v1/auth", authRouter);
-app.use(
-  "/api/v1/users",
-  restrictFromSecureRoutes(["NORMAL", "ADMIN"]),
-  userRouter
-);
-app.use(
-  "/api/v1/product",
-  restrictFromSecureRoutes(["NORMAL", "ADMIN"]),
-  productRoutes
-);
-app.use(
-  "/api/v1/cart",
-  restrictFromSecureRoutes(["NORMAL", "ADMIN"]),
-  cartRouter
-);
-app.use(
-  "/api/v1/orders",
-  restrictFromSecureRoutes(["NORMAL", "ADMIN"]),
-  orderRouter
-);
-app.use("/api/v1", restrictFromSecureRoutes(["NORMAL", "ADMIN"]), cbRouter);
+app.use("/api/v1/auth/", authRouter);
+// Admin Routes Only
+app.use("/api/v1/auth/admin", authAdminRouter);
+app.use("/api/v1/admin", restrictUserFromAdminRoutes(["ADMIN"]), adminRouter);
+app.use("/api/v1/users", restrictFromSecureRoutes(["NORMAL"]), userRouter);
+app.use("/api/v1/product", restrictFromSecureRoutes(["NORMAL"]), productRoutes);
+app.use("/api/v1/cart", restrictFromSecureRoutes(["NORMAL"]), cartRouter);
+app.use("/api/v1/orders", restrictFromSecureRoutes(["NORMAL"]), orderRouter);
+app.use("/api/v1", restrictFromSecureRoutes(["NORMAL"]), cbRouter);
 
 app.use((err, req, res, next) => {
   const success = err.success;

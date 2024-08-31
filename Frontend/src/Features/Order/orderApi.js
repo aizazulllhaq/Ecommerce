@@ -38,7 +38,7 @@ export async function getAllOrders(sort, pagination) {
 export async function updateOrder(updatedOrder) {
   try {
     const response = await apiClient.patch(
-      `/orders/edit/${updatedOrder._id}`,
+      `/users/orders/edit/${updatedOrder._id}`,
       updatedOrder,
       {
         headers: {

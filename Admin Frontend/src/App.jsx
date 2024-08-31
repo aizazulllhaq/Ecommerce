@@ -3,17 +3,16 @@ import "./App.css";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import PageNotFound from "./Pages/PageNotFound";
-import UserOrdersPage from "./Pages/UserOrdersPage";
 import UserProfilePage from "./Pages/UserProfilePage";
 import AdminHomePage from "./Pages/AdminHomePage";
 import AdminAddProductPage from "./Pages/AdminAddProductPage";
 import ProtectedAdmin from "./Features/Auth/Components/ProtectedAdmin";
 import AdminOrdersPage from "./Pages/AdminOrdersPage";
-// import Footer from "./Features/Common/Footer";
 import { transitions, positions, Provider as AlertProvider } from "react-alert";
 import AlertTemplate from "react-alert-template-basic";
 import AdminLogin from "./Features/Admin/Components/AdminLogin";
 import { checkAuthAsync, selectCheckAuth } from "./Features/Admin/adminSlice";
+import AdminLogout from "./Features/Admin/Components/AdminLogout";
 
 // optional configuration
 const options = {
@@ -78,6 +77,10 @@ const App = () => {
           <AdminOrdersPage />
         </ProtectedAdmin>
       ),
+    },
+    {
+      path: "/admin/logout",
+      element: <AdminLogout />,
     },
     {
       path: "*",

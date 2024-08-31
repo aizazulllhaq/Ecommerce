@@ -53,6 +53,7 @@ export async function getProductsByFilter(filter, sort, pagination) {
   try {
     const response = await apiClient.get(`/product?${queryString}`);
 
+    console.log("product : ", response);
     const totalItems = response.data.data.totalDocs;
     return { data: response.data.data.result, totalItems: totalItems };
   } catch (error) {

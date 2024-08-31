@@ -63,38 +63,8 @@ export const signIn = wrapAsync(async (req, res, next) => {
   if (!isPasswordMatch)
     return next(new ApiError(false, 401, "Invalid Credentials"));
 
-  const accessToken = await isUser.generateAccessToken();
-
-  return res
-    .status(200)
-    .cookie("accessToken", accessToken, {
-      httpOnly: true,
-      SameSite: "none",
-    })
-    .json(
-      new ApiResponse(true, "Login Successfull", {
-        id: isUser._id,
-        role: isUser.role,
-      })
-    );
-});
-
-// /admin/signin : admin-login
-export const adminSignin = wrapAsync(async (req, res, next) => {
-  // Validation required fields ( email , password ); signInValidation => AuthValidation.js
-  // get required fields
-  const { email, password } = req.body;
-
-  const isUser = await User.findOne({ email });
-  if (!isUser) return next(new ApiError(false, 401, "Invalid Credentials"));
-
-  const isPasswordMatch = await isUser.isPasswordCorrect(password);
-
-  if (!isPasswordMatch)
-    return next(new ApiError(false, 401, "Invalid Credentials"));
-
-  if (isUser.role !== "ADMIN")
-    return next(new ApiError(false, 400, "Admin Not Found"));
+  if (isUser.role !== "NORMAL")
+    return next(new ApiError(false, 500, "Invalid Credentials"));
 
   const accessToken = await isUser.generateAccessToken();
 
@@ -161,26 +131,8 @@ export const checkAuthentication = wrapAsync(async (req, res, next) => {
   if (accessToken) {
     const user = jwt.verify(accessToken, JWT_SECRET);
 
-    req.user = user;
-
-    return res.status(200).json({
-      id: user.id,
-      role: user.role,
-    });
-  }
-
-  return next(new ApiError(false, 401, "Authorized"));
-});
-
-// /admin/check : admin-auth-check
-export const adminCheckAuthentication = wrapAsync(async (req, res, next) => {
-  const accessToken = req.cookies?.accessToken;
-
-  if (accessToken) {
-    const user = jwt.verify(accessToken, JWT_SECRET);
-
-    if (user.role !== "ADMIN")
-      return next(new ApiError(false, 400, "Admin Not Found"));
+    if (user.role !== "NORMAL")
+      return next(new ApiError(false, 500, "Internal Server Error"));
 
     req.user = user;
 
@@ -190,7 +142,7 @@ export const adminCheckAuthentication = wrapAsync(async (req, res, next) => {
     });
   }
 
-  return next(new ApiError(false, 401, "Authorized"));
+  return next(new ApiError(false, 401, "unAuthorized"));
 });
 
 export const logoutUser = (req, res) => {
@@ -203,12 +155,3 @@ export const logoutUser = (req, res) => {
     .json(new ApiResponse(true, "User Logout", {}));
 };
 
-export const logoutAdmin = (req, res) => {
-  res
-    .status(200)
-    .clearCookie("ADMAccessToken", {
-      httpOnly: true,
-      SameSite: "none",
-    })
-    .json(new ApiResponse(true, "User Logout", {}));
-};

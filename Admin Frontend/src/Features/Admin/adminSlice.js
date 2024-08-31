@@ -1,5 +1,10 @@
 import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
-import { checkAuth, getAdminInfo, loginAdmin } from "./adminAuthApi";
+import {
+  checkAuth,
+  getAdminInfo,
+  loginAdmin,
+  AdminLogout,
+} from "./adminAuthApi";
 
 export const loginAdminAsync = createAsyncThunk(
   "admin/loginAdmin",
@@ -18,6 +23,14 @@ export const getAdminInfoAsync = createAsyncThunk(
   "user/getUserInfo",
   async () => {
     const response = await getAdminInfo();
+    return response;
+  }
+);
+
+export const AdminLogoutAsync = createAsyncThunk(
+  "admin/AdminLogout",
+  async () => {
+    const response = await AdminLogout();
     return response;
   }
 );
@@ -42,7 +55,7 @@ export const adminSlice = createSlice({
       })
       .addCase(loginAdminAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInAdminToken = action.payload.data;
+        state.loggedInAdminToken = action.payload;
       })
       .addCase(loginAdminAsync.rejected, (state, action) => {
         state.status = "idle";
@@ -61,12 +74,19 @@ export const adminSlice = createSlice({
       })
       .addCase(checkAuthAsync.fulfilled, (state, action) => {
         state.status = "idle";
-        state.loggedInAdminToken = action.payload.data;
+        state.loggedInAdminToken = action.payload;
         state.checkAuth = true;
       })
       .addCase(checkAuthAsync.rejected, (state) => {
         state.status = "idle";
         state.checkAuth = true;
+      })
+      .addCase(AdminLogoutAsync.pending, (state) => {
+        state.status = "idle";
+      })
+      .addCase(AdminLogoutAsync.fulfilled, (state) => {
+        state.status = "idle";
+        state.loggedInAdminToken = null;
       });
   },
 });
